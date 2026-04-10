@@ -49,9 +49,9 @@ export function MobileExitIntent() {
     setTimeout(() => {
       const element = document.getElementById("pricing-section");
       if (element) {
-        element.scrollIntoView({ behavior: "smooth", block: "start" });
+        element.scrollIntoView({ behavior: "smooth", block: "center" });
       }
-    }, 100);
+    }, 120);
   };
 
   const handleClose = () => {
