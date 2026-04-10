@@ -1,17 +1,11 @@
 import { useState } from "react";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogDescription,
-} from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Loader2 } from "lucide-react";
 
-const WEBHOOK_URL = "COLE_AQUI_A_URL_DO_N8N";
+const WEBHOOK_URL = "https://n8n.fisherai.shop/webhook/checkout-moovi";
 
 interface SelectedPlan {
   name: string;
@@ -98,12 +92,8 @@ export function PreCheckoutModal({ open, onOpenChange, plan }: PreCheckoutModalP
     <Dialog open={open} onOpenChange={handleOpenChange}>
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
-          <DialogTitle className="text-xl">
-            Quase lá! Falta pouco para liberar seu acesso.
-          </DialogTitle>
-          <DialogDescription>
-            Preencha seus dados abaixo para continuar com a assinatura.
-          </DialogDescription>
+          <DialogTitle className="text-xl">Quase lá! Falta pouco para liberar seu acesso.</DialogTitle>
+          <DialogDescription>Preencha seus dados abaixo para continuar com a assinatura.</DialogDescription>
         </DialogHeader>
 
         <form onSubmit={handleSubmit} className="space-y-4 mt-2">
@@ -145,20 +135,12 @@ export function PreCheckoutModal({ open, onOpenChange, plan }: PreCheckoutModalP
           </div>
 
           <div className="rounded-lg bg-muted p-3 text-sm text-muted-foreground">
-            Você está assinando o{" "}
-            <span className="font-semibold text-foreground">{plan.name}</span>
+            Você está assinando o <span className="font-semibold text-foreground">{plan.name}</span>
           </div>
 
-          {error && (
-            <p className="text-sm text-destructive">{error}</p>
-          )}
+          {error && <p className="text-sm text-destructive">{error}</p>}
 
-          <Button
-            type="submit"
-            className="w-full"
-            size="lg"
-            disabled={isSubmitting}
-          >
+          <Button type="submit" className="w-full" size="lg" disabled={isSubmitting}>
             {isSubmitting ? (
               <>
                 <Loader2 className="mr-2 h-4 w-4 animate-spin" />
