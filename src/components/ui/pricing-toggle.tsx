@@ -1,9 +1,11 @@
+import { useState } from "react";
 import { buttonVariants } from "@/components/ui/button";
 import { useMediaQuery } from "@/hooks/use-media-query";
 import { cn } from "@/lib/utils";
 import { motion } from "framer-motion";
-import { Check, Star, X } from "lucide-react"; // Importei o X aqui
+import { Check, Star, X } from "lucide-react";
 import { TextAnimate } from "@/components/ui/text-animate";
+import { PreCheckoutModal } from "@/components/PreCheckoutModal";
 
 interface PricingPlan {
   name: string;
@@ -30,6 +32,8 @@ interface PricingToggleProps {
 
 export function PricingToggle({ plans, title = "Escolha seu plano", description = "" }: PricingToggleProps) {
   const isDesktop = useMediaQuery("(min-width: 768px)");
+  const [selectedPlan, setSelectedPlan] = useState<PricingPlan | null>(null);
+  const [modalOpen, setModalOpen] = useState(false);
 
   return (
     <div className="container pt-8 pb-20">
@@ -133,10 +137,11 @@ export function PricingToggle({ plans, title = "Escolha seu plano", description 
               ))}
             </ul>
 
-            <a
-              href={plan.href}
-              target="_blank"
-              rel="noopener noreferrer"
+            <button
+              onClick={() => {
+                setSelectedPlan(plan);
+                setModalOpen(true);
+              }}
               className={cn(
                 buttonVariants({
                   variant: "hero",
@@ -148,12 +153,18 @@ export function PricingToggle({ plans, title = "Escolha seu plano", description 
               )}
             >
               {plan.buttonText}
-            </a>
+            </button>
 
             <p className="mt-6 text-xs text-muted-foreground">{plan.description}</p>
           </motion.div>
         ))}
       </div>
+
+      <PreCheckoutModal
+        open={modalOpen}
+        onOpenChange={setModalOpen}
+        plan={selectedPlan}
+      />
     </div>
   );
 }
