@@ -1,11 +1,18 @@
 export const scrollToSection = (sectionId: string) => {
-  const element = document.getElementById(sectionId);
-  if (element) {
-    element.scrollIntoView({ 
-      behavior: 'smooth',
-      block: 'start'
-    });
-  }
+  setTimeout(() => {
+    const element = document.getElementById(sectionId);
+    if (element) {
+      element.scrollIntoView({ 
+        behavior: 'smooth',
+        block: 'center'
+      });
+    }
+  }, 120);
+};
+
+export const scrollToPricing = (e?: React.MouseEvent) => {
+  e?.preventDefault();
+  scrollToSection('pricing-section');
 };
 
 export const openWhatsApp = () => {
