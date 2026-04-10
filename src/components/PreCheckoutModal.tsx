@@ -53,9 +53,18 @@ function formatPhone(value: string) {
   return `(${digits.slice(0, 2)}) ${digits.slice(2, 7)}-${digits.slice(7)}`;
 }
 
+function formatCpf(value: string) {
+  const digits = value.replace(/\D/g, "").slice(0, 11);
+  if (digits.length <= 3) return digits;
+  if (digits.length <= 6) return `${digits.slice(0, 3)}.${digits.slice(3)}`;
+  if (digits.length <= 9) return `${digits.slice(0, 3)}.${digits.slice(3, 6)}.${digits.slice(6)}`;
+  return `${digits.slice(0, 3)}.${digits.slice(3, 6)}.${digits.slice(6, 9)}-${digits.slice(9)}`;
+}
+
 export function PreCheckoutModal({ open, onOpenChange, plan }: PreCheckoutModalProps) {
   const [nome, setNome] = useState("");
   const [email, setEmail] = useState("");
+  const [cpf, setCpf] = useState("");
   const [telefone, setTelefone] = useState("");
   const [selectedCountry, setSelectedCountry] = useState(COUNTRIES[0]);
   const [countryOpen, setCountryOpen] = useState(false);
@@ -65,6 +74,7 @@ export function PreCheckoutModal({ open, onOpenChange, plan }: PreCheckoutModalP
   const resetForm = () => {
     setNome("");
     setEmail("");
+    setCpf("");
     setTelefone("");
     setSelectedCountry(COUNTRIES[0]);
     setError("");
@@ -86,6 +96,7 @@ export function PreCheckoutModal({ open, onOpenChange, plan }: PreCheckoutModalP
     const payload = {
       nome,
       email,
+      cpf: cpf.replace(/\D/g, ""),
       telefone: `+${selectedCountry.ddi}${telefone.replace(/\D/g, "")}`,
       plano: plan.name,
       valor: plan.name === "Plano Mensal" ? plan.monthlyPrice : plan.yearlyTotal,
@@ -98,7 +109,9 @@ export function PreCheckoutModal({ open, onOpenChange, plan }: PreCheckoutModalP
         body: JSON.stringify(payload),
       });
 
-      if (!res.ok) throw new Error("Erro ao processar. Tente novamente.");
+      if (!res.ok) {
+        throw new Error("Erro ao gerar pagamento");
+      }
 
       const data = await res.json();
 
@@ -108,8 +121,8 @@ export function PreCheckoutModal({ open, onOpenChange, plan }: PreCheckoutModalP
         window.location.href = plan.href;
       }
     } catch (err: any) {
-      setError(err.message || "Erro inesperado. Tente novamente.");
       setIsSubmitting(false);
+      toast.error("Não foi possível gerar a cobrança. Verifique seus dados e tente novamente.");
     }
   };
 
@@ -146,6 +159,19 @@ export function PreCheckoutModal({ open, onOpenChange, plan }: PreCheckoutModalP
               onChange={(e) => setEmail(e.target.value)}
               required
               disabled={isSubmitting}
+            />
+          </div>
+
+          <div className="space-y-2">
+            <Label htmlFor="cpf">CPF</Label>
+            <Input
+              id="cpf"
+              placeholder="000.000.000-00"
+              value={cpf}
+              onChange={(e) => setCpf(formatCpf(e.target.value))}
+              required
+              disabled={isSubmitting}
+              inputMode="numeric"
             />
           </div>
 
