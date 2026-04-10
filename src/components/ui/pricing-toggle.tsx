@@ -137,10 +137,11 @@ export function PricingToggle({ plans, title = "Escolha seu plano", description 
               ))}
             </ul>
 
-            <a
-              href={plan.href}
-              target="_blank"
-              rel="noopener noreferrer"
+            <button
+              onClick={() => {
+                setSelectedPlan(plan);
+                setModalOpen(true);
+              }}
               className={cn(
                 buttonVariants({
                   variant: "hero",
@@ -152,12 +153,18 @@ export function PricingToggle({ plans, title = "Escolha seu plano", description 
               )}
             >
               {plan.buttonText}
-            </a>
+            </button>
 
             <p className="mt-6 text-xs text-muted-foreground">{plan.description}</p>
           </motion.div>
         ))}
       </div>
+
+      <PreCheckoutModal
+        open={modalOpen}
+        onOpenChange={setModalOpen}
+        plan={selectedPlan}
+      />
     </div>
   );
 }
