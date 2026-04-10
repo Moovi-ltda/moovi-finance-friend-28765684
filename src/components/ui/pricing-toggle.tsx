@@ -32,6 +32,8 @@ interface PricingToggleProps {
 
 export function PricingToggle({ plans, title = "Escolha seu plano", description = "" }: PricingToggleProps) {
   const isDesktop = useMediaQuery("(min-width: 768px)");
+  const [selectedPlan, setSelectedPlan] = useState<PricingPlan | null>(null);
+  const [modalOpen, setModalOpen] = useState(false);
 
   return (
     <div className="container pt-8 pb-20">
