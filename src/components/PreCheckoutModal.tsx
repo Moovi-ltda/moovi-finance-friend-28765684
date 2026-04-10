@@ -162,14 +162,16 @@ export function PreCheckoutModal({ open, onOpenChange, plan }: PreCheckoutModalP
               </Popover>
               <Input
                 id="telefone"
-                placeholder="(XX) 9XXXX-XXXX"
+                placeholder="(99) 99999-9999"
                 value={telefone}
                 onChange={(e) => setTelefone(formatPhone(e.target.value))}
                 required
                 disabled={isSubmitting}
                 className="flex-1"
+                inputMode="numeric"
               />
             </div>
+            <p className="text-xs text-muted-foreground mt-1">Usamos seu WhatsApp para liberar seu acesso instantaneamente após o pagamento.</p>
           </div>
 
           <div className="space-y-2">
@@ -197,7 +199,7 @@ export function PreCheckoutModal({ open, onOpenChange, plan }: PreCheckoutModalP
                 Gerando ambiente seguro...
               </>
             ) : (
-              "Continuar para pagamento"
+              "Ir para o Pagamento 🔒"
             )}
           </Button>
         </form>
