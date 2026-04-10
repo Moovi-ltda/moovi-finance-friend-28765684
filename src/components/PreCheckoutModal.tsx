@@ -54,9 +54,7 @@ function formatPhone(value: string) {
 }
 
 export function PreCheckoutModal({ open, onOpenChange, plan }: PreCheckoutModalProps) {
-  const [nome, setNome] = useState("");
   const [email, setEmail] = useState("");
-  const [cpf, setCpf] = useState("");
   const [telefone, setTelefone] = useState("");
   const [selectedCountry, setSelectedCountry] = useState(COUNTRIES[0]);
   const [countryOpen, setCountryOpen] = useState(false);
@@ -64,9 +62,7 @@ export function PreCheckoutModal({ open, onOpenChange, plan }: PreCheckoutModalP
   const [error, setError] = useState("");
 
   const resetForm = () => {
-    setNome("");
     setEmail("");
-    setCpf("");
     setTelefone("");
     setSelectedCountry(COUNTRIES[0]);
     setError("");
@@ -86,10 +82,8 @@ export function PreCheckoutModal({ open, onOpenChange, plan }: PreCheckoutModalP
     setIsSubmitting(true);
 
     const payload = {
-      nome,
-      email,
-      cpf: cpf.replace(/\D/g, ""),
       telefone: `+${selectedCountry.ddi}${telefone.replace(/\D/g, "")}`,
+      email: email || "",
       plano: plan.name,
       valor: plan.name === "Plano Mensal" ? plan.monthlyPrice : plan.yearlyTotal,
     };
@@ -129,44 +123,6 @@ export function PreCheckoutModal({ open, onOpenChange, plan }: PreCheckoutModalP
         </DialogHeader>
 
         <form onSubmit={handleSubmit} className="space-y-4 mt-2">
-          <div className="space-y-2">
-            <Label htmlFor="nome">Nome Completo</Label>
-            <Input
-              id="nome"
-              placeholder="Seu nome completo"
-              value={nome}
-              onChange={(e) => setNome(e.target.value)}
-              required
-              disabled={isSubmitting}
-            />
-          </div>
-
-          <div className="space-y-2">
-            <Label htmlFor="email">E-mail</Label>
-            <Input
-              id="email"
-              type="email"
-              placeholder="seu@email.com"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-              disabled={isSubmitting}
-            />
-          </div>
-
-          <div className="space-y-2">
-            <Label htmlFor="cpf">CPF</Label>
-            <Input
-              id="cpf"
-              placeholder="000.000.000-00"
-              value={cpf}
-              onChange={(e) => setCpf(formatCpf(e.target.value))}
-              required
-              disabled={isSubmitting}
-              inputMode="numeric"
-            />
-          </div>
-
           <div className="space-y-2">
             <Label htmlFor="telefone">WhatsApp</Label>
             <div className="flex gap-2">
@@ -214,6 +170,18 @@ export function PreCheckoutModal({ open, onOpenChange, plan }: PreCheckoutModalP
                 className="flex-1"
               />
             </div>
+          </div>
+
+          <div className="space-y-2">
+            <Label htmlFor="email">E-mail <span className="text-muted-foreground font-normal">(Opcional)</span></Label>
+            <Input
+              id="email"
+              type="email"
+              placeholder="seu@email.com"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              disabled={isSubmitting}
+            />
           </div>
 
           <div className="rounded-lg bg-muted p-3 text-sm text-muted-foreground">
