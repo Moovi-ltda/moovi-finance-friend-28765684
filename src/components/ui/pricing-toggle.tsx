@@ -1,9 +1,11 @@
+import { useState } from "react";
 import { buttonVariants } from "@/components/ui/button";
 import { useMediaQuery } from "@/hooks/use-media-query";
 import { cn } from "@/lib/utils";
 import { motion } from "framer-motion";
-import { Check, Star, X } from "lucide-react"; // Importei o X aqui
+import { Check, Star, X } from "lucide-react";
 import { TextAnimate } from "@/components/ui/text-animate";
+import { PreCheckoutModal } from "@/components/PreCheckoutModal";
 
 interface PricingPlan {
   name: string;
