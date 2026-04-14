@@ -56,6 +56,7 @@ function formatPhone(value: string) {
 }
 
 export function PreCheckoutModal({ open, onOpenChange, plan }: PreCheckoutModalProps) {
+  const [email, setEmail] = useState("");
   const [telefone, setTelefone] = useState("");
   const [selectedCountry, setSelectedCountry] = useState(COUNTRIES[0]);
   const [countryOpen, setCountryOpen] = useState(false);
@@ -63,6 +64,7 @@ export function PreCheckoutModal({ open, onOpenChange, plan }: PreCheckoutModalP
   const [error, setError] = useState("");
 
   const resetForm = () => {
+    setEmail("");
     setTelefone("");
     setSelectedCountry(COUNTRIES[0]);
     setError("");
@@ -83,6 +85,7 @@ export function PreCheckoutModal({ open, onOpenChange, plan }: PreCheckoutModalP
 
     const payload = {
       telefone: `+${selectedCountry.ddi}${telefone.replace(/\D/g, "")}`,
+      email: email || "",
       plano: plan.name,
       valor: plan.totalPrice ?? plan.yearlyTotal ?? 0,
     };
@@ -173,6 +176,17 @@ export function PreCheckoutModal({ open, onOpenChange, plan }: PreCheckoutModalP
             <p className="text-xs text-muted-foreground mt-1">Usamos seu WhatsApp para liberar seu acesso instantaneamente após o pagamento.</p>
           </div>
 
+          <div className="space-y-2">
+            <Label htmlFor="email">E-mail <span className="text-muted-foreground font-normal">(Opcional)</span></Label>
+            <Input
+              id="email"
+              type="email"
+              placeholder="seu@email.com"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              disabled={isSubmitting}
+            />
+          </div>
 
           <div className="rounded-lg bg-muted p-3 text-sm text-muted-foreground">
             Você está assinando o <span className="font-semibold text-foreground">{plan.name}</span>
