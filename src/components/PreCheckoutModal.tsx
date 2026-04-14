@@ -87,7 +87,7 @@ export function PreCheckoutModal({ open, onOpenChange, plan }: PreCheckoutModalP
       telefone: `+${selectedCountry.ddi}${telefone.replace(/\D/g, "")}`,
       email: email || "",
       plano: plan.name,
-      valor: plan.name === "Plano Mensal" ? plan.monthlyPrice : plan.yearlyTotal,
+      valor: plan.totalPrice ?? plan.yearlyTotal ?? 0,
     };
 
     try {
