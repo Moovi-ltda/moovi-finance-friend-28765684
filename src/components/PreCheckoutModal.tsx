@@ -176,17 +176,6 @@ export function PreCheckoutModal({ open, onOpenChange, plan }: PreCheckoutModalP
             <p className="text-xs text-muted-foreground mt-1">Usamos seu WhatsApp para liberar seu acesso instantaneamente após o pagamento.</p>
           </div>
 
-          <div className="space-y-2">
-            <Label htmlFor="email">E-mail <span className="text-muted-foreground font-normal">(Opcional)</span></Label>
-            <Input
-              id="email"
-              type="email"
-              placeholder="seu@email.com"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              disabled={isSubmitting}
-            />
-          </div>
 
           <div className="rounded-lg bg-muted p-3 text-sm text-muted-foreground">
             Você está assinando o <span className="font-semibold text-foreground">{plan.name}</span>
