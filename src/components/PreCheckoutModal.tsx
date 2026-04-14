@@ -34,9 +34,11 @@ const COUNTRIES = [
 
 interface SelectedPlan {
   name: string;
-  yearlyPrice: number;
-  yearlyTotal: number;
-  monthlyPrice: number;
+  installmentPrice?: number;
+  totalPrice?: number;
+  yearlyPrice?: number;
+  yearlyTotal?: number;
+  monthlyPrice?: number;
   href: string;
 }
 
