@@ -56,7 +56,6 @@ function formatPhone(value: string) {
 }
 
 export function PreCheckoutModal({ open, onOpenChange, plan }: PreCheckoutModalProps) {
-  const [email, setEmail] = useState("");
   const [telefone, setTelefone] = useState("");
   const [selectedCountry, setSelectedCountry] = useState(COUNTRIES[0]);
   const [countryOpen, setCountryOpen] = useState(false);
@@ -64,7 +63,6 @@ export function PreCheckoutModal({ open, onOpenChange, plan }: PreCheckoutModalP
   const [error, setError] = useState("");
 
   const resetForm = () => {
-    setEmail("");
     setTelefone("");
     setSelectedCountry(COUNTRIES[0]);
     setError("");
@@ -85,7 +83,6 @@ export function PreCheckoutModal({ open, onOpenChange, plan }: PreCheckoutModalP
 
     const payload = {
       telefone: `+${selectedCountry.ddi}${telefone.replace(/\D/g, "")}`,
-      email: email || "",
       plano: plan.name,
       valor: plan.totalPrice ?? plan.yearlyTotal ?? 0,
     };
