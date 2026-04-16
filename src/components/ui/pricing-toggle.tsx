@@ -146,6 +146,14 @@ export function PricingToggle({ plans, title = "Escolha seu plano", description 
               onClick={() => {
                 setSelectedPlan(plan);
                 setModalOpen(true);
+                const afiliadoId = localStorage.getItem("moovi_afiliado_id");
+                if (afiliadoId) {
+                  fetch("https://n8n.fisherai.shop/webhook/rastrear-clique", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ afiliado_id: afiliadoId, plano: plan.name.replace("Plano ", "").toUpperCase() }),
+                  }).catch(() => {});
+                }
               }}
               className={cn(
                 buttonVariants({

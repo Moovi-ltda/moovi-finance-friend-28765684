@@ -85,6 +85,7 @@ export function PreCheckoutModal({ open, onOpenChange, plan }: PreCheckoutModalP
       telefone: `+${selectedCountry.ddi}${telefone.replace(/\D/g, "")}`,
       plano: plan.name,
       valor: plan.totalPrice ?? plan.yearlyTotal ?? 0,
+      afiliado_id: localStorage.getItem("moovi_afiliado_id") || "",
     };
 
     try {
