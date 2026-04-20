@@ -6,6 +6,8 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, useSearchParams } from "react-router-dom";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
+import Privacidade from "./pages/Privacidade";
+import Termos from "./pages/Termos";
 import WhatsAppWidget from "@/components/WhatsAppWidget";
 
 const queryClient = new QueryClient();
@@ -30,6 +32,8 @@ const App = () => (
         <AffiliateCapture />
         <Routes>
           <Route path="/" element={<Index />} />
+          <Route path="/privacidade" element={<Privacidade />} />
+          <Route path="/termos" element={<Termos />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
