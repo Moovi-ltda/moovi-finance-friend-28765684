@@ -483,22 +483,6 @@ export function CheckoutModal({ open, onOpenChange, plan }: CheckoutModalProps) 
               </button>
             </div>
           )}
-
-          {screen === "error" && (
-            <div className="py-6 text-center">
-              <h3 className="text-lg font-bold text-white">Não conseguimos processar 😕</h3>
-              <p className="mt-2 text-sm text-slate-400">
-                {errorMsg || "Verifique seus dados e tente novamente."}
-              </p>
-              <button
-                type="button"
-                onClick={() => setScreen("form")}
-                className="mt-5 bg-emerald-500 hover:bg-emerald-400 text-white font-semibold px-6 py-2.5 rounded-lg transition-colors"
-              >
-                Tentar novamente
-              </button>
-            </div>
-          )}
         </div>
       </DialogContent>
     </Dialog>
