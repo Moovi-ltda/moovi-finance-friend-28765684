@@ -141,6 +141,8 @@ export function CheckoutModal({ open, onOpenChange, plan }: CheckoutModalProps) 
         setPixData(null);
         setCopied(false);
         setErrorMsg("");
+        setSelectedCountry(COUNTRIES[0]);
+        setCountryOpen(false);
       }, 200);
       return () => clearTimeout(t);
     }
