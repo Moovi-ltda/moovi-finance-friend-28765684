@@ -392,9 +392,9 @@ export function CheckoutModal({ open, onOpenChange, plan }: CheckoutModalProps) 
 
           {screen === "loading" && (
             <div className="py-12 flex flex-col items-center justify-center text-center">
-              <Loader2 className="h-10 w-10 text-emerald-400 animate-spin" />
-              <p className="mt-4 text-white font-semibold">Processando pagamento...</p>
-              <p className="text-sm text-slate-400 mt-1">Não feche esta janela.</p>
+              <Loader2 className="h-10 w-10 text-emerald-600 animate-spin" />
+              <p className="mt-4 text-slate-900 font-semibold">Processando pagamento...</p>
+              <p className="text-sm text-slate-500 mt-1">Não feche esta janela.</p>
             </div>
           )}
 
