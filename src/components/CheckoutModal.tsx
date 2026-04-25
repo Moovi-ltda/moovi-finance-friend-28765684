@@ -451,19 +451,35 @@ export function CheckoutModal({ open, onOpenChange, plan }: CheckoutModalProps) 
 
           {screen === "card-success" && (
             <div className="py-8 text-center">
-              <div className="mx-auto w-16 h-16 rounded-full bg-emerald-500/15 flex items-center justify-center animate-in zoom-in duration-500">
-                <Check className="h-8 w-8 text-emerald-400" strokeWidth={3} />
+              <div className="mx-auto w-16 h-16 rounded-full bg-emerald-50 flex items-center justify-center animate-in zoom-in duration-500 border border-emerald-100">
+                <Check className="h-8 w-8 text-emerald-600" strokeWidth={3} />
               </div>
-              <h3 className="mt-4 text-xl font-bold text-white">Pagamento Aprovado! 🎉</h3>
-              <p className="mt-2 text-sm text-slate-400 max-w-xs mx-auto">
-                Tudo certo! Acabamos de enviar seu acesso no WhatsApp <span className="text-emerald-400 font-semibold">{telefone}</span>.
+              <h3 className="mt-4 text-xl font-bold text-slate-900">Pagamento Aprovado! 🎉</h3>
+              <p className="mt-2 text-sm text-slate-600 max-w-xs mx-auto">
+                Tudo certo! Acabamos de enviar seu acesso no WhatsApp <span className="text-emerald-600 font-semibold">{telefone}</span>.
               </p>
               <button
                 type="button"
                 onClick={() => onOpenChange(false)}
-                className="mt-6 bg-emerald-500 hover:bg-emerald-400 text-white font-semibold px-6 py-2.5 rounded-lg transition-colors"
+                className="mt-6 bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-6 py-2.5 rounded-lg transition-colors shadow-md"
               >
                 Fechar
+              </button>
+            </div>
+          )}
+
+          {screen === "error" && (
+            <div className="py-6 text-center">
+              <h3 className="text-lg font-bold text-slate-900">Não conseguimos processar 😕</h3>
+              <p className="mt-2 text-sm text-slate-600">
+                {errorMsg || "Verifique seus dados e tente novamente."}
+              </p>
+              <button
+                type="button"
+                onClick={() => setScreen("form")}
+                className="mt-5 bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-6 py-2.5 rounded-lg transition-colors shadow-md"
+              >
+                Tentar novamente
               </button>
             </div>
           )}
