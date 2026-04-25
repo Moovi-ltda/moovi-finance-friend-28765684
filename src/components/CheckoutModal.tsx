@@ -314,7 +314,7 @@ export function CheckoutModal({ open, onOpenChange, plan }: CheckoutModalProps) 
                     </div>
                     <Field label="Número" value={numero} onChange={setNumero} placeholder="123" inputMode="numeric" />
 
-                    <div className="pt-2 mt-2 border-t border-slate-800">
+                    <div className="pt-2 mt-2 border-t border-slate-200">
                       <p className="text-xs uppercase tracking-wider text-slate-500 mb-3 font-semibold">
                         Dados do cartão
                       </p>
@@ -351,11 +351,11 @@ export function CheckoutModal({ open, onOpenChange, plan }: CheckoutModalProps) 
                       </div>
 
                       <label className="block mt-3">
-                        <span className="text-xs font-medium text-slate-400">Parcelamento</span>
+                        <span className="text-sm font-medium text-slate-700">Parcelamento</span>
                         <select
                           value={installments}
                           onChange={(e) => setInstallments(Number(e.target.value))}
-                          className="mt-1 w-full bg-slate-800 border border-slate-700 rounded-md px-3 py-2.5 text-sm text-white focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                          className="mt-1 w-full bg-white border border-slate-200 rounded-md px-3 py-2.5 text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
                         >
                           {installmentOptions.map((opt) => (
                             <option key={opt.n} value={opt.n}>
@@ -370,7 +370,7 @@ export function CheckoutModal({ open, onOpenChange, plan }: CheckoutModalProps) 
 
                 <button
                   type="submit"
-                  className="w-full mt-4 bg-emerald-500 hover:bg-emerald-400 text-white font-semibold py-3 rounded-lg transition-colors shadow-lg shadow-emerald-500/20 flex items-center justify-center gap-2"
+                  className="w-full mt-4 bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3 rounded-lg transition-colors shadow-md flex items-center justify-center gap-2"
                 >
                   {method === "PIX" ? (
                     <>
