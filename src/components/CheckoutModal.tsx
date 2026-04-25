@@ -64,6 +64,20 @@ function maskCPF(v: string) {
     .replace(/(\d{3})(\d{1,2})$/, "$1-$2");
 }
 
+function maskCNPJ(v: string) {
+  const d = onlyDigits(v).slice(0, 14);
+  return d
+    .replace(/^(\d{2})(\d)/, "$1.$2")
+    .replace(/^(\d{2})\.(\d{3})(\d)/, "$1.$2.$3")
+    .replace(/\.(\d{3})(\d)/, ".$1/$2")
+    .replace(/(\d{4})(\d)/, "$1-$2");
+}
+
+function maskCpfCnpj(v: string) {
+  const d = onlyDigits(v);
+  return d.length <= 11 ? maskCPF(v) : maskCNPJ(v);
+}
+
 function maskCEP(v: string) {
   const d = onlyDigits(v).slice(0, 8);
   if (d.length <= 5) return d;
@@ -153,14 +167,15 @@ export function CheckoutModal({ open, onOpenChange, plan }: CheckoutModalProps) 
   const validatePix = () => {
     if (!nome.trim() || nome.trim().length < 3) return "Informe seu nome completo.";
     if (onlyDigits(telefone).length < 10) return "Informe um WhatsApp válido.";
+    if (!email.includes("@") || email.trim().length < 5) return "Informe um e-mail válido.";
+    const docDigits = onlyDigits(cpf).length;
+    if (docDigits !== 11 && docDigits !== 14) return "Informe um CPF ou CNPJ válido.";
     return null;
   };
 
   const validateCard = () => {
     const pixErr = validatePix();
     if (pixErr) return pixErr;
-    if (!email.includes("@")) return "Informe um e-mail válido.";
-    if (onlyDigits(cpf).length !== 11) return "CPF inválido.";
     if (onlyDigits(cep).length !== 8) return "CEP inválido.";
     if (!numero.trim()) return "Informe o número do endereço.";
     if (onlyDigits(cardNumber).length < 13) return "Número do cartão inválido.";
@@ -181,19 +196,21 @@ export function CheckoutModal({ open, onOpenChange, plan }: CheckoutModalProps) 
     setScreen("loading");
     setErrorMsg("");
 
+    const docDigits = onlyDigits(cpf);
     const payload: Record<string, unknown> = {
       plano: plan.name,
       valor: totalValue,
       forma_pagamento: method,
       nome: nome.trim(),
       telefone: `+${selectedCountry.ddi}${onlyDigits(telefone)}`,
+      email: email.trim(),
+      cpf_cnpj: docDigits,
+      tipo_documento: docDigits.length === 14 ? "CNPJ" : "CPF",
       afiliado_id: localStorage.getItem("moovi_afiliado_id") || "",
     };
 
     if (method === "CREDIT_CARD") {
       Object.assign(payload, {
-        email: email.trim(),
-        cpf: onlyDigits(cpf),
         cep: onlyDigits(cep),
         numero_endereco: numero.trim(),
         parcelas: installments,
@@ -351,23 +368,24 @@ export function CheckoutModal({ open, onOpenChange, plan }: CheckoutModalProps) 
                   </div>
                 </label>
 
+                <Field
+                  label="E-mail"
+                  type="email"
+                  value={email}
+                  onChange={setEmail}
+                  placeholder="voce@email.com"
+                />
+                <Field
+                  label="CPF / CNPJ"
+                  value={cpf}
+                  onChange={(v) => setCpf(maskCpfCnpj(v))}
+                  placeholder="000.000.000-00"
+                  inputMode="numeric"
+                />
+
                 {method === "CREDIT_CARD" && (
                   <>
-                    <Field
-                      label="E-mail"
-                      type="email"
-                      value={email}
-                      onChange={setEmail}
-                      placeholder="voce@email.com"
-                    />
                     <div className="grid grid-cols-2 gap-3">
-                      <Field
-                        label="CPF"
-                        value={cpf}
-                        onChange={(v) => setCpf(maskCPF(v))}
-                        placeholder="000.000.000-00"
-                        inputMode="numeric"
-                      />
                       <Field
                         label="CEP"
                         value={cep}
@@ -375,8 +393,8 @@ export function CheckoutModal({ open, onOpenChange, plan }: CheckoutModalProps) 
                         placeholder="00000-000"
                         inputMode="numeric"
                       />
+                      <Field label="Número" value={numero} onChange={setNumero} placeholder="123" inputMode="numeric" />
                     </div>
-                    <Field label="Número" value={numero} onChange={setNumero} placeholder="123" inputMode="numeric" />
 
                     <div className="pt-2 mt-2 border-t border-slate-200">
                       <p className="text-xs uppercase tracking-wider text-slate-500 mb-3 font-semibold">
