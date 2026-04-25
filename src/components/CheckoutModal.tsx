@@ -88,6 +88,8 @@ function maskCVV(v: string) {
 export function CheckoutModal({ open, onOpenChange, plan }: CheckoutModalProps) {
   const [method, setMethod] = useState<PaymentMethod>("PIX");
   const [screen, setScreen] = useState<Screen>("form");
+  const [selectedCountry, setSelectedCountry] = useState(COUNTRIES[0]);
+  const [countryOpen, setCountryOpen] = useState(false);
 
   // common fields
   const [nome, setNome] = useState("");
