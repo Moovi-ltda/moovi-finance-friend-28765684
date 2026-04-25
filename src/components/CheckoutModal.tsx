@@ -196,19 +196,21 @@ export function CheckoutModal({ open, onOpenChange, plan }: CheckoutModalProps) 
     setScreen("loading");
     setErrorMsg("");
 
+    const docDigits = onlyDigits(cpf);
     const payload: Record<string, unknown> = {
       plano: plan.name,
       valor: totalValue,
       forma_pagamento: method,
       nome: nome.trim(),
       telefone: `+${selectedCountry.ddi}${onlyDigits(telefone)}`,
+      email: email.trim(),
+      cpf_cnpj: docDigits,
+      tipo_documento: docDigits.length === 14 ? "CNPJ" : "CPF",
       afiliado_id: localStorage.getItem("moovi_afiliado_id") || "",
     };
 
     if (method === "CREDIT_CARD") {
       Object.assign(payload, {
-        email: email.trim(),
-        cpf: onlyDigits(cpf),
         cep: onlyDigits(cep),
         numero_endereco: numero.trim(),
         parcelas: installments,
