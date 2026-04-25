@@ -8,7 +8,7 @@ import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import Privacidade from "./pages/Privacidade";
 import Termos from "./pages/Termos";
-import WhatsAppWidget from "@/components/WhatsAppWidget";
+
 
 const queryClient = new QueryClient();
 
@@ -37,7 +37,7 @@ const App = () => (
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
-        <WhatsAppWidget />
+        
       </BrowserRouter>
     </TooltipProvider>
   </QueryClientProvider>
