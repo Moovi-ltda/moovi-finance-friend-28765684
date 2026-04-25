@@ -64,6 +64,20 @@ function maskCPF(v: string) {
     .replace(/(\d{3})(\d{1,2})$/, "$1-$2");
 }
 
+function maskCNPJ(v: string) {
+  const d = onlyDigits(v).slice(0, 14);
+  return d
+    .replace(/^(\d{2})(\d)/, "$1.$2")
+    .replace(/^(\d{2})\.(\d{3})(\d)/, "$1.$2.$3")
+    .replace(/\.(\d{3})(\d)/, ".$1/$2")
+    .replace(/(\d{4})(\d)/, "$1-$2");
+}
+
+function maskCpfCnpj(v: string) {
+  const d = onlyDigits(v);
+  return d.length <= 11 ? maskCPF(v) : maskCNPJ(v);
+}
+
 function maskCEP(v: string) {
   const d = onlyDigits(v).slice(0, 8);
   if (d.length <= 5) return d;
