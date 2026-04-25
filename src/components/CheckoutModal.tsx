@@ -368,23 +368,24 @@ export function CheckoutModal({ open, onOpenChange, plan }: CheckoutModalProps) 
                   </div>
                 </label>
 
+                <Field
+                  label="E-mail"
+                  type="email"
+                  value={email}
+                  onChange={setEmail}
+                  placeholder="voce@email.com"
+                />
+                <Field
+                  label="CPF / CNPJ"
+                  value={cpf}
+                  onChange={(v) => setCpf(maskCpfCnpj(v))}
+                  placeholder="000.000.000-00"
+                  inputMode="numeric"
+                />
+
                 {method === "CREDIT_CARD" && (
                   <>
-                    <Field
-                      label="E-mail"
-                      type="email"
-                      value={email}
-                      onChange={setEmail}
-                      placeholder="voce@email.com"
-                    />
                     <div className="grid grid-cols-2 gap-3">
-                      <Field
-                        label="CPF"
-                        value={cpf}
-                        onChange={(v) => setCpf(maskCPF(v))}
-                        placeholder="000.000.000-00"
-                        inputMode="numeric"
-                      />
                       <Field
                         label="CEP"
                         value={cep}
@@ -392,8 +393,8 @@ export function CheckoutModal({ open, onOpenChange, plan }: CheckoutModalProps) 
                         placeholder="00000-000"
                         inputMode="numeric"
                       />
+                      <Field label="Número" value={numero} onChange={setNumero} placeholder="123" inputMode="numeric" />
                     </div>
-                    <Field label="Número" value={numero} onChange={setNumero} placeholder="123" inputMode="numeric" />
 
                     <div className="pt-2 mt-2 border-t border-slate-200">
                       <p className="text-xs uppercase tracking-wider text-slate-500 mb-3 font-semibold">
