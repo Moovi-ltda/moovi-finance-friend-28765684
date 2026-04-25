@@ -307,13 +307,49 @@ export function CheckoutModal({ open, onOpenChange, plan }: CheckoutModalProps) 
 
               <form onSubmit={handleSubmit} className="space-y-3">
                 <Field label="Nome Completo" value={nome} onChange={setNome} placeholder="João da Silva" />
-                <Field
-                  label="WhatsApp"
-                  value={telefone}
-                  onChange={(v) => setTelefone(maskPhone(v))}
-                  placeholder="(99) 99999-9999"
-                  inputMode="numeric"
-                />
+                <label className="block">
+                  <span className="text-sm font-medium text-slate-700">WhatsApp</span>
+                  <div className="mt-1 flex gap-2">
+                    <Popover open={countryOpen} onOpenChange={setCountryOpen}>
+                      <PopoverTrigger asChild>
+                        <button
+                          type="button"
+                          className="flex items-center gap-1.5 px-2.5 h-[42px] shrink-0 rounded-md border border-slate-200 bg-white text-sm text-slate-900 hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-colors"
+                        >
+                          <span className="text-base leading-none">{selectedCountry.flag}</span>
+                          <span className="font-medium">+{selectedCountry.ddi}</span>
+                          <ChevronDown className="h-3.5 w-3.5 opacity-50" />
+                        </button>
+                      </PopoverTrigger>
+                      <PopoverContent className="w-[240px] p-0 max-h-[280px] overflow-y-auto" align="start">
+                        {COUNTRIES.map((country) => (
+                          <button
+                            key={country.code}
+                            type="button"
+                            className="flex w-full items-center gap-2 px-3 py-2 text-sm hover:bg-slate-100 transition-colors text-left"
+                            onClick={() => {
+                              setSelectedCountry(country);
+                              setCountryOpen(false);
+                            }}
+                          >
+                            <span className="text-base leading-none">{country.flag}</span>
+                            <span className="flex-1 text-slate-900">{country.name}</span>
+                            <span className="text-slate-500">+{country.ddi}</span>
+                          </button>
+                        ))}
+                      </PopoverContent>
+                    </Popover>
+                    <input
+                      type="tel"
+                      value={telefone}
+                      onChange={(e) => setTelefone(maskPhone(e.target.value))}
+                      placeholder="(99) 99999-9999"
+                      inputMode="numeric"
+                      required
+                      className="flex-1 bg-white border border-slate-200 rounded-md px-3 py-2.5 text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
+                    />
+                  </div>
+                </label>
 
                 {method === "CREDIT_CARD" && (
                   <>
