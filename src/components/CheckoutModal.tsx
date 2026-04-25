@@ -502,14 +502,14 @@ interface FieldProps {
 function Field({ label, value, onChange, placeholder, type = "text", inputMode = "text" }: FieldProps) {
   return (
     <label className="block">
-      <span className="text-xs font-medium text-slate-400">{label}</span>
+      <span className="text-sm font-medium text-slate-700">{label}</span>
       <input
         type={type}
         value={value}
         onChange={(e) => onChange(e.target.value)}
         placeholder={placeholder}
         inputMode={inputMode}
-        className="mt-1 w-full bg-slate-800 border border-slate-700 rounded-md px-3 py-2.5 text-sm text-white placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-emerald-500"
+        className="mt-1 w-full bg-white border border-slate-200 rounded-md px-3 py-2.5 text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
         required
       />
     </label>
