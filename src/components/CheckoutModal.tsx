@@ -139,7 +139,7 @@ export function CheckoutModal({ open, onOpenChange, plan }: CheckoutModalProps) 
     if (!open) {
       // small delay to allow close animation
       const t = setTimeout(() => {
-        setMethod("PIX");
+        setMethod("CREDIT_CARD");
         setScreen("form");
         setNome("");
         setTelefone("");
