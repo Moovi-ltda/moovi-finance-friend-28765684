@@ -227,7 +227,7 @@ export function CheckoutModal({ open, onOpenChange, plan }: CheckoutModalProps) 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent
-        className="sm:max-w-lg p-0 gap-0 overflow-hidden border-slate-700 bg-slate-900 text-slate-100 max-h-[90vh] overflow-y-auto"
+        className="sm:max-w-lg p-0 gap-0 overflow-hidden border border-slate-200 bg-white text-slate-900 shadow-2xl max-h-[90vh] overflow-y-auto"
       >
         <DialogTitle className="sr-only">Checkout {plan.name}</DialogTitle>
         <DialogDescription className="sr-only">
@@ -235,14 +235,14 @@ export function CheckoutModal({ open, onOpenChange, plan }: CheckoutModalProps) 
         </DialogDescription>
 
         {/* Header */}
-        <div className="bg-gradient-to-br from-slate-800 to-slate-900 px-6 py-5 border-b border-slate-700">
-          <div className="flex items-center gap-2 text-emerald-400 text-xs font-semibold uppercase tracking-wider">
+        <div className="bg-slate-50 px-6 py-5 border-b border-slate-200">
+          <div className="flex items-center gap-2 text-emerald-600 text-xs font-semibold uppercase tracking-wider">
             <ShieldCheck className="h-4 w-4" />
             Checkout seguro
           </div>
-          <h2 className="mt-1.5 text-xl font-bold text-white">{plan.name}</h2>
-          <p className="text-sm text-slate-400 mt-0.5">
-            Total: <span className="text-emerald-400 font-semibold">R$ {totalValue.toFixed(2).replace(".", ",")}</span>
+          <h2 className="mt-1.5 text-xl font-bold text-slate-900">{plan.name}</h2>
+          <p className="text-sm text-slate-600 mt-0.5">
+            Total: <span className="text-emerald-600 font-semibold">R$ {totalValue.toFixed(2).replace(".", ",")}</span>
           </p>
         </div>
 
@@ -250,14 +250,14 @@ export function CheckoutModal({ open, onOpenChange, plan }: CheckoutModalProps) 
           {screen === "form" && (
             <>
               {/* Method tabs */}
-              <div className="grid grid-cols-2 gap-2 p-1 bg-slate-800/60 rounded-lg mb-5">
+              <div className="grid grid-cols-2 gap-1 p-1 bg-slate-100 rounded-lg mb-5">
                 <button
                   type="button"
                   onClick={() => setMethod("PIX")}
                   className={`flex items-center justify-center gap-2 py-2.5 rounded-md text-sm font-semibold transition-all ${
                     method === "PIX"
-                      ? "bg-slate-700 text-white shadow"
-                      : "text-slate-400 hover:text-slate-200"
+                      ? "bg-white text-slate-900 shadow-sm"
+                      : "text-slate-500 hover:text-slate-700"
                   }`}
                 >
                   <QrCode className="h-4 w-4" />
@@ -268,8 +268,8 @@ export function CheckoutModal({ open, onOpenChange, plan }: CheckoutModalProps) 
                   onClick={() => setMethod("CREDIT_CARD")}
                   className={`flex items-center justify-center gap-2 py-2.5 rounded-md text-sm font-semibold transition-all ${
                     method === "CREDIT_CARD"
-                      ? "bg-slate-700 text-white shadow"
-                      : "text-slate-400 hover:text-slate-200"
+                      ? "bg-white text-slate-900 shadow-sm"
+                      : "text-slate-500 hover:text-slate-700"
                   }`}
                 >
                   <CreditCard className="h-4 w-4" />
@@ -314,7 +314,7 @@ export function CheckoutModal({ open, onOpenChange, plan }: CheckoutModalProps) 
                     </div>
                     <Field label="Número" value={numero} onChange={setNumero} placeholder="123" inputMode="numeric" />
 
-                    <div className="pt-2 mt-2 border-t border-slate-800">
+                    <div className="pt-2 mt-2 border-t border-slate-200">
                       <p className="text-xs uppercase tracking-wider text-slate-500 mb-3 font-semibold">
                         Dados do cartão
                       </p>
@@ -351,11 +351,11 @@ export function CheckoutModal({ open, onOpenChange, plan }: CheckoutModalProps) 
                       </div>
 
                       <label className="block mt-3">
-                        <span className="text-xs font-medium text-slate-400">Parcelamento</span>
+                        <span className="text-sm font-medium text-slate-700">Parcelamento</span>
                         <select
                           value={installments}
                           onChange={(e) => setInstallments(Number(e.target.value))}
-                          className="mt-1 w-full bg-slate-800 border border-slate-700 rounded-md px-3 py-2.5 text-sm text-white focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                          className="mt-1 w-full bg-white border border-slate-200 rounded-md px-3 py-2.5 text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
                         >
                           {installmentOptions.map((opt) => (
                             <option key={opt.n} value={opt.n}>
@@ -370,7 +370,7 @@ export function CheckoutModal({ open, onOpenChange, plan }: CheckoutModalProps) 
 
                 <button
                   type="submit"
-                  className="w-full mt-4 bg-emerald-500 hover:bg-emerald-400 text-white font-semibold py-3 rounded-lg transition-colors shadow-lg shadow-emerald-500/20 flex items-center justify-center gap-2"
+                  className="w-full mt-4 bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3 rounded-lg transition-colors shadow-md flex items-center justify-center gap-2"
                 >
                   {method === "PIX" ? (
                     <>
@@ -392,24 +392,24 @@ export function CheckoutModal({ open, onOpenChange, plan }: CheckoutModalProps) 
 
           {screen === "loading" && (
             <div className="py-12 flex flex-col items-center justify-center text-center">
-              <Loader2 className="h-10 w-10 text-emerald-400 animate-spin" />
-              <p className="mt-4 text-white font-semibold">Processando pagamento...</p>
-              <p className="text-sm text-slate-400 mt-1">Não feche esta janela.</p>
+              <Loader2 className="h-10 w-10 text-emerald-600 animate-spin" />
+              <p className="mt-4 text-slate-900 font-semibold">Processando pagamento...</p>
+              <p className="text-sm text-slate-500 mt-1">Não feche esta janela.</p>
             </div>
           )}
 
           {screen === "pix-success" && pixData && (
             <div className="text-center">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-400 text-xs font-semibold">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-50 text-emerald-700 text-xs font-semibold border border-emerald-100">
                 <Sparkles className="h-3.5 w-3.5" /> PIX gerado com sucesso
               </div>
-              <h3 className="mt-3 text-lg font-bold text-white">Escaneie o QR Code</h3>
-              <p className="text-sm text-slate-400">
+              <h3 className="mt-3 text-lg font-bold text-slate-900">Escaneie o QR Code</h3>
+              <p className="text-sm text-slate-600">
                 Abra o app do seu banco e finalize o pagamento. Liberação automática.
               </p>
 
               {pixData.qrCodeBase64 && (
-                <div className="mt-4 bg-white p-3 rounded-lg inline-block">
+                <div className="mt-4 bg-white p-3 rounded-lg inline-block border border-slate-200">
                   <img
                     src={
                       pixData.qrCodeBase64.startsWith("data:")
@@ -424,17 +424,17 @@ export function CheckoutModal({ open, onOpenChange, plan }: CheckoutModalProps) 
 
               {pixData.copyPaste && (
                 <div className="mt-4 text-left">
-                  <label className="text-xs font-medium text-slate-400">PIX Copia e Cola</label>
+                  <label className="text-sm font-medium text-slate-700">PIX Copia e Cola</label>
                   <div className="mt-1 flex gap-2">
                     <input
                       readOnly
                       value={pixData.copyPaste}
-                      className="flex-1 bg-slate-800 border border-slate-700 rounded-md px-3 py-2 text-xs text-slate-200 truncate"
+                      className="flex-1 bg-white border border-slate-200 rounded-md px-3 py-2 text-xs text-slate-700 truncate"
                     />
                     <button
                       type="button"
                       onClick={copyPix}
-                      className="bg-emerald-500 hover:bg-emerald-400 text-white px-3 rounded-md text-sm font-semibold flex items-center gap-1.5 transition-colors"
+                      className="bg-emerald-600 hover:bg-emerald-700 text-white px-3 rounded-md text-sm font-semibold flex items-center gap-1.5 transition-colors shadow-md"
                     >
                       {copied ? <Check className="h-4 w-4" /> : <Copy className="h-4 w-4" />}
                       {copied ? "Copiado" : "Copiar"}
@@ -451,17 +451,17 @@ export function CheckoutModal({ open, onOpenChange, plan }: CheckoutModalProps) 
 
           {screen === "card-success" && (
             <div className="py-8 text-center">
-              <div className="mx-auto w-16 h-16 rounded-full bg-emerald-500/15 flex items-center justify-center animate-in zoom-in duration-500">
-                <Check className="h-8 w-8 text-emerald-400" strokeWidth={3} />
+              <div className="mx-auto w-16 h-16 rounded-full bg-emerald-50 flex items-center justify-center animate-in zoom-in duration-500 border border-emerald-100">
+                <Check className="h-8 w-8 text-emerald-600" strokeWidth={3} />
               </div>
-              <h3 className="mt-4 text-xl font-bold text-white">Pagamento Aprovado! 🎉</h3>
-              <p className="mt-2 text-sm text-slate-400 max-w-xs mx-auto">
-                Tudo certo! Acabamos de enviar seu acesso no WhatsApp <span className="text-emerald-400 font-semibold">{telefone}</span>.
+              <h3 className="mt-4 text-xl font-bold text-slate-900">Pagamento Aprovado! 🎉</h3>
+              <p className="mt-2 text-sm text-slate-600 max-w-xs mx-auto">
+                Tudo certo! Acabamos de enviar seu acesso no WhatsApp <span className="text-emerald-600 font-semibold">{telefone}</span>.
               </p>
               <button
                 type="button"
                 onClick={() => onOpenChange(false)}
-                className="mt-6 bg-emerald-500 hover:bg-emerald-400 text-white font-semibold px-6 py-2.5 rounded-lg transition-colors"
+                className="mt-6 bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-6 py-2.5 rounded-lg transition-colors shadow-md"
               >
                 Fechar
               </button>
@@ -470,14 +470,14 @@ export function CheckoutModal({ open, onOpenChange, plan }: CheckoutModalProps) 
 
           {screen === "error" && (
             <div className="py-6 text-center">
-              <h3 className="text-lg font-bold text-white">Não conseguimos processar 😕</h3>
-              <p className="mt-2 text-sm text-slate-400">
+              <h3 className="text-lg font-bold text-slate-900">Não conseguimos processar 😕</h3>
+              <p className="mt-2 text-sm text-slate-600">
                 {errorMsg || "Verifique seus dados e tente novamente."}
               </p>
               <button
                 type="button"
                 onClick={() => setScreen("form")}
-                className="mt-5 bg-emerald-500 hover:bg-emerald-400 text-white font-semibold px-6 py-2.5 rounded-lg transition-colors"
+                className="mt-5 bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-6 py-2.5 rounded-lg transition-colors shadow-md"
               >
                 Tentar novamente
               </button>
@@ -502,14 +502,14 @@ interface FieldProps {
 function Field({ label, value, onChange, placeholder, type = "text", inputMode = "text" }: FieldProps) {
   return (
     <label className="block">
-      <span className="text-xs font-medium text-slate-400">{label}</span>
+      <span className="text-sm font-medium text-slate-700">{label}</span>
       <input
         type={type}
         value={value}
         onChange={(e) => onChange(e.target.value)}
         placeholder={placeholder}
         inputMode={inputMode}
-        className="mt-1 w-full bg-slate-800 border border-slate-700 rounded-md px-3 py-2.5 text-sm text-white placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-emerald-500"
+        className="mt-1 w-full bg-white border border-slate-200 rounded-md px-3 py-2.5 text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
         required
       />
     </label>
