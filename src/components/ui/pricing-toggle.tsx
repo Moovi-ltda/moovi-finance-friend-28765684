@@ -5,7 +5,7 @@ import { cn } from "@/lib/utils";
 import { motion } from "framer-motion";
 import { Check, Star, Zap } from "lucide-react";
 import { TextAnimate } from "@/components/ui/text-animate";
-import { PreCheckoutModal } from "@/components/PreCheckoutModal";
+import { CheckoutModal } from "@/components/CheckoutModal";
 
 interface PricingPlan {
   name: string;
@@ -176,7 +176,7 @@ export function PricingToggle({ plans, title = "Escolha seu plano", description 
         ))}
       </div>
 
-      <PreCheckoutModal
+      <CheckoutModal
         open={modalOpen}
         onOpenChange={setModalOpen}
         plan={selectedPlan}
