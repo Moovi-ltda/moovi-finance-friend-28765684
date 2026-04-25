@@ -34,6 +34,7 @@ export function Pricing() {
       period: "x12",
       includesFrom: "Tudo do plano Básico, e mais:",
       features: [
+        { text: "Integração com Google Agenda", included: true },
         { text: "Gráficos visuais no Dashboard", included: true },
         { text: "Relatórios financeiros mensais detalhados", included: true },
         { text: "Exportação de dados (PDF/Excel)", included: true },
