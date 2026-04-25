@@ -227,7 +227,7 @@ export function CheckoutModal({ open, onOpenChange, plan }: CheckoutModalProps) 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent
-        className="sm:max-w-lg p-0 gap-0 overflow-hidden border-slate-700 bg-slate-900 text-slate-100 max-h-[90vh] overflow-y-auto"
+        className="sm:max-w-lg p-0 gap-0 overflow-hidden border border-slate-200 bg-white text-slate-900 shadow-2xl max-h-[90vh] overflow-y-auto"
       >
         <DialogTitle className="sr-only">Checkout {plan.name}</DialogTitle>
         <DialogDescription className="sr-only">
