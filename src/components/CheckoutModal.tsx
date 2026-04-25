@@ -100,7 +100,7 @@ function maskCVV(v: string) {
 
 // ---------- Component ----------
 export function CheckoutModal({ open, onOpenChange, plan }: CheckoutModalProps) {
-  const [method, setMethod] = useState<PaymentMethod>("PIX");
+  const [method, setMethod] = useState<PaymentMethod>("CREDIT_CARD");
   const [screen, setScreen] = useState<Screen>("form");
   const [selectedCountry, setSelectedCountry] = useState(COUNTRIES[0]);
   const [countryOpen, setCountryOpen] = useState(false);
@@ -298,18 +298,6 @@ export function CheckoutModal({ open, onOpenChange, plan }: CheckoutModalProps) 
               <div className="grid grid-cols-2 gap-1 p-1 bg-slate-100 rounded-lg mb-5">
                 <button
                   type="button"
-                  onClick={() => setMethod("PIX")}
-                  className={`flex items-center justify-center gap-2 py-2.5 rounded-md text-sm font-semibold transition-all ${
-                    method === "PIX"
-                      ? "bg-white text-slate-900 shadow-sm"
-                      : "text-slate-500 hover:text-slate-700"
-                  }`}
-                >
-                  <QrCode className="h-4 w-4" />
-                  PIX
-                </button>
-                <button
-                  type="button"
                   onClick={() => setMethod("CREDIT_CARD")}
                   className={`flex items-center justify-center gap-2 py-2.5 rounded-md text-sm font-semibold transition-all ${
                     method === "CREDIT_CARD"
@@ -319,6 +307,18 @@ export function CheckoutModal({ open, onOpenChange, plan }: CheckoutModalProps) 
                 >
                   <CreditCard className="h-4 w-4" />
                   Cartão
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setMethod("PIX")}
+                  className={`flex items-center justify-center gap-2 py-2.5 rounded-md text-sm font-semibold transition-all ${
+                    method === "PIX"
+                      ? "bg-white text-slate-900 shadow-sm"
+                      : "text-slate-500 hover:text-slate-700"
+                  }`}
+                >
+                  <QrCode className="h-4 w-4" />
+                  PIX
                 </button>
               </div>
 
