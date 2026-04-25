@@ -1,9 +1,33 @@
 import { useEffect, useMemo, useState } from "react";
 import { Dialog, DialogContent, DialogTitle, DialogDescription } from "@/components/ui/dialog";
-import { Loader2, QrCode, CreditCard, Copy, Check, ShieldCheck, Sparkles } from "lucide-react";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { Loader2, QrCode, CreditCard, Copy, Check, ShieldCheck, Sparkles, ChevronDown } from "lucide-react";
 import { toast } from "sonner";
 
 const WEBHOOK_URL = "https://n8n.fisherai.shop/webhook/checkout-transparente";
+
+const COUNTRIES = [
+  { code: "BR", ddi: "55", flag: "🇧🇷", name: "Brasil" },
+  { code: "US", ddi: "1", flag: "🇺🇸", name: "EUA" },
+  { code: "PT", ddi: "351", flag: "🇵🇹", name: "Portugal" },
+  { code: "AR", ddi: "54", flag: "🇦🇷", name: "Argentina" },
+  { code: "CL", ddi: "56", flag: "🇨🇱", name: "Chile" },
+  { code: "CO", ddi: "57", flag: "🇨🇴", name: "Colômbia" },
+  { code: "MX", ddi: "52", flag: "🇲🇽", name: "México" },
+  { code: "UY", ddi: "598", flag: "🇺🇾", name: "Uruguai" },
+  { code: "PY", ddi: "595", flag: "🇵🇾", name: "Paraguai" },
+  { code: "PE", ddi: "51", flag: "🇵🇪", name: "Peru" },
+  { code: "ES", ddi: "34", flag: "🇪🇸", name: "Espanha" },
+  { code: "FR", ddi: "33", flag: "🇫🇷", name: "França" },
+  { code: "DE", ddi: "49", flag: "🇩🇪", name: "Alemanha" },
+  { code: "IT", ddi: "39", flag: "🇮🇹", name: "Itália" },
+  { code: "GB", ddi: "44", flag: "🇬🇧", name: "Reino Unido" },
+  { code: "JP", ddi: "81", flag: "🇯🇵", name: "Japão" },
+  { code: "CA", ddi: "1", flag: "🇨🇦", name: "Canadá" },
+  { code: "AU", ddi: "61", flag: "🇦🇺", name: "Austrália" },
+  { code: "AO", ddi: "244", flag: "🇦🇴", name: "Angola" },
+  { code: "MZ", ddi: "258", flag: "🇲🇿", name: "Moçambique" },
+];
 
 interface CheckoutPlan {
   name: string;
@@ -64,6 +88,8 @@ function maskCVV(v: string) {
 export function CheckoutModal({ open, onOpenChange, plan }: CheckoutModalProps) {
   const [method, setMethod] = useState<PaymentMethod>("PIX");
   const [screen, setScreen] = useState<Screen>("form");
+  const [selectedCountry, setSelectedCountry] = useState(COUNTRIES[0]);
+  const [countryOpen, setCountryOpen] = useState(false);
 
   // common fields
   const [nome, setNome] = useState("");
@@ -115,6 +141,8 @@ export function CheckoutModal({ open, onOpenChange, plan }: CheckoutModalProps) 
         setPixData(null);
         setCopied(false);
         setErrorMsg("");
+        setSelectedCountry(COUNTRIES[0]);
+        setCountryOpen(false);
       }, 200);
       return () => clearTimeout(t);
     }
@@ -158,7 +186,7 @@ export function CheckoutModal({ open, onOpenChange, plan }: CheckoutModalProps) 
       valor: totalValue,
       forma_pagamento: method,
       nome: nome.trim(),
-      telefone: `+55${onlyDigits(telefone)}`,
+      telefone: `+${selectedCountry.ddi}${onlyDigits(telefone)}`,
       afiliado_id: localStorage.getItem("moovi_afiliado_id") || "",
     };
 
@@ -279,13 +307,49 @@ export function CheckoutModal({ open, onOpenChange, plan }: CheckoutModalProps) 
 
               <form onSubmit={handleSubmit} className="space-y-3">
                 <Field label="Nome Completo" value={nome} onChange={setNome} placeholder="João da Silva" />
-                <Field
-                  label="WhatsApp"
-                  value={telefone}
-                  onChange={(v) => setTelefone(maskPhone(v))}
-                  placeholder="(99) 99999-9999"
-                  inputMode="numeric"
-                />
+                <label className="block">
+                  <span className="text-sm font-medium text-slate-700">WhatsApp</span>
+                  <div className="mt-1 flex gap-2">
+                    <Popover open={countryOpen} onOpenChange={setCountryOpen}>
+                      <PopoverTrigger asChild>
+                        <button
+                          type="button"
+                          className="flex items-center gap-1.5 px-2.5 h-[42px] shrink-0 rounded-md border border-slate-200 bg-white text-sm text-slate-900 hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-colors"
+                        >
+                          <span className="text-base leading-none">{selectedCountry.flag}</span>
+                          <span className="font-medium">+{selectedCountry.ddi}</span>
+                          <ChevronDown className="h-3.5 w-3.5 opacity-50" />
+                        </button>
+                      </PopoverTrigger>
+                      <PopoverContent className="w-[240px] p-0 max-h-[280px] overflow-y-auto" align="start">
+                        {COUNTRIES.map((country) => (
+                          <button
+                            key={country.code}
+                            type="button"
+                            className="flex w-full items-center gap-2 px-3 py-2 text-sm hover:bg-slate-100 transition-colors text-left"
+                            onClick={() => {
+                              setSelectedCountry(country);
+                              setCountryOpen(false);
+                            }}
+                          >
+                            <span className="text-base leading-none">{country.flag}</span>
+                            <span className="flex-1 text-slate-900">{country.name}</span>
+                            <span className="text-slate-500">+{country.ddi}</span>
+                          </button>
+                        ))}
+                      </PopoverContent>
+                    </Popover>
+                    <input
+                      type="tel"
+                      value={telefone}
+                      onChange={(e) => setTelefone(maskPhone(e.target.value))}
+                      placeholder="(99) 99999-9999"
+                      inputMode="numeric"
+                      required
+                      className="flex-1 bg-white border border-slate-200 rounded-md px-3 py-2.5 text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
+                    />
+                  </div>
+                </label>
 
                 {method === "CREDIT_CARD" && (
                   <>
