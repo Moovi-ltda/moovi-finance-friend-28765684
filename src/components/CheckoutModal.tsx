@@ -235,14 +235,14 @@ export function CheckoutModal({ open, onOpenChange, plan }: CheckoutModalProps) 
         </DialogDescription>
 
         {/* Header */}
-        <div className="bg-gradient-to-br from-slate-800 to-slate-900 px-6 py-5 border-b border-slate-700">
-          <div className="flex items-center gap-2 text-emerald-400 text-xs font-semibold uppercase tracking-wider">
+        <div className="bg-slate-50 px-6 py-5 border-b border-slate-200">
+          <div className="flex items-center gap-2 text-emerald-600 text-xs font-semibold uppercase tracking-wider">
             <ShieldCheck className="h-4 w-4" />
             Checkout seguro
           </div>
-          <h2 className="mt-1.5 text-xl font-bold text-white">{plan.name}</h2>
-          <p className="text-sm text-slate-400 mt-0.5">
-            Total: <span className="text-emerald-400 font-semibold">R$ {totalValue.toFixed(2).replace(".", ",")}</span>
+          <h2 className="mt-1.5 text-xl font-bold text-slate-900">{plan.name}</h2>
+          <p className="text-sm text-slate-600 mt-0.5">
+            Total: <span className="text-emerald-600 font-semibold">R$ {totalValue.toFixed(2).replace(".", ",")}</span>
           </p>
         </div>
 
@@ -250,14 +250,14 @@ export function CheckoutModal({ open, onOpenChange, plan }: CheckoutModalProps) 
           {screen === "form" && (
             <>
               {/* Method tabs */}
-              <div className="grid grid-cols-2 gap-2 p-1 bg-slate-800/60 rounded-lg mb-5">
+              <div className="grid grid-cols-2 gap-1 p-1 bg-slate-100 rounded-lg mb-5">
                 <button
                   type="button"
                   onClick={() => setMethod("PIX")}
                   className={`flex items-center justify-center gap-2 py-2.5 rounded-md text-sm font-semibold transition-all ${
                     method === "PIX"
-                      ? "bg-slate-700 text-white shadow"
-                      : "text-slate-400 hover:text-slate-200"
+                      ? "bg-white text-slate-900 shadow-sm"
+                      : "text-slate-500 hover:text-slate-700"
                   }`}
                 >
                   <QrCode className="h-4 w-4" />
@@ -268,8 +268,8 @@ export function CheckoutModal({ open, onOpenChange, plan }: CheckoutModalProps) 
                   onClick={() => setMethod("CREDIT_CARD")}
                   className={`flex items-center justify-center gap-2 py-2.5 rounded-md text-sm font-semibold transition-all ${
                     method === "CREDIT_CARD"
-                      ? "bg-slate-700 text-white shadow"
-                      : "text-slate-400 hover:text-slate-200"
+                      ? "bg-white text-slate-900 shadow-sm"
+                      : "text-slate-500 hover:text-slate-700"
                   }`}
                 >
                   <CreditCard className="h-4 w-4" />
