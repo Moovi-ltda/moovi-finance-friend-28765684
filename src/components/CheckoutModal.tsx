@@ -167,14 +167,15 @@ export function CheckoutModal({ open, onOpenChange, plan }: CheckoutModalProps) 
   const validatePix = () => {
     if (!nome.trim() || nome.trim().length < 3) return "Informe seu nome completo.";
     if (onlyDigits(telefone).length < 10) return "Informe um WhatsApp válido.";
+    if (!email.includes("@") || email.trim().length < 5) return "Informe um e-mail válido.";
+    const docDigits = onlyDigits(cpf).length;
+    if (docDigits !== 11 && docDigits !== 14) return "Informe um CPF ou CNPJ válido.";
     return null;
   };
 
   const validateCard = () => {
     const pixErr = validatePix();
     if (pixErr) return pixErr;
-    if (!email.includes("@")) return "Informe um e-mail válido.";
-    if (onlyDigits(cpf).length !== 11) return "CPF inválido.";
     if (onlyDigits(cep).length !== 8) return "CEP inválido.";
     if (!numero.trim()) return "Informe o número do endereço.";
     if (onlyDigits(cardNumber).length < 13) return "Número do cartão inválido.";
