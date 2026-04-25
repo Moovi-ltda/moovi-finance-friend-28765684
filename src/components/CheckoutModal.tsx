@@ -186,7 +186,7 @@ export function CheckoutModal({ open, onOpenChange, plan }: CheckoutModalProps) 
       valor: totalValue,
       forma_pagamento: method,
       nome: nome.trim(),
-      telefone: `+55${onlyDigits(telefone)}`,
+      telefone: `+${selectedCountry.ddi}${onlyDigits(telefone)}`,
       afiliado_id: localStorage.getItem("moovi_afiliado_id") || "",
     };
 
