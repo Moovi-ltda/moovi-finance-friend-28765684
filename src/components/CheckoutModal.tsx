@@ -400,16 +400,16 @@ export function CheckoutModal({ open, onOpenChange, plan }: CheckoutModalProps) 
 
           {screen === "pix-success" && pixData && (
             <div className="text-center">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-400 text-xs font-semibold">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-50 text-emerald-700 text-xs font-semibold border border-emerald-100">
                 <Sparkles className="h-3.5 w-3.5" /> PIX gerado com sucesso
               </div>
-              <h3 className="mt-3 text-lg font-bold text-white">Escaneie o QR Code</h3>
-              <p className="text-sm text-slate-400">
+              <h3 className="mt-3 text-lg font-bold text-slate-900">Escaneie o QR Code</h3>
+              <p className="text-sm text-slate-600">
                 Abra o app do seu banco e finalize o pagamento. Liberação automática.
               </p>
 
               {pixData.qrCodeBase64 && (
-                <div className="mt-4 bg-white p-3 rounded-lg inline-block">
+                <div className="mt-4 bg-white p-3 rounded-lg inline-block border border-slate-200">
                   <img
                     src={
                       pixData.qrCodeBase64.startsWith("data:")
@@ -424,17 +424,17 @@ export function CheckoutModal({ open, onOpenChange, plan }: CheckoutModalProps) 
 
               {pixData.copyPaste && (
                 <div className="mt-4 text-left">
-                  <label className="text-xs font-medium text-slate-400">PIX Copia e Cola</label>
+                  <label className="text-sm font-medium text-slate-700">PIX Copia e Cola</label>
                   <div className="mt-1 flex gap-2">
                     <input
                       readOnly
                       value={pixData.copyPaste}
-                      className="flex-1 bg-slate-800 border border-slate-700 rounded-md px-3 py-2 text-xs text-slate-200 truncate"
+                      className="flex-1 bg-white border border-slate-200 rounded-md px-3 py-2 text-xs text-slate-700 truncate"
                     />
                     <button
                       type="button"
                       onClick={copyPix}
-                      className="bg-emerald-500 hover:bg-emerald-400 text-white px-3 rounded-md text-sm font-semibold flex items-center gap-1.5 transition-colors"
+                      className="bg-emerald-600 hover:bg-emerald-700 text-white px-3 rounded-md text-sm font-semibold flex items-center gap-1.5 transition-colors shadow-md"
                     >
                       {copied ? <Check className="h-4 w-4" /> : <Copy className="h-4 w-4" />}
                       {copied ? "Copiado" : "Copiar"}
