@@ -671,6 +671,61 @@ export default function Checkout() {
               </div>
             )}
           </section>
+
+          {/* RIGHT: Order summary (desktop only) */}
+          <aside className="hidden lg:flex flex-col gap-4 lg:overflow-y-auto lg:min-h-0">
+            <div className="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm">
+              <p className="text-xs font-semibold uppercase tracking-wider text-slate-500">
+                Resumo do pedido
+              </p>
+              <h2 className="mt-2 text-lg font-bold text-slate-900">{plan.name}</h2>
+              <p className="text-sm text-slate-600 mt-0.5">Assinatura anual</p>
+
+              <div className="mt-4 pt-4 border-t border-slate-200 space-y-2">
+                <div className="flex justify-between text-sm">
+                  <span className="text-slate-600">Equivalente a</span>
+                  <span className="font-semibold text-slate-900">
+                    R$ {monthlyValue.toFixed(2).replace(".", ",")}/mês
+                  </span>
+                </div>
+                <div className="flex justify-between text-sm">
+                  <span className="text-slate-600">Total hoje</span>
+                  <span className="font-bold text-emerald-600 text-base">
+                    R$ {totalValue.toFixed(2).replace(".", ",")}
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            <div className="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm">
+              <div className="flex items-center gap-2 text-emerald-700">
+                <ShieldCheck className="h-5 w-5" />
+                <span className="font-semibold text-sm">Checkout Seguro</span>
+              </div>
+              <ul className="mt-3 space-y-2 text-xs text-slate-600">
+                <li className="flex items-start gap-2">
+                  <Check className="h-3.5 w-3.5 text-emerald-600 mt-0.5 flex-shrink-0" />
+                  Criptografia SSL 256 bits
+                </li>
+                <li className="flex items-start gap-2">
+                  <Check className="h-3.5 w-3.5 text-emerald-600 mt-0.5 flex-shrink-0" />
+                  Garantia de 7 dias ou seu dinheiro de volta
+                </li>
+                <li className="flex items-start gap-2">
+                  <Check className="h-3.5 w-3.5 text-emerald-600 mt-0.5 flex-shrink-0" />
+                  Acesso liberado no seu WhatsApp
+                </li>
+              </ul>
+            </div>
+
+            <Link
+              to="/#pricing-section"
+              className="flex items-center gap-1.5 text-sm text-slate-500 hover:text-slate-700 transition-colors"
+            >
+              <ChevronLeft className="h-4 w-4" /> Trocar de plano
+            </Link>
+          </aside>
+          </div>
         </div>
       </main>
 
