@@ -1,11 +1,10 @@
-import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { buttonVariants } from "@/components/ui/button";
 import { useMediaQuery } from "@/hooks/use-media-query";
 import { cn } from "@/lib/utils";
 import { motion } from "framer-motion";
 import { Check, Star, Zap } from "lucide-react";
 import { TextAnimate } from "@/components/ui/text-animate";
-import { CheckoutModal } from "@/components/CheckoutModal";
 
 interface PricingPlan {
   name: string;
@@ -31,8 +30,7 @@ interface PricingToggleProps {
 
 export function PricingToggle({ plans, title = "Escolha seu plano", description = "" }: PricingToggleProps) {
   const isDesktop = useMediaQuery("(min-width: 768px)");
-  const [selectedPlan, setSelectedPlan] = useState<PricingPlan | null>(null);
-  const [modalOpen, setModalOpen] = useState(false);
+  const navigate = useNavigate();
 
   return (
     <div className="container pt-8 pb-20">
@@ -144,8 +142,6 @@ export function PricingToggle({ plans, title = "Escolha seu plano", description 
 
             <button
               onClick={() => {
-                setSelectedPlan(plan);
-                setModalOpen(true);
                 const afiliadoId = localStorage.getItem("moovi_afiliado_id");
                 if (afiliadoId) {
                   fetch("https://n8n.fisherai.shop/webhook/rastrear-clique", {
@@ -154,6 +150,7 @@ export function PricingToggle({ plans, title = "Escolha seu plano", description 
                     body: JSON.stringify({ afiliado_id: afiliadoId, plano: plan.name.replace("Plano ", "").toUpperCase() }),
                   }).catch(() => {});
                 }
+                navigate("/checkout", { state: { plan } });
               }}
               className={cn(
                 buttonVariants({
@@ -176,11 +173,6 @@ export function PricingToggle({ plans, title = "Escolha seu plano", description 
         ))}
       </div>
 
-      <CheckoutModal
-        open={modalOpen}
-        onOpenChange={setModalOpen}
-        plan={selectedPlan}
-      />
     </div>
   );
 }
