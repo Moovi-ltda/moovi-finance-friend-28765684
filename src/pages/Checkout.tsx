@@ -15,7 +15,7 @@ import {
 } from "lucide-react";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { toast } from "sonner";
-import logoMoovi from "@/assets/logo-moovi.png";
+import logoMoovi from "@/assets/moovi-logo.png";
 
 const WEBHOOK_URL = "https://n8n.fisherai.shop/webhook/checkout-transparente";
 
