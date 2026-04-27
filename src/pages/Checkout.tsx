@@ -99,6 +99,7 @@ export default function Checkout() {
   const [step, setStep] = useState(1);
   const [status, setStatus] = useState<Status>("form");
   const [method, setMethod] = useState<PaymentMethod>("CREDIT_CARD");
+  const [mobileSummaryOpen, setMobileSummaryOpen] = useState(false);
 
   // Step 1
   const [nome, setNome] = useState("");
