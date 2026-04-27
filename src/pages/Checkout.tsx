@@ -276,12 +276,12 @@ export default function Checkout() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 text-slate-900 pb-32 lg:pb-12">
+    <div className="lg:h-screen lg:overflow-hidden min-h-screen bg-slate-50 text-slate-900 flex flex-col pb-[88px] lg:pb-0">
       {/* Top bar */}
-      <header className="bg-white border-b border-slate-200">
-        <div className="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
+      <header className="bg-white border-b border-slate-200 flex-shrink-0">
+        <div className="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
           <Link to="/" className="flex items-center gap-2">
-            <img src={logoMoovi} alt="Moovi" className="h-8 w-auto" />
+            <img src={logoMoovi} alt="Moovi" className="h-7 w-auto" />
           </Link>
           <div className="flex items-center gap-1.5 text-emerald-700 text-xs font-semibold">
             <Lock className="h-3.5 w-3.5" />
@@ -291,64 +291,50 @@ export default function Checkout() {
         </div>
       </header>
 
-      <main className="max-w-6xl mx-auto px-4 py-6 lg:py-10">
-        <div className="grid lg:grid-cols-[1fr_minmax(0,1.3fr)] gap-6 lg:gap-10">
-          {/* LEFT: Order summary */}
-          <aside className="lg:sticky lg:top-6 lg:self-start space-y-4">
-            <div className="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm">
-              <p className="text-xs font-semibold uppercase tracking-wider text-slate-500">
-                Resumo do pedido
-              </p>
-              <h2 className="mt-2 text-lg font-bold text-slate-900">{plan.name}</h2>
-              <p className="text-sm text-slate-600 mt-0.5">Assinatura anual</p>
-
-              <div className="mt-4 pt-4 border-t border-slate-200 space-y-2">
-                <div className="flex justify-between text-sm">
-                  <span className="text-slate-600">Equivalente a</span>
-                  <span className="font-semibold text-slate-900">
-                    R$ {monthlyValue.toFixed(2).replace(".", ",")}/mês
-                  </span>
-                </div>
-                <div className="flex justify-between text-sm">
-                  <span className="text-slate-600">Total hoje</span>
-                  <span className="font-bold text-emerald-600 text-base">
-                    R$ {totalValue.toFixed(2).replace(".", ",")}
-                  </span>
-                </div>
-              </div>
+      {/* Mobile compact collapsible summary */}
+      <div className="lg:hidden bg-white border-b border-slate-200 flex-shrink-0">
+        <button
+          type="button"
+          onClick={() => setMobileSummaryOpen((v) => !v)}
+          className="w-full px-4 py-3 flex items-center justify-between text-left"
+        >
+          <div className="flex items-center gap-2 min-w-0">
+            <span className="text-xs font-semibold uppercase tracking-wider text-slate-500">Pedido:</span>
+            <span className="text-sm font-bold text-slate-900 truncate">{plan.name}</span>
+          </div>
+          <div className="flex items-center gap-2 flex-shrink-0">
+            <span className="text-sm font-bold text-emerald-600">
+              R$ {totalValue.toFixed(2).replace(".", ",")}
+            </span>
+            <ChevronDown
+              className={`h-4 w-4 text-slate-500 transition-transform ${mobileSummaryOpen ? "rotate-180" : ""}`}
+            />
+          </div>
+        </button>
+        {mobileSummaryOpen && (
+          <div className="px-4 pb-3 -mt-1 space-y-1.5 text-xs">
+            <div className="flex justify-between">
+              <span className="text-slate-600">Equivalente a</span>
+              <span className="font-semibold text-slate-900">
+                R$ {monthlyValue.toFixed(2).replace(".", ",")}/mês
+              </span>
             </div>
-
-            <div className="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm">
-              <div className="flex items-center gap-2 text-emerald-700">
-                <ShieldCheck className="h-5 w-5" />
-                <span className="font-semibold text-sm">Checkout Seguro</span>
-              </div>
-              <ul className="mt-3 space-y-2 text-xs text-slate-600">
-                <li className="flex items-start gap-2">
-                  <Check className="h-3.5 w-3.5 text-emerald-600 mt-0.5 flex-shrink-0" />
-                  Criptografia SSL 256 bits
-                </li>
-                <li className="flex items-start gap-2">
-                  <Check className="h-3.5 w-3.5 text-emerald-600 mt-0.5 flex-shrink-0" />
-                  Garantia de 7 dias ou seu dinheiro de volta
-                </li>
-                <li className="flex items-start gap-2">
-                  <Check className="h-3.5 w-3.5 text-emerald-600 mt-0.5 flex-shrink-0" />
-                  Acesso liberado no seu WhatsApp
-                </li>
-              </ul>
+            <div className="flex justify-between">
+              <span className="text-slate-600">Assinatura anual</span>
+              <span className="text-slate-700">{plan.name}</span>
             </div>
-
-            <Link
-              to="/#pricing-section"
-              className="hidden lg:flex items-center gap-1.5 text-sm text-slate-500 hover:text-slate-700 transition-colors"
-            >
-              <ChevronLeft className="h-4 w-4" /> Trocar de plano
+            <Link to="/#pricing-section" className="text-emerald-600 font-medium inline-flex items-center gap-1">
+              <ChevronLeft className="h-3 w-3" /> Trocar de plano
             </Link>
-          </aside>
+          </div>
+        )}
+      </div>
 
-          {/* RIGHT: Form */}
-          <section className="bg-white border border-slate-200 rounded-2xl p-5 sm:p-8 shadow-sm">
+      <main className="flex-1 lg:overflow-hidden lg:min-h-0">
+        <div className="max-w-6xl mx-auto h-full px-4 py-4 lg:py-6">
+          <div className="grid lg:grid-cols-[minmax(0,1.3fr)_1fr] gap-6 lg:gap-8 lg:h-full lg:min-h-0">
+            {/* LEFT: Form */}
+            <section className="bg-white border border-slate-200 rounded-2xl p-5 sm:p-7 shadow-sm lg:overflow-y-auto lg:min-h-0">
             {status === "form" && (
               <>
                 <Stepper current={step} />
