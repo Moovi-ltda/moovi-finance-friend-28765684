@@ -6,7 +6,7 @@ import ComparisonSection from "@/components/ComparisonSection";
 import { Pricing } from "@/components/Pricing";
 import Footer from "@/components/Footer";
 import { FAQ } from "@/components/FAQ";
-import { AppShowcase } from "@/components/AppShowcase";
+
 import { MobileExitIntent } from "@/components/MobileExitIntent";
 
 const Index = () => {
@@ -14,7 +14,7 @@ const Index = () => {
     <div className="min-h-screen">
       <VSLHero />
       <Authority />
-      <AppShowcase />
+
       <FeaturesScroll />
       <ComparisonSection />
       <InstagramTestimonials />

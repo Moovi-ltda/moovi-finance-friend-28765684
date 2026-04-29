@@ -46,6 +46,17 @@ export default {
           DEFAULT: "hsl(var(--popover))",
           foreground: "hsl(var(--popover-foreground))",
         },
+        moovi: {
+          green: {
+            DEFAULT: "hsl(var(--moovi-green))",
+            dark: "hsl(var(--moovi-green-dark))",
+            deep: "hsl(var(--moovi-green-deep))",
+            light: "hsl(var(--moovi-green-light))",
+            soft: "hsl(var(--moovi-green-soft))",
+          },
+          mint: "hsl(var(--moovi-mint))",
+          whatsapp: "hsl(var(--whatsapp))",
+        },
         card: {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",

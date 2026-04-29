@@ -8,8 +8,8 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 155 70% 15%;
+    --background: 60 20% 98%; /* #FAFAF7 */
+    --foreground: 155 70% 15%; /* #0F1A14 */
 
     --card: 0 0% 100%;
     --card-foreground: 155 70% 15%;
@@ -17,16 +17,24 @@ All colors MUST be HSL.
     --popover: 0 0% 100%;
     --popover-foreground: 155 70% 15%;
 
-    --primary: 155 65% 35%;
+    --primary: 148 75% 24%; /* #0F6B3A */
     --primary-foreground: 0 0% 100%;
-    --primary-hover: 155 65% 30%;
-    --primary-glow: 155 60% 50%;
+    --primary-hover: 148 75% 20%;
+    --primary-glow: 148 75% 35%;
+
+    --moovi-green: 148 75% 24%;
+    --moovi-green-dark: 148 75% 15%;
+    --moovi-green-deep: 148 75% 10%;
+    --moovi-green-light: 138 33% 94%;
+    --moovi-green-soft: 137 20% 96%;
+    --moovi-mint: 138 41% 85%;
+    --whatsapp: 142 70% 49%;
 
     --secondary: 155 40% 92%;
     --secondary-foreground: 155 70% 20%;
 
-    --muted: 155 30% 95%;
-    --muted-foreground: 155 20% 45%;
+    --muted: 155 10% 40%;
+    --muted-foreground: 155 10% 55%;
 
     --accent: 150 60% 55%;
     --accent-foreground: 0 0% 100%;

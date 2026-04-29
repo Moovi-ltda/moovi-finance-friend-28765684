@@ -1,19 +1,19 @@
 import { useState, useEffect } from "react";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
-import mooviLogo from "@/assets/moovi-logo.png";
-import { FloatingBadge } from "@/components/ui/floating-badge";
+import { Iphone } from "@/components/ui/iphone";
 import { Button } from "@/components/ui/button";
 import { scrollToSection } from "@/utils/scroll";
-import { AnimatedHero } from "@/components/ui/animated-hero";
 import { motion, AnimatePresence } from "framer-motion";
-import { Sparkles, Clock, Users, ArrowRight } from "lucide-react";
+import { Sparkles, Clock, Users, ArrowRight, Star } from "lucide-react";
+
+const PANDA_VIDEO_URL =
+  "https://player-vz-c1e2f242-e38.tv.pandavideo.com.br/embed/?v=4e6c28e8-f6eb-4e20-b216-224be1bc17f8";
 
 const VSLHero = () => {
   const { elementRef, isVisible } = useScrollAnimation({
     threshold: 0.1,
   });
 
-  // --- LÓGICA DO TOP BANNER (ROTATIVO) ---
   const [currentMessageIndex, setCurrentMessageIndex] = useState(0);
 
   const messages = [
@@ -24,12 +24,12 @@ const VSLHero = () => {
     },
     {
       id: 2,
-      text: "⚡️ +1.000 pessoas já organizaram suas finanças",
+      text: "⚡️ +5.000 pessoas já organizaram suas finanças",
       icon: Users,
     },
     {
       id: 3,
-      text: "⏳ Oferta limitada: Preços aumentarão em 2026",
+      text: "⏳ Oferta limitada: Cancele quando quiser",
       icon: Clock,
     },
   ];
@@ -37,16 +37,14 @@ const VSLHero = () => {
   useEffect(() => {
     const timer = setInterval(() => {
       setCurrentMessageIndex((prev) => (prev + 1) % messages.length);
-    }, 4000); // Troca a cada 4 segundos
-
+    }, 4000);
     return () => clearInterval(timer);
   }, []);
 
   return (
-    // Removi o 'pt-2' do section para o banner colar no topo
-    <section className="relative min-h-[100dvh] flex flex-col bg-gradient-to-b from-green-50 via-green-50 to-green-100/20 overflow-x-hidden pb-0">
-      {/* --- NOVO: BARRA DE AVISOS INTEGRADA --- */}
-      <div className="w-full bg-green-900 text-white py-2 px-4 relative z-50 shadow-sm">
+    <section className="relative min-h-[100dvh] flex flex-col bg-[#FAFAF7] overflow-x-hidden">
+      {/* Top Banner */}
+      <div className="w-full bg-moovi-green-deep text-white py-2 px-4 relative z-50">
         <div className="container mx-auto flex justify-center items-center">
           <div className="relative h-6 w-full max-w-md overflow-hidden flex justify-center items-center">
             <AnimatePresence mode="wait">
@@ -58,12 +56,10 @@ const VSLHero = () => {
                 transition={{ duration: 0.5, ease: "easeInOut" }}
                 className="absolute flex items-center gap-2 text-xs md:text-sm font-medium whitespace-nowrap"
               >
-                {/* Renderiza o ícone da mensagem atual */}
                 {(() => {
                   const Icon = messages[currentMessageIndex].icon;
-                  return <Icon className="w-3 h-3 md:w-4 md:h-4 text-green-300" />;
+                  return <Icon className="w-3 h-3 md:w-4 md:h-4 text-moovi-mint" />;
                 })()}
-
                 <span>{messages[currentMessageIndex].text}</span>
                 <ArrowRight className="w-3 h-3 ml-1 opacity-70 hidden sm:block" />
               </motion.div>
@@ -72,69 +68,90 @@ const VSLHero = () => {
         </div>
       </div>
 
-      {/* Floating Badges (Mantidos) */}
-      <FloatingBadge icon="💰" value="R$ 234" text="economizado este mês" position="top-left" delay={0.2} />
-      <FloatingBadge icon="🍕" value="R$ 156" text="gasto com comida" position="top-right" delay={0.4} />
-      <FloatingBadge icon="✅" value="15" text="transações categorizadas" position="middle-left" delay={0.6} />
-      <FloatingBadge icon="🎯" value="78%" text="da meta atingida" position="middle-right" delay={0.8} />
-      <FloatingBadge icon="💡" value="R$ 89" text="economia inteligente" position="bottom-right" delay={1.0} />
-
-      <div className="w-full max-w-5xl mx-auto flex-grow flex flex-col pt-4 md:pt-8" ref={elementRef}>
-        <div className={`flex-grow flex flex-col text-center fade-in-scroll ${isVisible ? "visible" : ""}`}>
-          {/* --- BLOCO SUPERIOR --- */}
-          <div className="shrink-0">
-            <div className="flex justify-center mb-2 md:mb-6">
-              <img src={mooviLogo} alt="Moovi - Controle Financeiro no WhatsApp" className="h-12 md:h-28" />
+      {/* Header (Sticky, normal flow) */}
+      <div className="sticky top-0 w-full z-40 bg-white/80 backdrop-blur-md border-b border-gray-200 shadow-sm">
+        <div className="container max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center py-3">
+          <div className="flex items-center gap-2">
+            <div className="w-8 h-8 md:w-10 md:h-10 bg-moovi-green rounded-lg flex items-center justify-center p-1.5 overflow-hidden">
+              <img src="/moovi-pig.png" alt="Moovi" className="w-full h-full object-contain brightness-0 invert" />
             </div>
-            <AnimatedHero />
+            <span className="font-extrabold text-xl md:text-2xl text-moovi-green-dark tracking-tight">moovi</span>
           </div>
           <Button
-            size="xl"
-            // ALTERAÇÕES AQUI:
-            // 1. Removi 'w-full' e coloquei 'w-fit' (o tamanho agora obedece o texto)
-            // 2. Adicionei 'mx-auto' para ele ficar centralizado na tela
-            // 3. Ajustei 'px-8' para 'px-10' (padding lateral equilibrado)
-            className="bg-green-700 hover:bg-green-800 text-white font-bold text-lg md:text-xl px-10 py-6 md:px-12 md:py-8 shadow-2xl hover:shadow-3xl transition-all rounded-full w-fit mx-auto animate-pulse"
+            className="bg-moovi-green hover:bg-moovi-green-dark text-white font-semibold rounded-xl px-5 hidden sm:flex shadow-md shadow-moovi-green/20"
             onClick={() => scrollToSection("pricing-section")}
           >
-            Começar no WhatsApp Agora 🚀
+            Começar agora
           </Button>
+        </div>
+      </div>
 
-          {/* --- BLOCO DO MEIO (Vídeo) --- */}
-          <div className="flex-grow flex flex-col justify-center pt-2 pb-4 md:py-8">
-            <div className="relative w-full max-w-3xl mx-auto mb-4 px-4 md:px-0">
-              <div
-                className="rounded-2xl overflow-hidden shadow-2xl border-4 border-white/50 bg-black"
-                style={{ position: "relative", paddingTop: "56.25%" }}
+      {/* Hero Content */}
+      <div className="container max-w-6xl mx-auto px-4 pt-12 pb-16 md:pt-20 md:pb-24 flex-grow flex flex-col justify-center" ref={elementRef}>
+        <div className={`grid grid-cols-1 lg:grid-cols-[1.1fr_0.9fr] gap-12 lg:gap-12 items-center fade-in-scroll ${isVisible ? "visible" : ""}`}>
+
+          {/* Left Column: Text & CTA */}
+          <div className="flex flex-col text-center lg:text-left z-10">
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-moovi-green-light text-moovi-green text-xs font-semibold uppercase tracking-wider w-fit mx-auto lg:mx-0 mb-6 border border-moovi-green/20 shadow-sm">
+              <span className="w-1.5 h-1.5 rounded-full bg-moovi-green animate-pulse"></span>
+              Assistente financeiro no WhatsApp
+            </div>
+
+            <h1 className="text-4xl md:text-5xl lg:text-[64px] font-extrabold text-moovi-green-deep leading-[1.05] tracking-tight mb-6 text-balance">
+              Organize seu dinheiro <span className="text-moovi-green">pelo WhatsApp.</span> Em segundos.
+            </h1>
+
+            <p className="text-lg md:text-xl text-gray-600 mb-8 max-w-xl mx-auto lg:mx-0 leading-relaxed text-pretty">
+              Mande uma mensagem como se fosse pra um amigo. A Moovi anota seus gastos, categoriza tudo e te avisa quando você está prestes a estourar o orçamento.
+            </p>
+
+            <div className="flex flex-col sm:flex-row items-center gap-4 justify-center lg:justify-start">
+              <Button
+                size="xl"
+                className="bg-moovi-whatsapp hover:bg-[#1DBE5A] text-white font-bold text-lg px-8 py-7 shadow-xl shadow-moovi-whatsapp/30 hover:shadow-2xl hover:-translate-y-1 transition-all rounded-2xl w-full sm:w-auto flex items-center gap-3"
+                onClick={() => scrollToSection("pricing-section")}
               >
-                <iframe
-                  id="panda-48616b66-1753-4a6f-b6c5-4e35de714666"
-                  src="https://player-vz-c1e2f242-e38.tv.pandavideo.com.br/embed/?v=48616b66-1753-4a6f-b6c5-4e35de714666"
-                  style={{ border: "none", position: "absolute", top: 0, left: 0, width: "100%", height: "100%" }}
-                  allow="accelerometer;gyroscope;autoplay;encrypted-media;picture-in-picture"
-                  allowFullScreen
-                  title="Moovi VSL"
-                />
+                <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp" className="w-6 h-6 invert brightness-0" />
+                Começar grátis no WhatsApp
+              </Button>
+            </div>
+
+            <p className="text-sm text-gray-500 mt-5 font-medium">
+              7 dias grátis · Cancele quando quiser · Sem cartão
+            </p>
+
+            {/* Social Proof Avatars */}
+            <div className="flex items-center justify-center lg:justify-start gap-4 mt-12">
+              <div className="flex -space-x-3">
+                <div className="w-11 h-11 rounded-full border-2 border-[#FAFAF7] bg-[#FFE0B5] text-[#8B5A1C] flex items-center justify-center text-sm font-bold z-30 shadow-sm">JB</div>
+                <div className="w-11 h-11 rounded-full border-2 border-[#FAFAF7] bg-[#D5E8F5] text-[#1E5A8B] flex items-center justify-center text-sm font-bold z-20 shadow-sm">MA</div>
+                <div className="w-11 h-11 rounded-full border-2 border-[#FAFAF7] bg-[#E8D5F5] text-[#5A1E8B] flex items-center justify-center text-sm font-bold z-10 shadow-sm">RS</div>
+                <div className="w-11 h-11 rounded-full border-2 border-[#FAFAF7] bg-moovi-green text-white flex items-center justify-center text-xs font-bold z-0 shadow-sm">+5k</div>
+              </div>
+              <div className="text-left">
+                <div className="flex gap-0.5 text-yellow-400 mb-0.5">
+                  {[...Array(5)].map((_, i) => <Star key={i} size={15} fill="currentColor" />)}
+                </div>
+                <div className="text-xs text-gray-600 font-medium">
+                  <strong className="text-gray-900 font-bold">4.9/5</strong> · +5.000 brasileiros usando
+                </div>
               </div>
             </div>
+          </div>
 
-            {/* Texto Emocional OTIMIZADO (Mobile-First) */}
-            <div className="px-4 mt-2">
-              <p className="text-base md:text-xl font-medium text-gray-700 leading-snug">
-                Esqueça os apps complexos. <br className="md:hidden" />
-                <span className="text-green-600 font-bold">Mande um áudio no WhatsApp</span> e organize seu dinheiro em
-                segundos.
-              </p>
+          {/* Right Column: Real iPhone with Panda Video */}
+          <div className="relative flex justify-center lg:justify-end mt-12 lg:mt-0">
+            {/* Background glowing blob */}
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[140%] h-[140%] bg-moovi-green/10 rounded-full blur-[80px] -z-10"></div>
+
+            <div className="w-full max-w-[300px] sm:max-w-[320px] md:max-w-[340px]">
+              <Iphone
+                className="size-full shadow-[0_35px_60px_-15px_rgba(0,0,0,0.4)] rounded-[40px]"
+                embedSrc={PANDA_VIDEO_URL}
+              />
             </div>
           </div>
 
-          {/* --- BLOCO INFERIOR (Botão OTIMIZADO) --- */}
-          <div className="shrink-0 mt-auto pb-8 md:pb-12 px-4">
-            {/* Garantia Visual (Redutor de Fricção) */}
-            <p className="text-xs text-gray-400 mt-3 flex items-center justify-center gap-1">
-              🔒 Seguro e Criptografado • Oganize já
-            </p>
-          </div>
         </div>
       </div>
     </section>
