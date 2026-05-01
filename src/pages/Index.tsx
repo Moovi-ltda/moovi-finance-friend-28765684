@@ -23,27 +23,33 @@ const Index = () => {
       <Authority />
 
 
+      {/* Shared Gradient Wrapper for Middle Sections to eliminate seams */}
+      <div className="dark relative bg-gradient-to-b from-[#05150C] via-[#0A1A10] to-moovi-green-deep overflow-hidden text-foreground">
+        {/* Shared Decorative blobs */}
+        <div className="absolute top-[20%] left-0 w-[500px] h-[500px] bg-moovi-green/10 rounded-full blur-[120px] -translate-x-1/4 pointer-events-none" />
+        <div className="absolute top-[60%] right-0 w-[600px] h-[600px] bg-moovi-mint/5 rounded-full blur-[150px] translate-x-1/4 pointer-events-none" />
 
-      {/* 4. Features com Vídeo — Demonstração de cada funcionalidade */}
-      <FeaturesScroll />
+        {/* 4. Features com Vídeo — Demonstração de cada funcionalidade */}
+        <FeaturesScroll />
 
-      {/* 5. Comparativo — Moovi vs métodos tradicionais (tabela) */}
-      <ComparisonSection />
+        {/* 5. Comparativo — Moovi vs métodos tradicionais (tabela) */}
+        <ComparisonSection />
 
-      {/* 6. Segurança — Seção dedicada para eliminar objeções */}
-      <SecuritySection />
+        {/* 6. Segurança — Seção dedicada para eliminar objeções */}
+        <SecuritySection />
 
-      {/* 6.5 Exemplos de Interação — Marquee infinito de perguntas */}
-      <InteractionExamples />
+        {/* 6.5 Exemplos de Interação — Marquee infinito de perguntas */}
+        <InteractionExamples />
 
-      {/* 7. Depoimentos — Prova social com reviews reais */}
-      <InstagramTestimonials />
+        {/* 7. Depoimentos — Prova social com reviews reais */}
+        <InstagramTestimonials />
 
-      {/* 8. Planos — Conversão principal */}
-      <Pricing />
+        {/* 8. Planos — Conversão principal */}
+        <Pricing />
+      </div>
 
       {/* Shared Gradient Wrapper for FAQ and Final CTA to eliminate seams */}
-      <div className="relative bg-gradient-to-b from-moovi-green-deep via-moovi-green-dark to-[#05150C] overflow-hidden">
+      <div className="dark relative bg-gradient-to-b from-moovi-green-deep via-moovi-green-dark to-[#05150C] overflow-hidden text-foreground">
         {/* Shared Decorative blobs */}
         <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-moovi-mint/10 rounded-full blur-[120px] -translate-y-1/4 translate-x-1/4 pointer-events-none" />
         <div className="absolute bottom-1/4 left-0 w-[400px] h-[400px] bg-moovi-green/10 rounded-full blur-[100px] -translate-x-1/4 pointer-events-none" />

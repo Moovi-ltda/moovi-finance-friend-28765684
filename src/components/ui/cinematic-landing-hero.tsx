@@ -287,7 +287,7 @@ export function CinematicHero({ className, ...props }: CinematicHeroProps) {
 
       {/* Floating Header */}
       <div className="floating-header absolute top-[36px] left-0 right-0 z-[55] bg-white/80 backdrop-blur-md border-b border-gray-200/50 shadow-sm">
-        <div className="container max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center py-3">
+        <div className="container max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-center sm:justify-between items-center py-3">
           <div className="flex items-center gap-2">
             <div className="w-8 h-8 md:w-10 md:h-10 bg-moovi-green rounded-lg flex items-center justify-center p-1.5 overflow-hidden">
               <img src="/moovi-pig.png" alt="Moovi" className="w-full h-full object-contain brightness-0 invert" />

@@ -105,7 +105,7 @@ export function Pricing() {
   return (
     <section
       id="pricing-section"
-      className="min-h-screen mx-auto relative bg-[#05150C] overflow-hidden py-24"
+      className="min-h-screen mx-auto relative overflow-hidden py-24"
       ref={pricingRef}
     >
       {/* Background Grid & Sparkles */}

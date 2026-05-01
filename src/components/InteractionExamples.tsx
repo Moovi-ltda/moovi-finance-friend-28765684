@@ -53,7 +53,7 @@ export default function InteractionExamples() {
   const { elementRef, isVisible } = useScrollAnimation({ threshold: 0.1 });
 
   return (
-    <section className="py-20 md:py-28 bg-[#05150C] overflow-hidden flex flex-col items-center">
+    <section className="py-20 md:py-28 overflow-hidden flex flex-col items-center">
       <div className="container px-4 text-center mb-12 md:mb-16" ref={elementRef}>
         <motion.div
           initial={{ opacity: 0, y: 20 }}

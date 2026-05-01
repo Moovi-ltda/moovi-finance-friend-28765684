@@ -20,7 +20,7 @@ export default function SecuritySection() {
   const { elementRef, isVisible } = useScrollAnimation({ threshold: 0.1 });
 
   return (
-    <section className="py-20 md:py-32 bg-[#05150C] text-white flex justify-center px-4 relative overflow-hidden" id="seguranca-section">
+    <section className="py-20 md:py-32 text-white flex justify-center px-4 relative overflow-hidden" id="seguranca-section">
       {/* Decorative blobs para dar profundidade ao fundo sem criar bordas */}
       <div className="absolute top-0 right-0 w-96 h-96 bg-white/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 pointer-events-none" />
       <div className="absolute bottom-0 left-0 w-80 h-80 bg-moovi-mint/5 rounded-full blur-[100px] translate-y-1/4 -translate-x-1/4 pointer-events-none" />

@@ -68,7 +68,7 @@ export default function FeaturesScroll() {
   );
 
   return (
-    <section className="bg-background">
+    <section className="bg-transparent">
       <ContainerScroll
         titleComponent={
           <div className="space-y-4">

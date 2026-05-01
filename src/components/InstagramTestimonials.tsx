@@ -118,7 +118,7 @@ const InstagramTestimonials = () => {
   };
 
   return (
-    <section className="py-16 md:py-24 bg-[#05150C] overflow-hidden relative" id="testimonials-section">
+    <section className="py-16 md:py-24 overflow-hidden relative" id="testimonials-section">
       {/* Decorative subtle background gradient */}
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-[#0F6B3A]/5 via-transparent to-transparent pointer-events-none" />
 

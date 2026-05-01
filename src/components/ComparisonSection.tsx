@@ -18,7 +18,7 @@ const ComparisonSection = () => {
   ];
 
   return (
-    <section className="py-20 md:py-32 relative bg-gradient-to-br from-[#05150C] via-[#0A1A10] to-[#05150C] overflow-hidden">
+    <section className="py-20 md:py-32 relative overflow-hidden">
       {/* Decorative Grid */}
       <div className="absolute inset-0 bg-[linear-gradient(to_right,#0F6B3A1c_1px,transparent_1px),linear-gradient(to_bottom,#0F6B3A11_1px,transparent_1px)] bg-[size:70px_80px] pointer-events-none"></div>
 
