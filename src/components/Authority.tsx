@@ -11,16 +11,16 @@ const metrics = [
   {
     id: 1,
     icon: Users,
-    number: "+1.243",
+    number: "+5.240",
     label: "Usuários Ativos",
-    description: "Pessoas reais retomando o controle financeiro.",
+    description: "Brasileiros que já retomaram o controle financeiro.",
   },
   {
     id: 2,
     icon: DollarSign,
-    number: "+R$1.3 Mi",
+    number: "+R$2.1 Mi",
     label: "Organizados",
-    description: "Dinheiro real gerido e economizado pelo app.",
+    description: "Em finanças organizadas e economizadas.",
   },
   {
     id: 3,
@@ -166,10 +166,10 @@ const Authority = () => {
         <div className="text-center mt-12">
           <Button
             size="xl"
-            className="bg-green-700 hover:bg-green-800 text-white font-bold text-lg md:text-xl px-8 py-6 md:px-12 md:py-8 shadow-2xl hover:shadow-3xl transition-all rounded-full w-full md:w-auto animate-pulse"
+            className="bg-green-700 hover:bg-green-800 text-white font-bold text-lg md:text-xl px-8 py-6 md:px-12 md:py-8 shadow-2xl hover:shadow-3xl transition-all rounded-full w-full md:w-auto"
             onClick={() => scrollToSection("pricing-section")}
           >
-            Quero ter esses resultados 🚀
+            Quero esses resultados 🚀
           </Button>
         </div>
       </div>

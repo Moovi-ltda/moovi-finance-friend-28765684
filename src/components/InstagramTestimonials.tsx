@@ -118,8 +118,11 @@ const InstagramTestimonials = () => {
   };
 
   return (
-    <section className="py-16 md:py-24 bg-gradient-to-b from-background to-primary/5 overflow-hidden">
-      <div className="container mx-auto px-4">
+    <section className="py-16 md:py-24 bg-[#05150C] overflow-hidden relative" id="testimonials-section">
+      {/* Decorative subtle background gradient */}
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-[#0F6B3A]/5 via-transparent to-transparent pointer-events-none" />
+
+      <div className="container mx-auto px-4 relative z-10">
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -128,8 +131,9 @@ const InstagramTestimonials = () => {
           transition={{ duration: 0.6 }}
           className="text-center mb-12 max-w-4xl mx-auto"
         >
-          <h2 className="text-3xl md:text-5xl font-bold text-foreground mb-4">
-            Junte-se a <span className="text-primary">+1.000 brasileiros</span> que já simplificaram suas finanças.
+          <h2 className="text-[22px] min-[375px]:text-2xl sm:text-4xl md:text-5xl font-bold text-white mb-4 leading-snug tracking-tight">
+            Junte-se a <span className="text-[#25D366]">+5.240 brasileiros</span> que já<br />
+            simplificaram suas finanças.
           </h2>
         </motion.div>
 
@@ -205,7 +209,7 @@ const InstagramTestimonials = () => {
           transition={{ delay: 0.5, duration: 0.6 }}
           className="text-center mt-12"
         >
-          <p className="text-sm md:text-base text-muted-foreground">
+          <p className="text-sm md:text-base text-white/60">
             ✨ Depoimentos autênticos de usuários reais do Moovi
           </p>
         </motion.div>

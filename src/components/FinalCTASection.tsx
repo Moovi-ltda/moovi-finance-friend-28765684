@@ -1,98 +1,51 @@
 import { Button } from "@/components/ui/button";
-import { useScrollAnimation } from "@/hooks/useScrollAnimation";
-import { openWhatsApp } from "@/utils/scroll";
+import { scrollToSection } from "@/utils/scroll";
+import { motion } from "framer-motion";
+import { ArrowRight, Star } from "lucide-react";
 
-const FinalCTASection = () => {
-  const { elementRef, isVisible } = useScrollAnimation({ threshold: 0.15 });
-
+export default function FinalCTASection() {
   return (
-    <section 
-      id="pricing-section"
-      className="py-16 md:py-20 bg-gradient-to-br from-green-700 via-green-600 to-teal-700 text-white"
-    >
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center" ref={elementRef}>
-        <h2 className={`text-3xl sm:text-4xl lg:text-5xl font-extrabold mb-6 fade-in-scroll ${isVisible ? 'visible' : ''}`}>
-          Sua vida financeira organizada começa agora
-        </h2>
-        
-        <div className={`max-w-3xl mx-auto space-y-6 mb-12 fade-in-scroll fade-in-scroll-delay-100 ${isVisible ? 'visible' : ''}`}>
-          <p className="text-xl sm:text-2xl font-semibold">
-            Você merece ter paz de espírito com seu dinheiro.
-          </p>
-          <p className="text-lg sm:text-xl opacity-90">
-            Você merece clareza, controle e liberdade financeira.
-          </p>
-          <p className="text-lg sm:text-xl opacity-90">
-            Você merece um assessor pessoal trabalhando 24h por você.
-          </p>
-        </div>
-        
-        {/* Destaque teste grátis */}
-        <div className={`bg-green-800/40 backdrop-blur-md rounded-2xl p-6 sm:p-8 max-w-2xl mx-auto mb-12 border border-white/20 fade-in-scroll fade-in-scroll-delay-200 ${isVisible ? 'visible' : ''}`}>
-          <p className="text-2xl sm:text-3xl font-bold mb-4">
-            Teste grátis por 3 dias. Sem cartão de crédito.
-          </p>
-          <p className="text-base sm:text-lg opacity-90">
-            Experimente o Moovi sem compromisso. Sinta a diferença de ter um assessor 
-            financeiro pessoal no seu WhatsApp. Se você gostar (e vai gostar), continue 
-            por menos de um café por dia.
-          </p>
-        </div>
-        
-        {/* CTA Gigante */}
-        <Button 
-          size="lg"
-          className={`
-            bg-accent hover:bg-accent/90 
-            text-white text-lg sm:text-xl px-8 sm:px-16 py-6 sm:py-8 
-            animate-pulse-soft
-            shadow-2xl hover:shadow-accent/50
-            font-semibold
-            fade-in-scroll fade-in-scroll-delay-300
-            ${isVisible ? 'visible' : ''}
-          `}
-          onClick={openWhatsApp}
+    <section className="py-16 md:py-24 relative z-10">
+      <div className="container mx-auto px-4 max-w-3xl">
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="text-center"
         >
-          Comece agora — tenha seu assessor pessoal no WhatsApp →
-        </Button>
-        
-        <p className="text-base sm:text-lg mt-6 opacity-90">
-          Junte-se a mais de 10.000 pessoas que já transformaram suas vidas financeiras.
-        </p>
-        
-        {/* Garantia */}
-        <div className={`mt-12 max-w-2xl mx-auto fade-in-scroll fade-in-scroll-delay-400 ${isVisible ? 'visible' : ''}`}>
-          <p className="text-sm opacity-75 leading-relaxed">
-            <strong>Garantia de Satisfação:</strong> Se nos primeiros 3 dias você não 
-            sentir que o Moovi mudou sua relação com dinheiro, é só cancelar. Sem 
-            perguntas, sem complicação.
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-4 leading-tight">
+            Junte-se a{" "}
+            <span className="text-moovi-mint">+5.240 brasileiros</span> que já
+            transformaram suas finanças
+          </h2>
+
+          <p className="text-white/70 text-base md:text-lg mb-8 max-w-xl mx-auto">
+            Pare de perder dinheiro por falta de organização. Comece a ter controle real — direto no WhatsApp.
           </p>
-        </div>
-        
-        {/* Chamada emocional final */}
-        <div className={`mt-16 max-w-3xl mx-auto space-y-4 fade-in-scroll fade-in-scroll-delay-500 ${isVisible ? 'visible' : ''}`}>
-          <p className="text-lg sm:text-xl italic">
-            Você pode continuar tentando lembrar tudo de cabeça, perdendo contas e se 
-            sentindo perdido...
+
+          {/* Stars */}
+          <div className="flex items-center justify-center gap-1 mb-6">
+            {[...Array(5)].map((_, i) => (
+              <Star key={i} className="w-5 h-5 text-yellow-400 fill-yellow-400" />
+            ))}
+            <span className="text-white/80 text-sm ml-2 font-medium">4.9/5 de avaliação</span>
+          </div>
+
+          <Button
+            size="xl"
+            className="bg-white text-moovi-green-deep hover:bg-white/90 font-bold text-base md:text-lg px-8 md:px-12 py-6 md:py-7 shadow-2xl hover:shadow-3xl hover:-translate-y-1 transition-all rounded-2xl w-full sm:w-auto"
+            onClick={() => scrollToSection("pricing-section")}
+          >
+            Escolher meu plano
+            <ArrowRight className="w-5 h-5 ml-2" />
+          </Button>
+
+          <p className="text-white/50 text-xs mt-4 font-medium">
+            Cancele quando quiser · Sem burocracia
           </p>
-          <p className="text-lg sm:text-xl italic">
-            Ou pode ter um assessor pessoal cuidando de tudo pra você.
-          </p>
-          <p className="text-xl sm:text-2xl font-bold mt-6">
-            A escolha é sua. Mas a tranquilidade está a uma mensagem de distância.
-          </p>
-        </div>
-        
-        <Button 
-          size="lg"
-          className="mt-8 bg-green-700 hover:bg-green-800 text-white font-semibold shadow-lg hover:shadow-xl transition-all"
-          onClick={openWhatsApp}
-        >
-          Quero ter controle total das minhas finanças →
-        </Button>
+        </motion.div>
       </div>
     </section>
   );
-};
-
-export default FinalCTASection;
+}

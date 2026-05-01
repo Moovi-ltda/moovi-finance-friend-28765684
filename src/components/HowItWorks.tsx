@@ -1,100 +1,88 @@
-import { Edit3, Bell, BarChart3, Shield, Target } from "lucide-react";
+import { motion } from "framer-motion";
+import { CreditCard, MessageSquare, BarChart3 } from "lucide-react";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
-import mooviAvatar from "@/assets/moovi-mascot-avatar.png";
-interface Feature {
-  icon: any;
-  title: string;
-  description: string;
-  conversation: Array<{
-    type: 'user' | 'bot';
-    text: string;
-  }>;
-}
-const HowItWorks = () => {
-  const {
-    elementRef,
-    isVisible
-  } = useScrollAnimation({
-    threshold: 0.1
-  });
-  const features: Feature[] = [{
-    icon: Edit3,
-    title: "Registre suas despesas do jeito mais fácil",
-    description: "Por texto, áudio ou até foto do cupom fiscal. Você decide como quer conversar com seu assessor.",
-    conversation: [{
-      type: 'user',
-      text: 'Gastei 45 reais no almoço'
-    }, {
-      type: 'bot',
-      text: 'Registrado! Almoço — R$ 45,00. Categoria: Alimentação.'
-    }]
-  }, {
-    icon: Bell,
-    title: "Receba alertas inteligentes de tudo que importa",
-    description: "Nunca mais esqueça uma conta. A Moovi avisa você sobre vencimentos, gastos altos e oportunidades de economia.",
-    conversation: [{
-      type: 'bot',
-      text: 'Oi! Seu boleto de internet vence amanhã. Já separou o valor?'
-    }]
-  }, {
+
+const steps = [
+  {
+    icon: CreditCard,
+    number: "01",
+    title: "Escolha seu plano",
+    description: "Selecione o plano ideal para você. Pagamento rápido e seguro.",
+    color: "bg-blue-50 text-blue-600",
+    borderColor: "border-blue-200",
+  },
+  {
+    icon: MessageSquare,
+    number: "02",
+    title: "Receba acesso imediato",
+    description: "Após o pagamento, você recebe o acesso direto no WhatsApp. Sem espera.",
+    color: "bg-green-50 text-green-600",
+    borderColor: "border-green-200",
+  },
+  {
     icon: BarChart3,
-    title: "Entenda suas finanças de verdade",
-    description: "Relatórios claros e insights que realmente fazem sentido. Descubra para onde seu dinheiro está indo — sem abrir planilhas.",
-    conversation: [{
-      type: 'user',
-      text: 'Gastei demais esse mês?'
-    }, {
-      type: 'bot',
-      text: 'Você gastou 30% a mais com delivery. Quer uma dica pra equilibrar?'
-    }]
-  }, {
-    icon: Target,
-    title: "Categorização automática inteligente",
-    description: "A Moovi aprende com você e categoriza tudo sozinha. Você só precisa registrar — o resto é com ela.",
-    conversation: [{
-      type: 'user',
-      text: 'Paguei R$ 120 no mercado'
-    }, {
-      type: 'bot',
-      text: '✓ Registrado em Supermercado. Total do mês: R$ 680.'
-    }]
-  }, {
-    icon: BarChart3,
-    title: "Relatórios Automáticos",
-    description: "Receba relatórios completos sem fazer nada. A Moovi organiza tudo automaticamente e te mostra onde você pode melhorar.",
-    conversation: [{
-      type: 'user',
-      text: 'Como estão minhas finanças?'
-    }, {
-      type: 'bot',
-      text: 'Preparei seu relatório do mês! Você economizou 15% 🎉'
-    }]
-  }];
-  const WhatsAppConversation = ({
-    messages
-  }: {
-    messages: any[];
-  }) => <div className="bg-white rounded-2xl shadow-xl p-4 max-w-md mx-auto lg:mx-0">
-      <div className="bg-gray-50 p-4 rounded-xl space-y-3 min-h-[180px]">
-        {messages.map((msg, i) => <div key={i} className={`
-              flex items-end gap-2 animate-fade-in
-              ${msg.type === 'user' ? 'ml-auto flex-row-reverse' : 'mr-auto'}
-            `}>
-            {/* Avatar apenas para mensagens do bot */}
-            {msg.type === 'bot' && <img src={mooviAvatar} alt="Moovi" className="w-8 h-8 rounded-full flex-shrink-0" />}
-            
-            {/* Mensagem */}
-            <div className={`
-                rounded-lg p-3 max-w-[85%]
-                ${msg.type === 'user' ? 'bg-green-100 text-right' : 'bg-white shadow-sm'}
-              `}>
-              <p className="text-sm text-gray-800">{msg.text}</p>
-            </div>
-          </div>)}
+    number: "03",
+    title: "A Moovi faz o resto",
+    description: "Registre gastos por texto ou áudio. A IA organiza, categoriza e te alerta.",
+    color: "bg-purple-50 text-purple-600",
+    borderColor: "border-purple-200",
+  },
+];
+
+export default function HowItWorks() {
+  const { elementRef, isVisible } = useScrollAnimation({ threshold: 0.15 });
+
+  return (
+    <section className="py-16 md:py-24 bg-white overflow-hidden">
+      <div className="container mx-auto px-4 max-w-5xl" ref={elementRef}>
+        {/* Header */}
+        <div className={`text-center mb-12 md:mb-16 fade-in-scroll ${isVisible ? "visible" : ""}`}>
+          <span className="inline-block text-sm font-semibold text-moovi-green uppercase tracking-wider mb-3">
+            Como funciona
+          </span>
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+            Pagou? Pronto. A Moovi faz o resto.
+          </h2>
+          <p className="text-gray-500 text-base md:text-lg max-w-2xl mx-auto">
+            Em menos de 2 minutos você já está organizando suas finanças pelo WhatsApp.
+          </p>
+        </div>
+
+        {/* Steps */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
+          {steps.map((step, index) => (
+            <motion.div
+              key={index}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: index * 0.15 }}
+              className={`relative bg-white rounded-2xl border-2 ${step.borderColor} p-6 md:p-8 text-center group hover:shadow-xl transition-shadow duration-300`}
+            >
+              {/* Step number */}
+              <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-white px-3">
+                <span className="text-xs font-bold text-gray-300 uppercase tracking-widest">
+                  Passo {step.number}
+                </span>
+              </div>
+
+              {/* Icon */}
+              <div className={`w-16 h-16 rounded-2xl ${step.color} flex items-center justify-center mx-auto mb-5 group-hover:scale-110 transition-transform duration-300`}>
+                <step.icon className="w-7 h-7" />
+              </div>
+
+              {/* Content */}
+              <h3 className="text-lg font-bold text-gray-900 mb-2">{step.title}</h3>
+              <p className="text-sm text-gray-500 leading-relaxed">{step.description}</p>
+
+              {/* Connector line (desktop only) */}
+              {index < steps.length - 1 && (
+                <div className="hidden md:block absolute top-1/2 -right-4 md:-right-5 w-8 md:w-10 h-px bg-gray-200 -translate-y-1/2" />
+              )}
+            </motion.div>
+          ))}
+        </div>
       </div>
-    </div>;
-  return <section className="py-16 md:py-20 bg-background">
-      
-    </section>;
-};
-export default HowItWorks;
+    </section>
+  );
+}
