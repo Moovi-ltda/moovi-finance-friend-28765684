@@ -1,7 +1,7 @@
 import { CinematicHero } from "@/components/ui/cinematic-landing-hero";
 import Authority from "@/components/Authority";
 
-import FeaturesScroll from "@/components/FeaturesScroll";
+import FeaturesShowcase from "@/components/FeaturesShowcase";
 import ComparisonSection from "@/components/ComparisonSection";
 import SecuritySection from "@/components/SecuritySection";
 import InteractionExamples from "@/components/InteractionExamples";
@@ -23,14 +23,14 @@ const Index = () => {
       <Authority />
 
 
+      {/* 4. Features — Seção clara com stacking cards */}
+      <FeaturesShowcase />
+
       {/* Shared Gradient Wrapper for Middle Sections to eliminate seams */}
       <div className="dark relative bg-gradient-to-b from-[#05150C] via-[#0A1A10] to-moovi-green-deep overflow-hidden text-foreground">
         {/* Shared Decorative blobs */}
         <div className="absolute top-[20%] left-0 w-[500px] h-[500px] bg-moovi-green/10 rounded-full blur-[120px] -translate-x-1/4 pointer-events-none" />
         <div className="absolute top-[60%] right-0 w-[600px] h-[600px] bg-moovi-mint/5 rounded-full blur-[150px] translate-x-1/4 pointer-events-none" />
-
-        {/* 4. Features com Vídeo — Demonstração de cada funcionalidade */}
-        <FeaturesScroll />
 
         {/* 5. Comparativo — Moovi vs métodos tradicionais (tabela) */}
         <ComparisonSection />
