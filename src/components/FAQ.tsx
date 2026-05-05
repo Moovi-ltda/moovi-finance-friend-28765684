@@ -40,14 +40,14 @@ export function FAQ() {
   ];
 
   return (
-    <section className="py-16 md:py-24 relative z-10">
+    <section className="py-16 md:py-24 relative z-10 bg-white">
       <div className="container px-4 mx-auto max-w-3xl" ref={elementRef}>
         <div className={`text-center mb-10 md:mb-14 fade-in-scroll ${isVisible ? 'visible' : ''}`}>
-          <span className="inline-block text-sm font-semibold text-moovi-mint uppercase tracking-wider mb-3">
+          <span className="inline-block text-sm font-semibold text-moovi-green uppercase tracking-wider mb-3">
             FAQ
           </span>
-          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-4 text-white">Ainda com dúvida?</h2>
-          <p className="text-white/70">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-4 text-gray-900">Ainda com dúvida?</h2>
+          <p className="text-gray-500">
             Respondemos as dúvidas de mais de 5.240 membros.
           </p>
         </div>
@@ -55,11 +55,11 @@ export function FAQ() {
         <div className={`fade-in-scroll fade-in-scroll-delay-200 ${isVisible ? 'visible' : ''}`}>
           <Accordion type="single" collapsible className="w-full">
             {faqs.map((faq, i) => (
-              <AccordionItem key={i} value={`item-${i}`} className="border-b border-white/10">
-                <AccordionTrigger className="text-left font-semibold text-white hover:text-moovi-mint hover:no-underline py-5 text-sm md:text-base">
+              <AccordionItem key={i} value={`item-${i}`} className="border-b border-gray-200">
+                <AccordionTrigger className="text-left font-semibold text-gray-900 hover:text-moovi-green hover:no-underline py-5 text-sm md:text-base">
                   {faq.question}
                 </AccordionTrigger>
-                <AccordionContent className="text-white/70 leading-relaxed pb-5 text-sm">
+                <AccordionContent className="text-gray-500 leading-relaxed pb-5 text-sm">
                   {faq.answer}
                 </AccordionContent>
               </AccordionItem>
@@ -69,10 +69,10 @@ export function FAQ() {
 
         {/* CTA after FAQ */}
         <div className="text-center mt-10">
-          <p className="text-sm text-white/50 mb-4">Não encontrou sua dúvida? Fale com nosso suporte.</p>
+          <p className="text-sm text-gray-400 mb-4">Não encontrou sua dúvida? Fale com nosso suporte.</p>
           <Button
             variant="outline"
-            className="rounded-xl border-moovi-mint/30 text-moovi-mint hover:bg-moovi-mint hover:text-moovi-green-deep transition-all bg-transparent"
+            className="rounded-2xl border-moovi-green/30 text-moovi-green hover:bg-moovi-green hover:text-white transition-all bg-transparent"
             onClick={() => scrollToSection("pricing-section")}
           >
             Ver planos disponíveis
