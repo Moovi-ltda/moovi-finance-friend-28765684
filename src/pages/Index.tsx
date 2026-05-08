@@ -25,8 +25,7 @@ const Index = () => {
       {/* 4. Features — Seção clara com stacking cards */}
       <FeaturesShowcase />
 
-      {/* Transition bridge: white → dark */}
-      <div className="h-24 md:h-32 bg-gradient-to-b from-white to-[#05150C]" />
+      {/* Transition handled inside FeaturesShowcase via internal gradient */}
 
       {/* Shared Gradient Wrapper for Middle Sections */}
       <div className="dark relative bg-gradient-to-b from-[#05150C] via-[#0A1A10] to-[#071510] overflow-hidden text-foreground">
@@ -46,8 +45,7 @@ const Index = () => {
         <InstagramTestimonials />
       </div>
 
-      {/* Transition bridge: dark → white (Pricing) */}
-      <div className="h-24 md:h-32 bg-gradient-to-b from-[#071510] to-white" />
+      {/* Hard cut transition to Pricing section */}
 
       {/* 8. Planos — Fundo branco para máximo contraste e conversão */}
       <Pricing />
@@ -55,8 +53,7 @@ const Index = () => {
       {/* 9. FAQ — Fundo branco para leitura limpa */}
       <FAQ />
 
-      {/* Transition bridge: white → dark (Final CTA) */}
-      <div className="h-16 md:h-24 bg-gradient-to-b from-white to-[#05150C]" />
+      {/* Hard cut transition to Final CTA section */}
 
       {/* 10. CTA Final */}
       <div className="dark relative bg-gradient-to-b from-[#05150C] via-[#0A1210] to-[#05150C] overflow-hidden text-foreground">

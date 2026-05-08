@@ -348,8 +348,8 @@ export default function FeaturesShowcase() {
         </div>
       </div>
 
-      {/* Bottom spacer */}
-      <div className="h-8 md:h-16" />
+      {/* Bottom padding for the section content to breathe before the next section */}
+      <div className="h-16 md:h-24" />
     </section>
   );
 }
