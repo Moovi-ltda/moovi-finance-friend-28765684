@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 import { Users, DollarSign, TrendingUp, Shield, ChevronLeft, ChevronRight } from "lucide-react";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import { scrollToSection } from "@/utils/scroll";
-import { Button } from "@/components/ui/button";
+import { AnimatedButton } from "@/components/ui/animated-button";
 import { TextAnimate } from "@/components/ui/text-animate";
 
 // --- DADOS ---
@@ -164,13 +164,13 @@ const Authority = () => {
 
         {/* Botão CTA Final */}
         <div className="text-center mt-12">
-          <Button
+          <AnimatedButton
             size="xl"
-            className="bg-green-700 hover:bg-green-800 text-white font-bold text-lg md:text-xl px-8 py-6 md:px-12 md:py-8 shadow-2xl hover:shadow-3xl transition-all rounded-full w-full md:w-auto"
+            variant="mooviSolid"
+            text="Quero esses resultados"
+            emoji="🚀"
             onClick={() => scrollToSection("pricing-section")}
-          >
-            Quero esses resultados 🚀
-          </Button>
+          />
         </div>
       </div>
     </section>

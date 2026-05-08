@@ -1,4 +1,4 @@
-import { Button } from "@/components/ui/button";
+import { AnimatedButton } from "@/components/ui/animated-button";
 import { scrollToSection } from "@/utils/scroll";
 import { motion } from "framer-motion";
 import { ArrowRight, Star } from "lucide-react";
@@ -32,14 +32,12 @@ export default function FinalCTASection() {
             <span className="text-white/80 text-sm ml-2 font-medium">4.9/5 de avaliação</span>
           </div>
 
-          <Button
+          <AnimatedButton
             size="xl"
-            className="bg-white text-moovi-green-deep hover:bg-white/90 font-bold text-base md:text-lg px-8 md:px-12 py-6 md:py-7 shadow-2xl hover:shadow-3xl hover:-translate-y-1 transition-all rounded-2xl w-full sm:w-auto"
+            variant="mooviWhite"
+            text="Escolher meu plano"
             onClick={() => scrollToSection("pricing-section")}
-          >
-            Escolher meu plano
-            <ArrowRight className="w-5 h-5 ml-2" />
-          </Button>
+          />
 
           <p className="text-white/50 text-xs mt-4 font-medium">
             Cancele quando quiser · Sem burocracia

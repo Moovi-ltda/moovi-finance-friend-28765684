@@ -1,7 +1,7 @@
 import { X, Check, ArrowRight } from "lucide-react";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import { scrollToSection } from "@/utils/scroll";
-import { Button } from "@/components/ui/button";
+import { AnimatedButton } from "@/components/ui/animated-button";
 import { motion } from "framer-motion";
 
 const ComparisonSection = () => {
@@ -14,7 +14,6 @@ const ComparisonSection = () => {
     { feature: "Dashboard profissional", moovi: "Completo com gráficos", others: "Básico ou inexistente" },
     { feature: "Exportar relatórios", moovi: "PDF e Excel", others: "Limitado" },
     { feature: "Lembretes de contas", moovi: "No WhatsApp", others: "Notificação genérica" },
-    { feature: "Precisa instalar app?", moovi: "Não — funciona no WhatsApp", others: "Sim — app pesado" },
   ];
 
   return (
@@ -99,14 +98,12 @@ const ComparisonSection = () => {
 
         {/* CTA */}
         <div className="text-center mt-12">
-          <Button
-            size="lg"
-            className="bg-gradient-to-t from-[#0F6B3A] to-[#25D366] hover:scale-105 text-white font-bold rounded-xl px-10 py-6 text-lg shadow-[0_0_30px_rgba(37,211,102,0.3)] hover:shadow-[0_0_50px_rgba(37,211,102,0.5)] border border-[#25D366]/50 transition-all duration-300"
+          <AnimatedButton
+            size="xl"
+            variant="mooviPrimary"
+            text="Quero usar o Moovi"
             onClick={() => scrollToSection("pricing-section")}
-          >
-            Quero usar o Moovi
-            <ArrowRight className="w-5 h-5 ml-2" />
-          </Button>
+          />
         </div>
       </div>
     </section>
