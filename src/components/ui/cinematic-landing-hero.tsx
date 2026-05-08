@@ -57,11 +57,12 @@ function Navbar() {
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.5, ease: "easeOut" }}
         className={cn(
-          "pointer-events-auto transition-all duration-500 w-full max-w-[900px] border border-white/[0.08] backdrop-blur-2xl overflow-hidden",
-          isMobileMenuOpen ? "rounded-3xl bg-[#080d0a]" : "rounded-full",
-          scrolled && !isMobileMenuOpen
-            ? "bg-[#050a07]/90 shadow-[0_10px_40px_rgba(0,0,0,0.5)]"
-            : !isMobileMenuOpen ? "bg-[#050a07]/40" : ""
+          "pointer-events-auto transition-all duration-500 w-full max-w-[900px] border border-white/[0.08] backdrop-blur-2xl overflow-hidden rounded-[32px]",
+          isMobileMenuOpen 
+            ? "bg-[#080d0a] shadow-2xl" 
+            : scrolled 
+              ? "bg-[#050a07]/90 shadow-[0_10px_40px_rgba(0,0,0,0.5)]"
+              : "bg-[#050a07]/40"
         )}
       >
         <div className="px-6 flex justify-between items-center h-16 md:h-[72px]">
@@ -242,16 +243,6 @@ function HeroCTA() {
         </span>
       </button>
 
-      {/* Secondary CTA */}
-      <button
-        onClick={() => scrollToSection("pricing-section")}
-        className="group w-full sm:w-auto h-[52px] px-8 rounded-2xl text-[15px] font-semibold text-white/70 hover:text-white bg-white/[0.04] border border-white/[0.08] hover:bg-white/[0.08] hover:border-white/[0.14] transition-all duration-300"
-      >
-        <span className="flex items-center justify-center gap-2">
-          Ver planos
-          <ArrowRight className="w-3.5 h-3.5 opacity-50 group-hover:translate-x-0.5 transition-transform" />
-        </span>
-      </button>
     </motion.div>
   );
 }
