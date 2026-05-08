@@ -49,20 +49,6 @@ export default function SecuritySection() {
             O selo exibido no nosso perfil garante que você tenha mais segurança ao conversar com a Moovi no WhatsApp. Esse selo indica que a Meta verificou nossa conta com base nas atividades no WhatsApp e documentos fornecidos.
           </p>
 
-          {/* Bottom Tabs/Buttons */}
-          <div className="flex flex-row flex-nowrap gap-3 md:gap-4 w-full max-w-[340px] md:max-w-[380px] mx-auto justify-center px-0">
-            <button 
-              onClick={() => scrollToSection('testimonials-section')}
-              className="flex-1 px-2 py-3.5 md:py-4 rounded-xl md:rounded-2xl bg-[#2A2B2E] border border-white/5 hover:bg-white/10 text-white text-[13px] sm:text-[14px] md:text-[15px] font-semibold transition-colors shadow-sm whitespace-nowrap"
-            >
-              Depoimentos
-            </button>
-            <button 
-              className="flex-1 px-2 py-3.5 md:py-4 rounded-xl md:rounded-2xl bg-[#2A2B2E] border border-white/5 hover:bg-white/10 text-white text-[13px] sm:text-[14px] md:text-[15px] font-semibold transition-colors shadow-sm whitespace-nowrap"
-            >
-              Segurança
-            </button>
-          </div>
         </motion.div>
       </div>
     </section>
