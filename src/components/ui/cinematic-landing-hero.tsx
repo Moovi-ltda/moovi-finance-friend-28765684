@@ -520,7 +520,7 @@ export function CinematicHero({ className, ...props }: CinematicHeroProps) {
                   className="mt-6 md:mt-7 text-[15px] md:text-[17px] text-white/45 leading-relaxed max-w-[480px] font-medium"
                 >
                   A Moovi registra, categoriza e organiza seus gastos 
-                  automaticamente — direto no WhatsApp, usando Inteligência Artificial. 
+                  automaticamente direto no WhatsApp, usando Inteligência Artificial. 
                   Sem planilha, sem esforço.
                 </motion.p>
 
