@@ -223,7 +223,7 @@ export function Pricing() {
                   className={`w-full mb-8 p-4 text-base font-bold rounded-2xl transition-all duration-300 ${
                     plan.isPopular
                       ? "bg-moovi-green hover:bg-moovi-green-dark text-white shadow-lg shadow-moovi-green/20 hover:shadow-xl hover:shadow-moovi-green/30 hover:-translate-y-0.5"
-                      : "bg-gray-900 hover:bg-gray-800 text-white shadow-md hover:shadow-lg hover:-translate-y-0.5"
+                      : "bg-moovi-green hover:bg-moovi-green-dark text-white shadow-md hover:shadow-lg hover:-translate-y-0.5"
                   }`}
                 >
                   {plan.buttonText}
