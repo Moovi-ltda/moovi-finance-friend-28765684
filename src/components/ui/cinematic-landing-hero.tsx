@@ -152,7 +152,7 @@ function Navbar() {
                 <button
                   onClick={() => {
                     setIsMobileMenuOpen(false);
-                    scrollToSection("seguranca-section");
+                    scrollToSection("features");
                   }}
                   className="text-[17px] text-left font-semibold text-white/90 hover:text-white transition-colors"
                 >
