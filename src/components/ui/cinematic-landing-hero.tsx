@@ -98,12 +98,12 @@ function Navbar() {
           </div>
 
           {/* CTA — desktop only */}
-          <button
-            onClick={() => scrollToSection("pricing-section")}
-            className="hidden md:flex h-10 px-6 rounded-full text-[14px] font-semibold text-[#05150C] bg-white hover:scale-105 hover:bg-gray-100 transition-all duration-300 items-center"
+          <a
+            href="https://dash.moovi.chat"
+            className="hidden md:flex h-10 px-6 rounded-full text-[14px] font-semibold text-[#05150C] bg-white hover:scale-105 hover:bg-gray-100 transition-all duration-300 items-center no-underline"
           >
             Entrar
-          </button>
+          </a>
 
           {/* Mobile Hamburger / Close Button */}
           <button
@@ -160,15 +160,13 @@ function Navbar() {
                 </button>
               </div>
 
-              <button
-                onClick={() => {
-                  setIsMobileMenuOpen(false);
-                  scrollToSection("pricing-section");
-                }}
-                className="h-[46px] w-[140px] rounded-full text-[15px] font-bold text-[#05150C] bg-white flex items-center justify-center hover:scale-105 transition-all"
+              <a
+                href="https://dash.moovi.chat"
+                className="h-[46px] w-[140px] rounded-full text-[15px] font-bold text-[#05150C] bg-white flex items-center justify-center hover:scale-105 transition-all no-underline"
+                onClick={() => setIsMobileMenuOpen(false)}
               >
                 Entrar
-              </button>
+              </a>
             </motion.div>
           )}
         </AnimatePresence>
