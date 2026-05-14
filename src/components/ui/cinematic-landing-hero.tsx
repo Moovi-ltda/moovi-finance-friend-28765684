@@ -67,13 +67,16 @@ function Navbar() {
       >
         <div className="px-6 flex justify-between items-center h-16 md:h-[72px]">
           {/* Logo */}
-          <div className="flex items-center">
+          <button
+            onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+            className="flex items-center cursor-pointer bg-transparent border-0 p-0"
+          >
             <img
               src="/logo-moovi.png"
               alt="Moovi"
               className="h-10 md:h-12 w-auto object-contain drop-shadow-md"
             />
-          </div>
+          </button>
 
           {/* Nav Links — desktop only */}
           <div className="hidden md:flex items-center gap-8">
