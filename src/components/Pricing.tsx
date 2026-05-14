@@ -123,6 +123,7 @@ export function Pricing() {
             staggerFrom="first"
             reverse={true}
             containerClassName="justify-center"
+            wordLevelClassName="pb-2"
             transition={{
               type: "spring",
               stiffness: 250,
