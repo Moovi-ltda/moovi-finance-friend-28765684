@@ -90,7 +90,7 @@ function Navbar() {
               Preços
             </button>
             <button
-              onClick={() => scrollToSection("seguranca-section")}
+              onClick={() => scrollToSection("features")}
               className="text-[14px] text-white/60 hover:text-white transition-colors font-medium tracking-wide"
             >
               Como funciona
@@ -152,7 +152,7 @@ function Navbar() {
                 <button
                   onClick={() => {
                     setIsMobileMenuOpen(false);
-                    scrollToSection("seguranca-section");
+                    scrollToSection("features");
                   }}
                   className="text-[17px] text-left font-semibold text-white/90 hover:text-white transition-colors"
                 >
