@@ -506,12 +506,14 @@ export default function Checkout() {
                             onChange={(v) => setCardNumber(maskCardNumber(v))}
                             placeholder="0000 0000 0000 0000"
                             inputMode="numeric"
+                            error={hasAttemptedSubmit ? fieldErrors.cardNumber : undefined}
                           />
                           <Field
                             label="Nome impresso"
                             value={cardHolder}
                             onChange={(v) => setCardHolder(v.toUpperCase())}
                             placeholder="JOAO DA SILVA"
+                            error={hasAttemptedSubmit ? fieldErrors.cardHolder : undefined}
                           />
                           <div className="grid grid-cols-2 gap-3">
                             <Field
@@ -520,6 +522,7 @@ export default function Checkout() {
                               onChange={(v) => setCardExpiry(maskExpiry(v))}
                               placeholder="MM/AA"
                               inputMode="numeric"
+                              error={hasAttemptedSubmit ? fieldErrors.cardExpiry : undefined}
                             />
                             <Field
                               label="CVV"
@@ -527,6 +530,7 @@ export default function Checkout() {
                               onChange={(v) => setCardCvv(maskCVV(v))}
                               placeholder="123"
                               inputMode="numeric"
+                              error={hasAttemptedSubmit ? fieldErrors.cardCvv : undefined}
                             />
                           </div>
                           <label className="block">
