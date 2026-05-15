@@ -154,7 +154,7 @@ export function PricingToggle({ plans, title = "Escolha seu plano", description 
               }}
               className={cn(
                 buttonVariants({
-                  variant: plan.buttonStyle === "primary" ? "hero" : "outline",
+                  variant: plan.buttonStyle === "primary" ? "mooviPrimary" : "outline",
                   size: "lg",
                 }),
                 "w-full font-semibold text-base mt-auto",
