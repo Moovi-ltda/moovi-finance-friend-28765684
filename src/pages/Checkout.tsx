@@ -354,7 +354,7 @@ export default function Checkout() {
               <>
                 <Stepper current={step} />
 
-                <form onSubmit={handleSubmit} className="mt-8 space-y-4">
+                <form noValidate className="mt-8 space-y-4">
                   {step === 1 && (
                     <>
                       <h3 className="text-xl font-bold text-slate-900">Quem é você?</h3>
