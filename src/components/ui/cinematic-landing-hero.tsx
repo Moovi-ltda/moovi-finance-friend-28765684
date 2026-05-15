@@ -262,7 +262,7 @@ function FloatingBadge({
     <motion.div
       initial={{ opacity: 0, y: 30, scale: 0.9 }}
       animate={{ opacity: 1, y: 0, scale: 1 }}
-      transition={{ delay: 2.0 + delay, duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }}
+      transition={{ delay: 2.0 + delay, duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] as const }}
       className={cn(
         "absolute z-30 px-4 py-3 rounded-2xl",
         "bg-[#0a0f0c]/70 backdrop-blur-xl border border-white/[0.08]",
