@@ -186,25 +186,37 @@ export default function Checkout() {
     return null;
   };
   const validateStep3 = () => {
-    if (method === "PIX") return null;
-    if (onlyDigits(cardNumber).length < 13) return "Número do cartão inválido.";
-    if (!cardHolder.trim()) return "Informe o nome impresso no cartão.";
-    if (cardExpiry.length !== 5) return "Validade inválida (MM/AA).";
-    if (cardCvv.length < 3) return "CVV inválido.";
-    return null;
+    const errors: Record<string, string> = {};
+    if (method === "PIX") return errors;
+    if (onlyDigits(cardNumber).length < 13) errors.cardNumber = "Número do cartão inválido.";
+    if (!cardHolder.trim()) errors.cardHolder = "Informe o nome impresso no cartão.";
+    if (cardExpiry.length !== 5) errors.cardExpiry = "Validade inválida (MM/AA).";
+    if (cardCvv.length < 3) errors.cardCvv = "CVV inválido.";
+    return errors;
   };
 
   const next = () => {
     const err = step === 1 ? validateStep1() : step === 2 ? validateStep2() : null;
     if (err) return toast.error(err);
     setStep((s) => Math.min(3, s + 1));
+    setHasAttemptedSubmit(false);
+    setFieldErrors({});
   };
-  const back = () => setStep((s) => Math.max(1, s - 1));
+  const back = () => {
+    setStep((s) => Math.max(1, s - 1));
+    setHasAttemptedSubmit(false);
+    setFieldErrors({});
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const err = validateStep3();
-    if (err) return toast.error(err);
+    setHasAttemptedSubmit(true);
+    const errors = validateStep3();
+    if (Object.keys(errors).length > 0) {
+      setFieldErrors(errors);
+      return;
+    }
+    setFieldErrors({});
 
     setStatus("loading");
     setErrorMsg("");
