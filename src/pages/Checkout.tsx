@@ -582,12 +582,13 @@ export default function Checkout() {
                         Continuar <ArrowRight className="h-4 w-4" />
                       </button>
                     ) : (
-                      <button
-                        type="submit"
-                        className="bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-8 py-3 rounded-lg shadow-md transition-colors flex items-center gap-2"
-                      >
-                        <ShieldCheck className="h-4 w-4" /> Finalizar Assinatura
-                      </button>
+                    <button
+                      type="button"
+                      onClick={handleSubmit}
+                      className="bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-8 py-3 rounded-lg shadow-md transition-colors flex items-center gap-2"
+                    >
+                      <ShieldCheck className="h-4 w-4" /> Finalizar Assinatura
+                    </button>
                     )}
                   </div>
                 </form>
