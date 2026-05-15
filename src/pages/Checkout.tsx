@@ -829,8 +829,9 @@ interface FieldProps {
   placeholder?: string;
   type?: string;
   inputMode?: "text" | "numeric" | "email" | "tel";
+  error?: string;
 }
-function Field({ label, value, onChange, placeholder, type = "text", inputMode = "text" }: FieldProps) {
+function Field({ label, value, onChange, placeholder, type = "text", inputMode = "text", error }: FieldProps) {
   return (
     <label className="block">
       <span className="text-sm font-medium text-slate-700">{label}</span>
@@ -840,8 +841,11 @@ function Field({ label, value, onChange, placeholder, type = "text", inputMode =
         onChange={(e) => onChange(e.target.value)}
         placeholder={placeholder}
         inputMode={inputMode}
-        className="mt-1 w-full bg-white border border-slate-200 rounded-lg px-3 h-[44px] text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
+        className={`mt-1 w-full bg-white border rounded-lg px-3 h-[44px] text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 ${
+          error ? "border-red-300 focus:border-red-500 focus:ring-red-200" : "border-slate-200"
+        }`}
       />
+      {error && <p className="mt-1 text-xs text-red-500">{error}</p>}
     </label>
   );
 }
