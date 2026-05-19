@@ -195,9 +195,15 @@ function SocialProof() {
               key={i}
               src={url}
               alt=""
+              width={32}
+              height={32}
               className="w-8 h-8 rounded-full border-2 border-[#0a0f0c] object-cover"
-              loading="lazy"
+              loading="eager"
+              decoding="async"
+              // @ts-ignore
+              fetchpriority="high"
             />
+
           ))}
         </div>
         <div className="flex items-center gap-0.5 ml-3">
