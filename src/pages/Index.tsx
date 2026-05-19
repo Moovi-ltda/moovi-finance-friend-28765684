@@ -1,4 +1,5 @@
 import { CinematicHero } from "@/components/ui/cinematic-landing-hero";
+import TrustMarquee from "@/components/TrustMarquee";
 import Authority from "@/components/Authority";
 
 import FeaturesShowcase from "@/components/FeaturesShowcase";
