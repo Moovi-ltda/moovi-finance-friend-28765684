@@ -20,8 +20,10 @@ const Index = () => {
       {/* 1. Hero — Captura atenção, copy principal, vídeo demo */}
       <CinematicHero />
 
-      {/* Barra de confiança em marquee */}
-      <TrustMarquee />
+      {/* Barra de confiança em marquee (apenas mobile; no desktop fica no rodapé da hero) */}
+      <div className="md:hidden">
+        <TrustMarquee />
+      </div>
 
 
       {/* 2. Prova Social — Números de impacto para validação imediata */}

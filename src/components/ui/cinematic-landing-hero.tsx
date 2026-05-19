@@ -3,6 +3,7 @@ import { cn } from "@/lib/utils";
 import { scrollToSection } from "@/utils/scroll";
 import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion";
 import { ArrowRight, Sparkles, MessageCircle, Star, ChevronDown, X } from "lucide-react";
+import TrustMarquee from "@/components/TrustMarquee";
 
 // ─── CONFIG ────────────────────────────────────────────────────────────────────
 const PANDA_VIDEO_URL =
@@ -556,6 +557,11 @@ export function CinematicHero({ className, ...props }: CinematicHeroProps) {
 
         {/* ─── BOTTOM FADE ──────────────────────────────────────────── */}
         <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-[#0A1A10] to-transparent pointer-events-none z-[5]" />
+
+        {/* ─── TRUST MARQUEE (desktop only, anchored to hero bottom) ── */}
+        <div className="hidden md:block absolute bottom-0 left-0 right-0 z-20">
+          <TrustMarquee />
+        </div>
       </section>
     </>
   );
