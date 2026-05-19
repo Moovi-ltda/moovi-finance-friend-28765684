@@ -4,17 +4,16 @@ import { scrollToSection } from "@/utils/scroll";
 import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion";
 import { ArrowRight, Sparkles, MessageCircle, Star, ChevronDown, X } from "lucide-react";
 import TrustMarquee from "@/components/TrustMarquee";
+import avatar1 from "@/assets/avatars/a1.jpg";
+import avatar2 from "@/assets/avatars/a2.jpg";
+import avatar3 from "@/assets/avatars/a3.jpg";
+import avatar4 from "@/assets/avatars/a4.jpg";
 
 // ─── CONFIG ────────────────────────────────────────────────────────────────────
 const PANDA_VIDEO_URL =
   "https://player-vz-c1e2f242-e38.tv.pandavideo.com.br/embed/?v=4e6c28e8-f6eb-4e20-b216-224be1bc17f8";
 
-const AVATAR_URLS = [
-  "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=64&h=64&fit=crop&crop=face",
-  "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=64&h=64&fit=crop&crop=face",
-  "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=64&h=64&fit=crop&crop=face",
-  "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=64&h=64&fit=crop&crop=face",
-];
+const AVATAR_URLS = [avatar1, avatar2, avatar3, avatar4];
 
 // ─── HEADLINE WORDS ANIMATION ──────────────────────────────────────────────────
 const headlineVariants = {
@@ -196,9 +195,15 @@ function SocialProof() {
               key={i}
               src={url}
               alt=""
+              width={32}
+              height={32}
               className="w-8 h-8 rounded-full border-2 border-[#0a0f0c] object-cover"
-              loading="lazy"
+              loading="eager"
+              decoding="async"
+              // @ts-ignore
+              fetchpriority="high"
             />
+
           ))}
         </div>
         <div className="flex items-center gap-0.5 ml-3">
