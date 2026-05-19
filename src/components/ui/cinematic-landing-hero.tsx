@@ -521,15 +521,19 @@ export function CinematicHero({ className, ...props }: CinematicHeroProps) {
                   <HeroCTA />
                 </div>
 
-                {/* Social proof */}
-                <div className="mt-8 md:mt-10">
+                {/* Social proof — desktop only (mobile version renders below the phone) */}
+                <div className="hidden lg:block mt-8 md:mt-10">
                   <SocialProof />
                 </div>
               </div>
 
               {/* ─── RIGHT COLUMN: Phone Mockup ────────────────────── */}
-              <div className="order-2 mt-14 lg:mt-0 w-full flex justify-center lg:justify-end">
+              <div className="order-2 mt-14 lg:mt-0 w-full flex flex-col items-center lg:items-end">
                 <PhoneMockup />
+                {/* Social proof — mobile only, below phone */}
+                <div className="lg:hidden mt-10 flex justify-center w-full">
+                  <SocialProof />
+                </div>
               </div>
             </div>
           </div>
