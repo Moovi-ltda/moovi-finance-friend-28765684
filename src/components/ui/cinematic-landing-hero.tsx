@@ -422,7 +422,7 @@ export function CinematicHero({ className, ...props }: CinematicHeroProps) {
   const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0.3]);
 
   const headlineWords = ["Seu", "dinheiro", "organizado."];
-  const headlineAccent = ["Sua", "vida", "com", "IA."];
+  const headlineAccent = ["Sua", "vida", "mais", "IA."];
 
   return (
     <>
