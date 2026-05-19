@@ -3,6 +3,7 @@ import { cn } from "@/lib/utils";
 import { scrollToSection } from "@/utils/scroll";
 import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion";
 import { ArrowRight, Sparkles, MessageCircle, Star, ChevronDown, X } from "lucide-react";
+import TrustMarquee from "@/components/TrustMarquee";
 
 // ─── CONFIG ────────────────────────────────────────────────────────────────────
 const PANDA_VIDEO_URL =
