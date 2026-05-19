@@ -479,7 +479,7 @@ export function CinematicHero({ className, ...props }: CinematicHeroProps) {
 
                 {/* Headline */}
                 <div className="mt-7 md:mt-8">
-                  <h1 className="text-[2.5rem] sm:text-[3.2rem] md:text-[3.8rem] lg:text-[4.2rem] font-extrabold leading-[1.05] tracking-tight">
+                  <h1 className="text-[2.3rem] sm:text-[3.0rem] md:text-[3.6rem] lg:text-[4.0rem] font-extrabold leading-[1.05] tracking-tight">
                     {/* Line 1 */}
                     <span className="block text-white">
                       {headlineWords.map((word, i) => (
