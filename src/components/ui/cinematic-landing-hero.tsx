@@ -228,19 +228,11 @@ function HeroCTA() {
       {/* Primary CTA */}
       <button
         onClick={() => scrollToSection("pricing-section")}
-        className="group relative w-full sm:w-auto h-[52px] px-8 rounded-2xl text-[15px] font-bold text-white overflow-hidden transition-all duration-500 hover:scale-[1.03] active:scale-[0.98]"
+        className="group relative w-full sm:w-auto h-[52px] px-8 rounded-full text-[15px] font-bold text-[#1AAD55] bg-white overflow-hidden transition-all duration-500 hover:scale-[1.03] active:scale-[0.98] shadow-[0_10px_40px_-10px_rgba(255,255,255,0.25)] hover:shadow-[0_15px_50px_-10px_rgba(255,255,255,0.4)]"
       >
-        {/* Gradient BG */}
-        <div className="absolute inset-0 bg-gradient-to-b from-[#25D366] to-[#1AAD55] rounded-2xl" />
-        {/* Glow */}
-        <div className="absolute inset-0 rounded-2xl shadow-[0_0_40px_rgba(37,211,102,0.25)] group-hover:shadow-[0_0_60px_rgba(37,211,102,0.4)] transition-shadow duration-500" />
-        {/* Inner highlight */}
-        <div className="absolute inset-[1px] rounded-[15px] bg-gradient-to-b from-white/[0.15] to-transparent pointer-events-none" style={{ height: "50%" }} />
-        {/* Content */}
         <span className="relative z-10 flex items-center justify-center gap-2">
-          <MessageCircle className="w-4 h-4" />
-          Começar a usar a Moovi
-          <ArrowRight className="w-4 h-4 opacity-70 group-hover:translate-x-1 transition-transform duration-300" />
+          Começar agora
+          <ArrowRight className="w-4 h-4 opacity-80 group-hover:translate-x-1 transition-transform duration-300" />
         </span>
       </button>
 
