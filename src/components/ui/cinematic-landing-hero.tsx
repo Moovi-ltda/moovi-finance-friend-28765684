@@ -228,7 +228,7 @@ function HeroCTA() {
       {/* Primary CTA */}
       <button
         onClick={() => scrollToSection("pricing-section")}
-        className="group relative w-full sm:w-auto h-[52px] px-8 rounded-full text-[15px] font-bold bg-white/95 overflow-hidden transition-all duration-500 hover:scale-[1.03] active:scale-[0.98] shadow-[0_4px_14px_-4px_rgba(0,0,0,0.3)] hover:shadow-[0_6px_18px_-4px_rgba(0,0,0,0.35)] text-[#0f6b3a]"
+        className="group relative w-auto h-[52px] px-8 rounded-full text-[15px] font-bold bg-white/95 overflow-hidden transition-all duration-500 hover:scale-[1.03] active:scale-[0.98] shadow-[0_4px_14px_-4px_rgba(0,0,0,0.3)] hover:shadow-[0_6px_18px_-4px_rgba(0,0,0,0.35)] text-[#0f6b3a]"
       >
         <span className="relative z-10 flex items-center justify-center gap-2">
           Começar agora
