@@ -518,7 +518,7 @@ export function CinematicHero({ className, ...props }: CinematicHeroProps) {
                   variants={fadeUp(1.0)}
                   initial="hidden"
                   animate="visible"
-                  className="mt-6 md:mt-7 text-[15px] md:text-[17px] text-white/45 leading-relaxed max-w-[480px] font-medium"
+                  className="mt-6 md:mt-7 text-[15px] md:text-[17px] text-white/85 leading-relaxed max-w-[480px] font-medium"
                 >
                   A Moovi organiza seus gastos automaticamente, usando Inteligência Artificial. 
                   Sem planilha, sem esforço.
