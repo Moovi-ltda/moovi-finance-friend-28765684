@@ -512,7 +512,7 @@ export function CinematicHero({ className, ...props }: CinematicHeroProps) {
                   animate="visible"
                   className="mt-6 md:mt-7 text-[15px] md:text-[17px] text-white/85 leading-relaxed max-w-[480px] font-medium"
                 >
-                  A Moovi organiza seus gastos automaticamente, usando Inteligência Artificial. 
+                  A Moovi organiza automaticamente, usando Inteligência Artificial. 
                   Sem planilha, sem esforço.
                 </motion.p>
 
