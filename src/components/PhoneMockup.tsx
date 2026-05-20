@@ -44,7 +44,7 @@ export const PhoneMockup = () => (
         }}>
           {/* Outbound Bubble */}
           <div className="relative max-w-[85%] self-end rounded-xl rounded-tr-sm bg-[#DCF8C6] px-3 pb-1.5 pt-2 text-gray-800 shadow-sm">
-            Gastei <span className="font-bold text-red-600">R$ 47,90</span> no mercado agora 🛒
+            Gastei <span className="font-bold text-red-600">R$ 47,90</span> no mercado agora <span className="hidden">🚀</span>
             <div className="mt-0.5 text-right text-[10px] font-medium text-gray-500">
               14:32 <span className="text-[#34B7F1] ml-0.5">✓✓</span>
             </div>
