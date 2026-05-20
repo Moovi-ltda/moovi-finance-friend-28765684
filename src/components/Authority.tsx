@@ -168,7 +168,7 @@ const Authority = () => {
             size="xl"
             variant="mooviSolid"
             text="Quero esses resultados"
-            emoji="🚀"
+            emoji="​"
             onClick={() => scrollToSection("pricing-section")}
           />
         </div>
