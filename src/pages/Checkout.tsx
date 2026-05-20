@@ -99,6 +99,8 @@ export default function Checkout() {
   const [step, setStep] = useState(1);
   const [status, setStatus] = useState<Status>("form");
   const [method, setMethod] = useState<PaymentMethod>("CREDIT_CARD");
+  const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
+  const [hasAttemptedSubmit, setHasAttemptedSubmit] = useState(false);
   const [mobileSummaryOpen, setMobileSummaryOpen] = useState(false);
 
   // Step 1
@@ -184,25 +186,37 @@ export default function Checkout() {
     return null;
   };
   const validateStep3 = () => {
-    if (method === "PIX") return null;
-    if (onlyDigits(cardNumber).length < 13) return "Número do cartão inválido.";
-    if (!cardHolder.trim()) return "Informe o nome impresso no cartão.";
-    if (cardExpiry.length !== 5) return "Validade inválida (MM/AA).";
-    if (cardCvv.length < 3) return "CVV inválido.";
-    return null;
+    const errors: Record<string, string> = {};
+    if (method === "PIX") return errors;
+    if (onlyDigits(cardNumber).length < 13) errors.cardNumber = "Número do cartão inválido.";
+    if (!cardHolder.trim()) errors.cardHolder = "Informe o nome impresso no cartão.";
+    if (cardExpiry.length !== 5) errors.cardExpiry = "Validade inválida (MM/AA).";
+    if (cardCvv.length < 3) errors.cardCvv = "CVV inválido.";
+    return errors;
   };
 
   const next = () => {
     const err = step === 1 ? validateStep1() : step === 2 ? validateStep2() : null;
     if (err) return toast.error(err);
     setStep((s) => Math.min(3, s + 1));
+    setHasAttemptedSubmit(false);
+    setFieldErrors({});
   };
-  const back = () => setStep((s) => Math.max(1, s - 1));
+  const back = () => {
+    setStep((s) => Math.max(1, s - 1));
+    setHasAttemptedSubmit(false);
+    setFieldErrors({});
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const err = validateStep3();
-    if (err) return toast.error(err);
+    setHasAttemptedSubmit(true);
+    const errors = validateStep3();
+    if (Object.keys(errors).length > 0) {
+      setFieldErrors(errors);
+      return;
+    }
+    setFieldErrors({});
 
     setStatus("loading");
     setErrorMsg("");
@@ -340,7 +354,7 @@ export default function Checkout() {
               <>
                 <Stepper current={step} />
 
-                <form onSubmit={handleSubmit} className="mt-8 space-y-4">
+                <form noValidate className="mt-8 space-y-4">
                   {step === 1 && (
                     <>
                       <h3 className="text-xl font-bold text-slate-900">Quem é você?</h3>
@@ -492,12 +506,14 @@ export default function Checkout() {
                             onChange={(v) => setCardNumber(maskCardNumber(v))}
                             placeholder="0000 0000 0000 0000"
                             inputMode="numeric"
+                            error={hasAttemptedSubmit ? fieldErrors.cardNumber : undefined}
                           />
                           <Field
                             label="Nome impresso"
                             value={cardHolder}
                             onChange={(v) => setCardHolder(v.toUpperCase())}
                             placeholder="JOAO DA SILVA"
+                            error={hasAttemptedSubmit ? fieldErrors.cardHolder : undefined}
                           />
                           <div className="grid grid-cols-2 gap-3">
                             <Field
@@ -506,6 +522,7 @@ export default function Checkout() {
                               onChange={(v) => setCardExpiry(maskExpiry(v))}
                               placeholder="MM/AA"
                               inputMode="numeric"
+                              error={hasAttemptedSubmit ? fieldErrors.cardExpiry : undefined}
                             />
                             <Field
                               label="CVV"
@@ -513,6 +530,7 @@ export default function Checkout() {
                               onChange={(v) => setCardCvv(maskCVV(v))}
                               placeholder="123"
                               inputMode="numeric"
+                              error={hasAttemptedSubmit ? fieldErrors.cardCvv : undefined}
                             />
                           </div>
                           <label className="block">
@@ -568,12 +586,13 @@ export default function Checkout() {
                         Continuar <ArrowRight className="h-4 w-4" />
                       </button>
                     ) : (
-                      <button
-                        type="submit"
-                        className="bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-8 py-3 rounded-lg shadow-md transition-colors flex items-center gap-2"
-                      >
-                        <ShieldCheck className="h-4 w-4" /> Finalizar Assinatura
-                      </button>
+                    <button
+                      type="button"
+                      onClick={handleSubmit}
+                      className="bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-8 py-3 rounded-lg shadow-md transition-colors flex items-center gap-2"
+                    >
+                      <ShieldCheck className="h-4 w-4" /> Finalizar Assinatura
+                    </button>
                     )}
                   </div>
                 </form>
@@ -814,8 +833,9 @@ interface FieldProps {
   placeholder?: string;
   type?: string;
   inputMode?: "text" | "numeric" | "email" | "tel";
+  error?: string;
 }
-function Field({ label, value, onChange, placeholder, type = "text", inputMode = "text" }: FieldProps) {
+function Field({ label, value, onChange, placeholder, type = "text", inputMode = "text", error }: FieldProps) {
   return (
     <label className="block">
       <span className="text-sm font-medium text-slate-700">{label}</span>
@@ -825,8 +845,11 @@ function Field({ label, value, onChange, placeholder, type = "text", inputMode =
         onChange={(e) => onChange(e.target.value)}
         placeholder={placeholder}
         inputMode={inputMode}
-        className="mt-1 w-full bg-white border border-slate-200 rounded-lg px-3 h-[44px] text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
+        className={`mt-1 w-full bg-white border rounded-lg px-3 h-[44px] text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 ${
+          error ? "border-red-300 focus:border-red-500 focus:ring-red-200" : "border-slate-200"
+        }`}
       />
+      {error && <p className="mt-1 text-xs text-red-500">{error}</p>}
     </label>
   );
 }

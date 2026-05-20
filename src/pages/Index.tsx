@@ -1,4 +1,5 @@
 import { CinematicHero } from "@/components/ui/cinematic-landing-hero";
+import TrustMarquee from "@/components/TrustMarquee";
 import Authority from "@/components/Authority";
 
 import FeaturesShowcase from "@/components/FeaturesShowcase";
@@ -18,6 +19,12 @@ const Index = () => {
     <div className="min-h-screen">
       {/* 1. Hero — Captura atenção, copy principal, vídeo demo */}
       <CinematicHero />
+
+      {/* Barra de confiança em marquee (apenas mobile; no desktop fica no rodapé da hero) */}
+      <div className="md:hidden">
+        <TrustMarquee />
+      </div>
+
 
       {/* 2. Prova Social — Números de impacto para validação imediata */}
       <Authority />

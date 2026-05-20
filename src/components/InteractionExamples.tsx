@@ -64,7 +64,7 @@ export default function InteractionExamples() {
             Interaja com a <span className="text-[#25D366]">Moovi</span> 24h por dia
           </h2>
           <p className="text-white/60 text-[15px] md:text-lg max-w-2xl mx-auto leading-relaxed">
-            Pergunte o que quiser e como quiser sobre as suas finanças ou seus compromissos. Veja alguns exemplos abaixo.
+            Pergunte o que quiser e como quiser sobre as suas finanças ou seus compromissos.
           </p>
         </motion.div>
       </div>

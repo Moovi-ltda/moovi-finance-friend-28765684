@@ -275,7 +275,7 @@ export default function FeaturesShowcase() {
 
           <p className="header-animate text-base md:text-lg text-gray-500 mt-6 max-w-2xl mx-auto leading-relaxed">
             Seis ferramentas inteligentes que transformam a forma como você
-            gerencia suas finanças — tudo pelo WhatsApp.
+            gerencia suas finanças.
           </p>
         </div>
       </div>

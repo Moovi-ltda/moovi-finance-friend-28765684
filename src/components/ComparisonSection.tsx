@@ -100,7 +100,7 @@ const ComparisonSection = () => {
         <div className="text-center mt-12">
           <AnimatedButton
             size="xl"
-            variant="mooviPrimary"
+            variant="mooviWhite"
             text="Quero usar o Moovi"
             onClick={() => scrollToSection("pricing-section")}
           />

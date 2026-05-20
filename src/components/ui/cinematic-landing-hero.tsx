@@ -3,17 +3,17 @@ import { cn } from "@/lib/utils";
 import { scrollToSection } from "@/utils/scroll";
 import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion";
 import { ArrowRight, Sparkles, MessageCircle, Star, ChevronDown, X } from "lucide-react";
+import TrustMarquee from "@/components/TrustMarquee";
+import avatar1 from "@/assets/avatars/a1.jpg";
+import avatar2 from "@/assets/avatars/a2.jpg";
+import avatar3 from "@/assets/avatars/a3.jpg";
+import avatar4 from "@/assets/avatars/a4.jpg";
 
 // ─── CONFIG ────────────────────────────────────────────────────────────────────
 const PANDA_VIDEO_URL =
   "https://player-vz-c1e2f242-e38.tv.pandavideo.com.br/embed/?v=4e6c28e8-f6eb-4e20-b216-224be1bc17f8";
 
-const AVATAR_URLS = [
-  "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=64&h=64&fit=crop&crop=face",
-  "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=64&h=64&fit=crop&crop=face",
-  "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=64&h=64&fit=crop&crop=face",
-  "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=64&h=64&fit=crop&crop=face",
-];
+const AVATAR_URLS = [avatar1, avatar2, avatar3, avatar4];
 
 // ─── HEADLINE WORDS ANIMATION ──────────────────────────────────────────────────
 const headlineVariants = {
@@ -25,7 +25,7 @@ const headlineVariants = {
     transition: {
       delay: 0.4 + i * 0.08,
       duration: 0.6,
-      ease: [0.25, 0.46, 0.45, 0.94],
+      ease: [0.25, 0.46, 0.45, 0.94] as const,
     },
   }),
 };
@@ -35,7 +35,7 @@ const fadeUp = (delay: number = 0) => ({
   visible: {
     opacity: 1,
     y: 0,
-    transition: { delay, duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] },
+    transition: { delay, duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] as const },
   },
 });
 
@@ -67,13 +67,16 @@ function Navbar() {
       >
         <div className="px-6 flex justify-between items-center h-16 md:h-[72px]">
           {/* Logo */}
-          <div className="flex items-center">
+          <button
+            onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+            className="flex items-center cursor-pointer bg-transparent border-0 p-0"
+          >
             <img
               src="/logo-moovi.png"
               alt="Moovi"
               className="h-10 md:h-12 w-auto object-contain drop-shadow-md"
             />
-          </div>
+          </button>
 
           {/* Nav Links — desktop only */}
           <div className="hidden md:flex items-center gap-8">
@@ -90,7 +93,7 @@ function Navbar() {
               Preços
             </button>
             <button
-              onClick={() => scrollToSection("seguranca-section")}
+              onClick={() => scrollToSection("features")}
               className="text-[14px] text-white/60 hover:text-white transition-colors font-medium tracking-wide"
             >
               Como funciona
@@ -98,12 +101,12 @@ function Navbar() {
           </div>
 
           {/* CTA — desktop only */}
-          <button
-            onClick={() => scrollToSection("pricing-section")}
-            className="hidden md:flex h-10 px-6 rounded-full text-[14px] font-semibold text-[#05150C] bg-white hover:scale-105 hover:bg-gray-100 transition-all duration-300 items-center"
+          <a
+            href="https://dash.moovi.chat"
+            className="hidden md:flex h-10 px-6 rounded-full text-[14px] font-semibold text-[#05150C] bg-white hover:scale-105 hover:bg-gray-100 transition-all duration-300 items-center no-underline"
           >
             Entrar
-          </button>
+          </a>
 
           {/* Mobile Hamburger / Close Button */}
           <button
@@ -152,7 +155,7 @@ function Navbar() {
                 <button
                   onClick={() => {
                     setIsMobileMenuOpen(false);
-                    scrollToSection("seguranca-section");
+                    scrollToSection("features");
                   }}
                   className="text-[17px] text-left font-semibold text-white/90 hover:text-white transition-colors"
                 >
@@ -160,15 +163,13 @@ function Navbar() {
                 </button>
               </div>
 
-              <button
-                onClick={() => {
-                  setIsMobileMenuOpen(false);
-                  scrollToSection("pricing-section");
-                }}
-                className="h-[46px] w-[140px] rounded-full text-[15px] font-bold text-[#05150C] bg-white flex items-center justify-center hover:scale-105 transition-all"
+              <a
+                href="https://dash.moovi.chat"
+                className="h-[46px] w-[140px] rounded-full text-[15px] font-bold text-[#05150C] bg-white flex items-center justify-center hover:scale-105 transition-all no-underline"
+                onClick={() => setIsMobileMenuOpen(false)}
               >
                 Entrar
-              </button>
+              </a>
             </motion.div>
           )}
         </AnimatePresence>
@@ -194,9 +195,15 @@ function SocialProof() {
               key={i}
               src={url}
               alt=""
+              width={32}
+              height={32}
               className="w-8 h-8 rounded-full border-2 border-[#0a0f0c] object-cover"
-              loading="lazy"
+              loading="eager"
+              decoding="async"
+              // @ts-ignore
+              fetchpriority="high"
             />
+
           ))}
         </div>
         <div className="flex items-center gap-0.5 ml-3">
@@ -227,19 +234,11 @@ function HeroCTA() {
       {/* Primary CTA */}
       <button
         onClick={() => scrollToSection("pricing-section")}
-        className="group relative w-full sm:w-auto h-[52px] px-8 rounded-2xl text-[15px] font-bold text-white overflow-hidden transition-all duration-500 hover:scale-[1.03] active:scale-[0.98]"
+        className="group relative w-auto h-[52px] px-8 rounded-full text-[15px] font-bold bg-white/95 overflow-hidden transition-all duration-500 hover:scale-[1.03] active:scale-[0.98] shadow-[0_4px_14px_-4px_rgba(0,0,0,0.3)] hover:shadow-[0_6px_18px_-4px_rgba(0,0,0,0.35)] text-[#0f6b3a]"
       >
-        {/* Gradient BG */}
-        <div className="absolute inset-0 bg-gradient-to-b from-[#25D366] to-[#1AAD55] rounded-2xl" />
-        {/* Glow */}
-        <div className="absolute inset-0 rounded-2xl shadow-[0_0_40px_rgba(37,211,102,0.25)] group-hover:shadow-[0_0_60px_rgba(37,211,102,0.4)] transition-shadow duration-500" />
-        {/* Inner highlight */}
-        <div className="absolute inset-[1px] rounded-[15px] bg-gradient-to-b from-white/[0.15] to-transparent pointer-events-none" style={{ height: "50%" }} />
-        {/* Content */}
         <span className="relative z-10 flex items-center justify-center gap-2">
-          <MessageCircle className="w-4 h-4" />
-          Começar a usar a Moovi
-          <ArrowRight className="w-4 h-4 opacity-70 group-hover:translate-x-1 transition-transform duration-300" />
+          Começar agora
+          <ArrowRight className="w-4 h-4 opacity-80 group-hover:translate-x-1 transition-transform duration-300" />
         </span>
       </button>
 
@@ -261,7 +260,7 @@ function FloatingBadge({
     <motion.div
       initial={{ opacity: 0, y: 30, scale: 0.9 }}
       animate={{ opacity: 1, y: 0, scale: 1 }}
-      transition={{ delay: 2.0 + delay, duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }}
+      transition={{ delay: 2.0 + delay, duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] as const }}
       className={cn(
         "absolute z-30 px-4 py-3 rounded-2xl",
         "bg-[#0a0f0c]/70 backdrop-blur-xl border border-white/[0.08]",
@@ -421,7 +420,7 @@ export function CinematicHero({ className, ...props }: CinematicHeroProps) {
   const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0.3]);
 
   const headlineWords = ["Seu", "dinheiro", "organizado."];
-  const headlineAccent = ["Pelo", "WhatsApp,", "com", "IA."];
+  const headlineAccent = ["Sua", "vida", "mais", "leve."];
 
   return (
     <>
@@ -467,7 +466,7 @@ export function CinematicHero({ className, ...props }: CinematicHeroProps) {
         />
 
         {/* ─── CONTENT ──────────────────────────────────────────────── */}
-        <motion.div style={{ opacity }} className="relative z-10">
+        <div className="relative z-10">
           <div className="max-w-6xl mx-auto px-5 sm:px-8 pt-28 md:pt-36 pb-16 md:pb-24">
             {/* Layout: Text (left) + Phone (right) on desktop, stacked on mobile */}
             <div className="flex flex-col lg:grid lg:grid-cols-2 lg:gap-12 items-center">
@@ -478,7 +477,7 @@ export function CinematicHero({ className, ...props }: CinematicHeroProps) {
 
                 {/* Headline */}
                 <div className="mt-7 md:mt-8">
-                  <h1 className="text-[2.5rem] sm:text-[3.2rem] md:text-[3.8rem] lg:text-[4.2rem] font-extrabold leading-[1.05] tracking-tight">
+                  <h1 className="text-[2.3rem] sm:text-[3.0rem] md:text-[3.6rem] lg:text-[4.0rem] font-extrabold leading-[1.05] tracking-tight">
                     {/* Line 1 */}
                     <span className="block text-white">
                       {headlineWords.map((word, i) => (
@@ -517,10 +516,9 @@ export function CinematicHero({ className, ...props }: CinematicHeroProps) {
                   variants={fadeUp(1.0)}
                   initial="hidden"
                   animate="visible"
-                  className="mt-6 md:mt-7 text-[15px] md:text-[17px] text-white/45 leading-relaxed max-w-[480px] font-medium"
+                  className="mt-6 md:mt-7 text-[15px] md:text-[17px] text-white/85 leading-relaxed max-w-[480px] font-medium"
                 >
-                  A Moovi registra, categoriza e organiza seus gastos 
-                  automaticamente direto no WhatsApp, usando Inteligência Artificial. 
+                  A Moovi organiza automaticamente, usando Inteligência Artificial. 
                   Sem planilha, sem esforço.
                 </motion.p>
 
@@ -529,19 +527,23 @@ export function CinematicHero({ className, ...props }: CinematicHeroProps) {
                   <HeroCTA />
                 </div>
 
-                {/* Social proof */}
-                <div className="mt-8 md:mt-10">
+                {/* Social proof — desktop only (mobile version renders below the phone) */}
+                <div className="hidden lg:block mt-8 md:mt-10">
                   <SocialProof />
                 </div>
               </div>
 
               {/* ─── RIGHT COLUMN: Phone Mockup ────────────────────── */}
-              <div className="order-2 mt-14 lg:mt-0 w-full flex justify-center lg:justify-end">
+              <div className="order-2 mt-14 lg:mt-0 w-full flex flex-col items-center lg:items-end">
                 <PhoneMockup />
+                {/* Social proof — mobile only, below phone */}
+                <div className="lg:hidden mt-10 flex justify-center w-full">
+                  <SocialProof />
+                </div>
               </div>
             </div>
           </div>
-        </motion.div>
+        </div>
 
         {/* ─── SCROLL INDICATOR ──────────────────────────────────────── */}
         <motion.div
@@ -560,6 +562,11 @@ export function CinematicHero({ className, ...props }: CinematicHeroProps) {
 
         {/* ─── BOTTOM FADE ──────────────────────────────────────────── */}
         <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-[#0A1A10] to-transparent pointer-events-none z-[5]" />
+
+        {/* ─── TRUST MARQUEE (desktop only, anchored to hero bottom) ── */}
+        <div className="hidden md:block absolute bottom-0 left-0 right-0 z-20">
+          <TrustMarquee />
+        </div>
       </section>
     </>
   );
