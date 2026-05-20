@@ -466,7 +466,7 @@ export function CinematicHero({ className, ...props }: CinematicHeroProps) {
         />
 
         {/* ─── CONTENT ──────────────────────────────────────────────── */}
-        <motion.div style={{ opacity }} className="relative z-10">
+        <div className="relative z-10">
           <div className="max-w-6xl mx-auto px-5 sm:px-8 pt-28 md:pt-36 pb-16 md:pb-24">
             {/* Layout: Text (left) + Phone (right) on desktop, stacked on mobile */}
             <div className="flex flex-col lg:grid lg:grid-cols-2 lg:gap-12 items-center">
