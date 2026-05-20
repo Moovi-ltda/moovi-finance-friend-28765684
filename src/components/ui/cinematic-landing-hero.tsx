@@ -543,7 +543,7 @@ export function CinematicHero({ className, ...props }: CinematicHeroProps) {
               </div>
             </div>
           </div>
-        </motion.div>
+        </div>
 
         {/* ─── SCROLL INDICATOR ──────────────────────────────────────── */}
         <motion.div
