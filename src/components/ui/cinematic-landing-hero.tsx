@@ -471,12 +471,6 @@ export interface CinematicHeroProps extends React.HTMLAttributes<HTMLDivElement>
 
 export function CinematicHero({ className, ...props }: CinematicHeroProps) {
   const sectionRef = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: sectionRef,
-    offset: ["start start", "end start"],
-  });
-  const bgY = useTransform(scrollYProgress, [0, 1], ["0%", "15%"]);
-  const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0.3]);
 
   const headlineWords = ["Seu", "dinheiro", "organizado."];
   const headlineAccent = ["Sua", "vida", "mais", "leve."];
@@ -494,8 +488,8 @@ export function CinematicHero({ className, ...props }: CinematicHeroProps) {
         )}
         {...props}
       >
-        {/* ─── BACKGROUND LAYERS ─────────────────────────────────────── */}
-        <motion.div style={{ y: bgY }} className="absolute inset-0 pointer-events-none">
+        {/* ─── BACKGROUND LAYERS (estático, sem parallax) ──────────── */}
+        <div className="absolute inset-0 pointer-events-none">
           {/* Subtle grid */}
           <div
             className="absolute inset-0 opacity-[0.03]"
@@ -510,11 +504,11 @@ export function CinematicHero({ className, ...props }: CinematicHeroProps) {
             }}
           />
 
-          {/* Ambient orbs */}
-          <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[600px] bg-[#25D366]/[0.03] rounded-full blur-[120px]" />
-          <div className="absolute bottom-0 right-0 translate-x-1/4 translate-y-1/4 w-[500px] h-[500px] bg-[#0F6B3A]/[0.04] rounded-full blur-[100px]" />
-          <div className="absolute top-1/3 left-0 -translate-x-1/3 w-[400px] h-[400px] bg-emerald-900/[0.03] rounded-full blur-[100px]" />
-        </motion.div>
+          {/* Ambient orbs — menos camadas e blur menor no mobile */}
+          <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[500px] bg-[#25D366]/[0.03] rounded-full blur-[80px]" />
+          <div className="hidden md:block absolute bottom-0 right-0 translate-x-1/4 translate-y-1/4 w-[500px] h-[500px] bg-[#0F6B3A]/[0.04] rounded-full blur-[100px]" />
+        </div>
+
 
         {/* Noise texture */}
         <div
