@@ -298,18 +298,21 @@ export default function FeaturesShowcase() {
         </div>
       </div>
 
-      {/* Stacking Cards */}
-      <div ref={stackRef} className="relative w-full h-[100dvh] md:h-screen flex items-center justify-center overflow-hidden">
+      {/* Stacking Cards (desktop) / Lista vertical (mobile) */}
+      <div
+        ref={stackRef}
+        className="relative w-full lg:h-screen flex flex-col lg:items-center lg:justify-center lg:overflow-hidden px-4 sm:px-6 lg:px-0 gap-6 lg:gap-0 pb-8 lg:pb-0"
+      >
         <div
-          className="relative w-[92vw] max-w-[1100px]"
-          style={{ height: "min(78vh, 780px)", perspective: "1200px" }}
+          className="relative w-full lg:w-[92vw] lg:max-w-[1100px] flex flex-col lg:block gap-6 lg:gap-0"
+          style={{ perspective: "1200px" }}
         >
           {features.map((feature, i) => {
             const Icon = feature.icon;
             return (
               <div
                 key={feature.number}
-                className="stack-card absolute inset-0 rounded-[1.5rem] border border-gray-200 overflow-hidden will-change-transform bg-white"
+                className="stack-card relative lg:absolute lg:inset-0 rounded-[1.5rem] border border-gray-200 overflow-hidden lg:will-change-transform bg-white"
                 style={{
                   boxShadow:
                     "0 25px 50px -12px rgba(0,0,0,0.12), 0 0 0 1px rgba(0,0,0,0.03)",
