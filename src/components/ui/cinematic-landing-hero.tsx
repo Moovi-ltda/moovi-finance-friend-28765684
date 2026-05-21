@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { cn } from "@/lib/utils";
 import { scrollToSection } from "@/utils/scroll";
-import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { ArrowRight, Sparkles, MessageCircle, Star, ChevronDown, X } from "lucide-react";
 import TrustMarquee from "@/components/TrustMarquee";
 import avatar1 from "@/assets/avatars/a1.jpg";
