@@ -33,7 +33,7 @@ const features: Feature[] = [
     description:
       "Envie uma mensagem ou áudio de 5 segundos. A IA categoriza automaticamente seus gastos e receitas.",
     images: [
-      "/features/whatsapp_1.png",
+      "/features/concertar.png",
       "/features/whatsapp_2.png",
     ],
   },
@@ -350,36 +350,49 @@ export default function FeaturesShowcase() {
                     className={`flex-1 min-w-0 flex items-center justify-center ${i % 2 !== 0 ? "lg:order-1" : ""}`}
                   >
                     {feature.images ? (
-                      /* Dois iPhones lado a lado com larguras fixas em px */
-                      <div className="relative flex items-end justify-center gap-3">
-                        <div className="absolute -inset-8 bg-moovi-green/[0.05] rounded-3xl blur-3xl pointer-events-none" />
+                      feature.images.length === 2 ? (
+                        /* Dois iPhones lado a lado com larguras fixas em px */
+                        <div className="relative flex items-end justify-center gap-3">
+                          <div className="absolute -inset-8 bg-moovi-green/[0.05] rounded-3xl blur-3xl pointer-events-none" />
 
-                        {/* iPhone esquerdo — atrás */}
-                        <div
-                          style={{
-                            width: 140,
-                            flexShrink: 0,
-                            transform: "rotate(-5deg) translateY(18px)",
-                            transformOrigin: "bottom center",
-                            filter: "drop-shadow(0 16px 32px rgba(0,0,0,0.28))",
-                          }}
-                        >
-                          <Iphone src={feature.images[0]} style={{ width: "100%" }} />
-                        </div>
+                          {/* iPhone esquerdo — atrás */}
+                          <div
+                            style={{
+                              width: 140,
+                              flexShrink: 0,
+                              transform: "rotate(-5deg) translateY(18px)",
+                              transformOrigin: "bottom center",
+                              filter: "drop-shadow(0 16px 32px rgba(0,0,0,0.28))",
+                            }}
+                          >
+                            <Iphone src={feature.images[0]} style={{ width: "100%" }} />
+                          </div>
 
-                        {/* iPhone direito — frente */}
-                        <div
-                          style={{
-                            width: 160,
-                            flexShrink: 0,
-                            transform: "rotate(5deg) translateY(0px)",
-                            transformOrigin: "bottom center",
-                            filter: "drop-shadow(0 20px 42px rgba(0,0,0,0.35))",
-                          }}
-                        >
-                          <Iphone src={feature.images[1]} style={{ width: "100%" }} />
+                          {/* iPhone direito — frente */}
+                          <div
+                            style={{
+                              width: 160,
+                              flexShrink: 0,
+                              transform: "rotate(5deg) translateY(0px)",
+                              transformOrigin: "bottom center",
+                              filter: "drop-shadow(0 20px 42px rgba(0,0,0,0.35))",
+                            }}
+                          >
+                            <Iphone src={feature.images[1]} style={{ width: "100%" }} />
+                          </div>
                         </div>
-                      </div>
+                      ) : (
+                        /* Um único iPhone */
+                        <div className="relative flex items-center justify-center">
+                          <div className="absolute -inset-8 bg-moovi-green/[0.05] rounded-3xl blur-3xl pointer-events-none" />
+                          <div
+                            className="w-[180px] sm:w-[220px] lg:w-[260px]"
+                            style={{ filter: "drop-shadow(0 20px 42px rgba(0,0,0,0.35))" }}
+                          >
+                            <Iphone src={feature.images[0]} style={{ width: "100%" }} />
+                          </div>
+                        </div>
+                      )
                     ) : (
                       /* Imagem única */
                       <div className="relative w-full max-w-[500px]">
