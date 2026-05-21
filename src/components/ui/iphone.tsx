@@ -39,7 +39,7 @@ export function Iphone({ src, videoSrc, embedSrc, className, style, ...props }: 
 
   return (
     <div
-      className={`relative block w-full leading-none ${className ?? ""}`}
+      className={`relative block leading-none ${className ?? ""}`}
       style={{ aspectRatio: `${PHONE_WIDTH}/${PHONE_HEIGHT}`, ...style }}
       {...props}
     >
@@ -59,8 +59,13 @@ export function Iphone({ src, videoSrc, embedSrc, className, style, ...props }: 
 
       {/* Imagem */}
       {!hasVideo && !hasEmbed && src && (
-        <div className="pointer-events-none absolute z-0 overflow-hidden" style={screenStyle}>
-          <img src={src} alt="" className="block size-full object-cover object-top" />
+        <div className="pointer-events-none absolute z-0 overflow-hidden bg-black" style={screenStyle}>
+          <img
+            src={src}
+            alt=""
+            className="block size-full object-contain object-center"
+            style={{ imageRendering: "-webkit-optimize-contrast" } as React.CSSProperties}
+          />
         </div>
       )}
 

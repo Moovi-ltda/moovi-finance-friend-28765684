@@ -32,7 +32,10 @@ const features: Feature[] = [
     title: "Registre Tudo pelo WhatsApp",
     description:
       "Envie uma mensagem ou áudio de 5 segundos. A IA categoriza automaticamente seus gastos e receitas.",
-    image: "/features/Registre_Tudo_no_whatsapp.png",
+    images: [
+      "/features/whatsapp_1.png",
+      "/features/whatsapp_2.png",
+    ],
   },
   {
     number: "02",
@@ -51,7 +54,10 @@ const features: Feature[] = [
     title: "Lembretes Personalizados",
     description:
       "Fale em linguagem natural: 'me lembre de pagar a academia dia 20'. O Moovi avisa na hora certa.",
-    image: "/features/Lembretes_Personalizados.png",
+    images: [
+      "/features/lembretes_1.png",
+      "/features/lembretes_2.png",
+    ],
   },
   {
     number: "04",
@@ -351,23 +357,27 @@ export default function FeaturesShowcase() {
                         {/* iPhone esquerdo — atrás */}
                         <div
                           style={{
+                            width: 140,
+                            flexShrink: 0,
                             transform: "rotate(-5deg) translateY(18px)",
                             transformOrigin: "bottom center",
                             filter: "drop-shadow(0 16px 32px rgba(0,0,0,0.28))",
                           }}
                         >
-                          <Iphone src={feature.images[0]} className="w-[160px] sm:w-[180px] lg:w-[180px]" />
+                          <Iphone src={feature.images[0]} style={{ width: "100%" }} />
                         </div>
 
                         {/* iPhone direito — frente */}
                         <div
                           style={{
+                            width: 160,
+                            flexShrink: 0,
                             transform: "rotate(5deg) translateY(0px)",
                             transformOrigin: "bottom center",
                             filter: "drop-shadow(0 20px 42px rgba(0,0,0,0.35))",
                           }}
                         >
-                          <Iphone src={feature.images[1]} className="w-[160px] sm:w-[180px] lg:w-[200px]" />
+                          <Iphone src={feature.images[1]} style={{ width: "100%" }} />
                         </div>
                       </div>
                     ) : (
