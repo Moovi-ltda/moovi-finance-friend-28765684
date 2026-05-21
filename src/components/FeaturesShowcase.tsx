@@ -304,7 +304,7 @@ export default function FeaturesShowcase() {
         className="relative w-full lg:h-screen flex flex-col lg:items-center lg:justify-center lg:overflow-hidden px-4 sm:px-6 lg:px-0 gap-6 lg:gap-0 pb-8 lg:pb-0"
       >
         <div
-          className="relative w-full lg:w-[92vw] lg:max-w-[1100px] flex flex-col lg:block gap-6 lg:gap-0"
+          className="relative w-full lg:w-[92vw] lg:max-w-[1100px] lg:h-[80vh] flex flex-col lg:block gap-6 lg:gap-0"
           style={{ perspective: "1200px" }}
         >
           {features.map((feature, i) => {
