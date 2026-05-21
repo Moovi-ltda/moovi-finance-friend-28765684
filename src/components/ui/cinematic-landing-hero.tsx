@@ -10,10 +10,61 @@ import avatar3 from "@/assets/avatars/a3.jpg";
 import avatar4 from "@/assets/avatars/a4.jpg";
 
 // ─── CONFIG ────────────────────────────────────────────────────────────────────
-const PANDA_VIDEO_URL =
-  "https://player-vz-c1e2f242-e38.tv.pandavideo.com.br/embed/?v=4e6c28e8-f6eb-4e20-b216-224be1bc17f8";
+const PANDA_VIDEO_ID = "4e6c28e8-f6eb-4e20-b216-224be1bc17f8";
+const PANDA_VIDEO_URL = `https://player-vz-c1e2f242-e38.tv.pandavideo.com.br/embed/?v=${PANDA_VIDEO_ID}&autoplay=1`;
+// Thumbnail oficial do Panda Video (leve, sem iframe)
+const PANDA_THUMBNAIL_URL = `https://b-vz-c1e2f242-e38.tv.pandavideo.com.br/${PANDA_VIDEO_ID}/thumbnail.jpg`;
 
 const AVATAR_URLS = [avatar1, avatar2, avatar3, avatar4];
+
+// ─── LAZY VIDEO PLAYER ─────────────────────────────────────────────────────────
+// Injeta o iframe automaticamente após ~1.5s (depois que o browser
+// termina de renderizar o conteúdo crítico), mantendo autoplay e loop.
+function LazyPandaPlayer({ className }: { className?: string }) {
+  const [ready, setReady] = useState(false);
+
+  useEffect(() => {
+    // Usa requestIdleCallback se disponível, senão setTimeout
+    if (typeof window !== "undefined") {
+      if ("requestIdleCallback" in window) {
+        (window as any).requestIdleCallback(() => setReady(true), { timeout: 1500 });
+      } else {
+        const t = setTimeout(() => setReady(true), 1200);
+        return () => clearTimeout(t);
+      }
+    }
+  }, []);
+
+  return (
+    <div className={cn("relative w-full h-full bg-black overflow-hidden", className)}>
+      {/* Thumbnail leve enquanto o iframe não carregou */}
+      {!ready && (
+        <img
+          src={PANDA_THUMBNAIL_URL}
+          alt="Preview do app Moovi"
+          className="absolute inset-0 w-full h-full object-cover"
+          loading="eager"
+          decoding="async"
+          onError={(e) => {
+            (e.target as HTMLImageElement).style.opacity = "0";
+          }}
+        />
+      )}
+
+      {/* Iframe injetado após o delay — autoplay + loop */}
+      {ready && (
+        <iframe
+          id="panda-player-hero"
+          src={PANDA_VIDEO_URL}
+          className="absolute inset-0 w-full h-full"
+          style={{ border: "none" }}
+          allow="accelerometer;gyroscope;autoplay;encrypted-media;picture-in-picture"
+          allowFullScreen
+        />
+      )}
+    </div>
+  );
+}
 
 // ─── HEADLINE WORDS ANIMATION ──────────────────────────────────────────────────
 const headlineVariants = {
@@ -341,16 +392,8 @@ function PhoneMockup() {
               }}
             />
 
-            {/* Video */}
-            <iframe
-              id="panda-player-hero"
-              src={PANDA_VIDEO_URL}
-              className="w-full h-full"
-              style={{ border: "none" }}
-              allow="accelerometer;gyroscope;autoplay;encrypted-media;picture-in-picture"
-              allowFullScreen
-              loading="lazy"
-            />
+            {/* Video — carregamento lazy (thumbnail + play on click) */}
+            <LazyPandaPlayer />
           </div>
 
           {/* Hardware buttons */}

@@ -1,6 +1,7 @@
 import { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { Iphone } from "@/components/ui/iphone";
 import {
   MessageCircle,
   LayoutDashboard,
@@ -14,12 +15,14 @@ if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
 }
 
+
 interface Feature {
   number: string;
   icon: React.ElementType;
   title: string;
   description: string;
-  image: string;
+  image?: string;
+  images?: string[]; // dois mockups lado a lado
 }
 
 const features: Feature[] = [
@@ -37,7 +40,10 @@ const features: Feature[] = [
     title: "Painel Profissional",
     description:
       "Visualize saldo, receitas, despesas e histórico dos últimos 30 dias com gráficos claros.",
-    image: "/features/Painel_Profissional.png",
+    images: [
+      "/features/painel_profissional_1.jpeg",
+      "/features/painel_profissional_2.jpeg",
+    ],
   },
   {
     number: "03",
@@ -53,7 +59,10 @@ const features: Feature[] = [
     title: "Categorias Personalizadas",
     description:
       "Todas as transações organizadas com busca, filtros avançados e categorias inteligentes.",
-    image: "/features/Categorias_Personalizadas.png",
+    images: [
+      "/features/categorias_personalizadas_1.jpeg",
+      "/features/categorias_personalizadas_2.jpeg",
+    ],
   },
   {
     number: "05",
@@ -69,7 +78,10 @@ const features: Feature[] = [
     title: "Gestão de Contas e Cartões",
     description:
       "Adicione contas e cartões em linguagem natural. Controle saldos e limites em um só lugar.",
-    image: "/features/Gestao_de_Contas_e_Cartoes.png",
+    images: [
+      "/features/gestao_contas_1.jpeg",
+      "/features/gestao_contas_2.jpeg",
+    ],
   },
 ];
 
@@ -331,15 +343,45 @@ export default function FeaturesShowcase() {
                   <div
                     className={`flex-1 min-w-0 flex items-center justify-center ${i % 2 !== 0 ? "lg:order-1" : ""}`}
                   >
-                    <div className="relative w-full max-w-[500px]">
-                      <div className="absolute -inset-6 bg-moovi-green/[0.04] rounded-3xl blur-2xl" />
-                      <img
-                        src={feature.image}
-                        alt={feature.title}
-                        loading={i === 0 ? "eager" : "lazy"}
-                        className="relative w-full h-auto rounded-xl shadow-lg shadow-black/10"
-                      />
-                    </div>
+                    {feature.images ? (
+                      /* Dois iPhones lado a lado com larguras fixas em px */
+                      <div className="relative flex items-end justify-center gap-3">
+                        <div className="absolute -inset-8 bg-moovi-green/[0.05] rounded-3xl blur-3xl pointer-events-none" />
+
+                        {/* iPhone esquerdo — atrás */}
+                        <div
+                          style={{
+                            transform: "rotate(-5deg) translateY(18px)",
+                            transformOrigin: "bottom center",
+                            filter: "drop-shadow(0 16px 32px rgba(0,0,0,0.28))",
+                          }}
+                        >
+                          <Iphone src={feature.images[0]} className="w-[160px] sm:w-[180px] lg:w-[180px]" />
+                        </div>
+
+                        {/* iPhone direito — frente */}
+                        <div
+                          style={{
+                            transform: "rotate(5deg) translateY(0px)",
+                            transformOrigin: "bottom center",
+                            filter: "drop-shadow(0 20px 42px rgba(0,0,0,0.35))",
+                          }}
+                        >
+                          <Iphone src={feature.images[1]} className="w-[160px] sm:w-[180px] lg:w-[200px]" />
+                        </div>
+                      </div>
+                    ) : (
+                      /* Imagem única */
+                      <div className="relative w-full max-w-[500px]">
+                        <div className="absolute -inset-6 bg-moovi-green/[0.04] rounded-3xl blur-2xl" />
+                        <img
+                          src={feature.image}
+                          alt={feature.title}
+                          loading={i === 0 ? "eager" : "lazy"}
+                          className="relative w-full h-auto rounded-xl shadow-lg shadow-black/10"
+                        />
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>
