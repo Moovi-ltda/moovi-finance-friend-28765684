@@ -168,7 +168,11 @@ export default function FeaturesShowcase() {
     const section = sectionRef.current;
     const header = headerRef.current;
     const stackEl = stackRef.current;
-    if (!section || !header || !stackEl) return;
+    if (!section || !header) return;
+
+    const isMobile =
+      typeof window !== "undefined" &&
+      window.matchMedia("(max-width: 1023px)").matches;
 
     const ctx = gsap.context(() => {
       const headerEls = header.querySelectorAll(".header-animate");
@@ -189,6 +193,9 @@ export default function FeaturesShowcase() {
         }
       );
 
+      // No mobile/tablet, NÃO ativamos o stacking pin — cards viram lista normal.
+      if (isMobile || !stackEl) return;
+
       const cards = gsap.utils.toArray<HTMLElement>(
         stackEl.querySelectorAll(".stack-card")
       );
@@ -196,8 +203,6 @@ export default function FeaturesShowcase() {
 
       gsap.set(cards.slice(1), { yPercent: 120 });
 
-      // Each card gets: 1 unit hold (card visible) + 1 unit transition (next card slides in)
-      // Total timeline = (cards.length - 1) * 2 + 1 (first card hold)
       const holdDuration = 1;
       const transitionDuration = 1;
       const totalUnits = 1 + (cards.length - 1) * (holdDuration + transitionDuration);
@@ -212,7 +217,6 @@ export default function FeaturesShowcase() {
         },
       });
 
-      // First card holds for 1 unit before anything happens
       tl.to({}, { duration: holdDuration });
 
       cards.forEach((card, index) => {
@@ -222,11 +226,7 @@ export default function FeaturesShowcase() {
 
         tl.to(
           card,
-          {
-            yPercent: 0,
-            duration: transitionDuration,
-            ease: "power3.inOut",
-          },
+          { yPercent: 0, duration: transitionDuration, ease: "power3.inOut" },
           transitionStart
         );
 
@@ -258,7 +258,6 @@ export default function FeaturesShowcase() {
           }
         });
 
-        // Hold after this card lands (except for the last card)
         if (index < cards.length - 1) {
           tl.to({}, { duration: holdDuration }, transitionStart + transitionDuration);
         }
@@ -267,6 +266,7 @@ export default function FeaturesShowcase() {
 
     return () => ctx.revert();
   }, []);
+
 
   return (
     <section ref={sectionRef} className="relative bg-white z-40 overflow-hidden" id="features">
