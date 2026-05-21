@@ -18,32 +18,45 @@ const PANDA_THUMBNAIL_URL = `https://b-vz-c1e2f242-e38.tv.pandavideo.com.br/${PA
 const AVATAR_URLS = [avatar1, avatar2, avatar3, avatar4];
 
 // ─── LAZY VIDEO PLAYER ─────────────────────────────────────────────────────────
-// Injeta o iframe automaticamente após ~1.5s (depois que o browser
-// termina de renderizar o conteúdo crítico), mantendo autoplay e loop.
+// Só injeta o iframe quando o mockup está realmente visível na viewport,
+// evitando download/parse pesado durante o carregamento e o scroll inicial.
 function LazyPandaPlayer({ className }: { className?: string }) {
+  const containerRef = useRef<HTMLDivElement>(null);
   const [ready, setReady] = useState(false);
 
   useEffect(() => {
-    // Usa requestIdleCallback se disponível, senão setTimeout
-    if (typeof window !== "undefined") {
-      if ("requestIdleCallback" in window) {
-        (window as any).requestIdleCallback(() => setReady(true), { timeout: 1500 });
-      } else {
-        const t = setTimeout(() => setReady(true), 1200);
-        return () => clearTimeout(t);
-      }
+    const el = containerRef.current;
+    if (!el || ready) return;
+
+    if (typeof IntersectionObserver === "undefined") {
+      const t = setTimeout(() => setReady(true), 2000);
+      return () => clearTimeout(t);
     }
-  }, []);
+
+    const io = new IntersectionObserver(
+      (entries) => {
+        if (entries.some((e) => e.isIntersecting)) {
+          setReady(true);
+          io.disconnect();
+        }
+      },
+      { rootMargin: "200px" }
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, [ready]);
 
   return (
-    <div className={cn("relative w-full h-full bg-black overflow-hidden", className)}>
-      {/* Thumbnail leve enquanto o iframe não carregou */}
+    <div
+      ref={containerRef}
+      className={cn("relative w-full h-full bg-black overflow-hidden", className)}
+    >
       {!ready && (
         <img
           src={PANDA_THUMBNAIL_URL}
           alt="Preview do app Moovi"
           className="absolute inset-0 w-full h-full object-cover"
-          loading="eager"
+          loading="lazy"
           decoding="async"
           onError={(e) => {
             (e.target as HTMLImageElement).style.opacity = "0";
@@ -51,7 +64,6 @@ function LazyPandaPlayer({ className }: { className?: string }) {
         />
       )}
 
-      {/* Iframe injetado após o delay — autoplay + loop */}
       {ready && (
         <div className="absolute inset-0 pointer-events-none" tabIndex={-1}>
           <iframe
@@ -62,6 +74,7 @@ function LazyPandaPlayer({ className }: { className?: string }) {
             allow="accelerometer;gyroscope;autoplay;encrypted-media;picture-in-picture"
             tabIndex={-1}
             allowFullScreen
+            loading="lazy"
           />
         </div>
       )}
