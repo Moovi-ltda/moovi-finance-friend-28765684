@@ -85,7 +85,7 @@ const Authority = () => {
   }, [currentIndex]);
 
   return (
-    <section className="py-12 md:py-24 bg-gradient-to-b from-green-50 to-white overflow-hidden">
+    <section className="py-12 md:py-24 bg-gradient-to-b from-green-50 to-white overflow-hidden relative z-[60]">
       <div className="container mx-auto px-4" ref={elementRef}>
         {/* Header */}
         <div className={`text-center mb-12 max-w-4xl mx-auto fade-in-scroll ${isVisible ? "visible" : ""}`}>

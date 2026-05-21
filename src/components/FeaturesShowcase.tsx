@@ -183,7 +183,7 @@ export default function FeaturesShowcase() {
           ease: "power3.out",
           scrollTrigger: {
             trigger: header,
-            start: "top 85%",
+            start: "top 120%",
             toggleActions: "play none none reverse",
           },
         }
@@ -207,7 +207,7 @@ export default function FeaturesShowcase() {
           trigger: stackEl,
           start: "top top",
           end: () => `+=${totalUnits * 80}vh`,
-          scrub: 3.5,
+          scrub: 1,
           pin: true,
         },
       });
@@ -269,7 +269,7 @@ export default function FeaturesShowcase() {
   }, []);
 
   return (
-    <section ref={sectionRef} className="relative bg-white" id="features">
+    <section ref={sectionRef} className="relative bg-white z-40 overflow-hidden" id="features">
       <FloatingPiggy sectionRef={sectionRef} />
 
       {/* Section Header */}
@@ -299,7 +299,7 @@ export default function FeaturesShowcase() {
       </div>
 
       {/* Stacking Cards */}
-      <div ref={stackRef} className="relative w-full h-screen flex items-center justify-center">
+      <div ref={stackRef} className="relative w-full h-[100dvh] md:h-screen flex items-center justify-center overflow-hidden">
         <div
           className="relative w-[92vw] max-w-[1100px]"
           style={{ height: "min(78vh, 780px)", perspective: "1200px" }}

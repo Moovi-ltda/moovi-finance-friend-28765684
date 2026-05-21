@@ -274,7 +274,7 @@ export const ContainerScroll = ({ titleComponent, children }: any) => {
                 key={index}
                 initial={{ opacity: 0, y: 50 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-100px" }}
+                viewport={{ once: true, margin: "400px" }}
                 transition={{ duration: 0.6, ease: "easeOut" }}
                 className={`flex flex-col md:flex-row items-center gap-8 md:gap-16 ${
                   isEven ? "md:flex-row" : "md:flex-row-reverse"

@@ -53,14 +53,17 @@ function LazyPandaPlayer({ className }: { className?: string }) {
 
       {/* Iframe injetado após o delay — autoplay + loop */}
       {ready && (
-        <iframe
-          id="panda-player-hero"
-          src={PANDA_VIDEO_URL}
-          className="absolute inset-0 w-full h-full"
-          style={{ border: "none" }}
-          allow="accelerometer;gyroscope;autoplay;encrypted-media;picture-in-picture"
-          allowFullScreen
-        />
+        <div className="absolute inset-0 pointer-events-none" tabIndex={-1}>
+          <iframe
+            id="panda-player-hero"
+            src={PANDA_VIDEO_URL}
+            className="w-full h-full"
+            style={{ border: "none" }}
+            allow="accelerometer;gyroscope;autoplay;encrypted-media;picture-in-picture"
+            tabIndex={-1}
+            allowFullScreen
+          />
+        </div>
       )}
     </div>
   );
