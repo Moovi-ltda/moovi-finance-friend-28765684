@@ -168,7 +168,11 @@ export default function FeaturesShowcase() {
     const section = sectionRef.current;
     const header = headerRef.current;
     const stackEl = stackRef.current;
-    if (!section || !header || !stackEl) return;
+    if (!section || !header) return;
+
+    const isMobile =
+      typeof window !== "undefined" &&
+      window.matchMedia("(max-width: 1023px)").matches;
 
     const ctx = gsap.context(() => {
       const headerEls = header.querySelectorAll(".header-animate");
@@ -189,6 +193,9 @@ export default function FeaturesShowcase() {
         }
       );
 
+      // No mobile/tablet, NÃO ativamos o stacking pin — cards viram lista normal.
+      if (isMobile || !stackEl) return;
+
       const cards = gsap.utils.toArray<HTMLElement>(
         stackEl.querySelectorAll(".stack-card")
       );
@@ -196,8 +203,6 @@ export default function FeaturesShowcase() {
 
       gsap.set(cards.slice(1), { yPercent: 120 });
 
-      // Each card gets: 1 unit hold (card visible) + 1 unit transition (next card slides in)
-      // Total timeline = (cards.length - 1) * 2 + 1 (first card hold)
       const holdDuration = 1;
       const transitionDuration = 1;
       const totalUnits = 1 + (cards.length - 1) * (holdDuration + transitionDuration);
@@ -212,7 +217,6 @@ export default function FeaturesShowcase() {
         },
       });
 
-      // First card holds for 1 unit before anything happens
       tl.to({}, { duration: holdDuration });
 
       cards.forEach((card, index) => {
@@ -222,11 +226,7 @@ export default function FeaturesShowcase() {
 
         tl.to(
           card,
-          {
-            yPercent: 0,
-            duration: transitionDuration,
-            ease: "power3.inOut",
-          },
+          { yPercent: 0, duration: transitionDuration, ease: "power3.inOut" },
           transitionStart
         );
 
@@ -258,7 +258,6 @@ export default function FeaturesShowcase() {
           }
         });
 
-        // Hold after this card lands (except for the last card)
         if (index < cards.length - 1) {
           tl.to({}, { duration: holdDuration }, transitionStart + transitionDuration);
         }
@@ -267,6 +266,7 @@ export default function FeaturesShowcase() {
 
     return () => ctx.revert();
   }, []);
+
 
   return (
     <section ref={sectionRef} className="relative bg-white z-40 overflow-hidden" id="features">
@@ -298,18 +298,21 @@ export default function FeaturesShowcase() {
         </div>
       </div>
 
-      {/* Stacking Cards */}
-      <div ref={stackRef} className="relative w-full h-[100dvh] md:h-screen flex items-center justify-center overflow-hidden">
+      {/* Stacking Cards (desktop) / Lista vertical (mobile) */}
+      <div
+        ref={stackRef}
+        className="relative w-full lg:h-screen flex flex-col lg:items-center lg:justify-center lg:overflow-hidden px-4 sm:px-6 lg:px-0 gap-6 lg:gap-0 pb-8 lg:pb-0"
+      >
         <div
-          className="relative w-[92vw] max-w-[1100px]"
-          style={{ height: "min(78vh, 780px)", perspective: "1200px" }}
+          className="relative w-full lg:w-[92vw] lg:max-w-[1100px] flex flex-col lg:block gap-6 lg:gap-0"
+          style={{ perspective: "1200px" }}
         >
           {features.map((feature, i) => {
             const Icon = feature.icon;
             return (
               <div
                 key={feature.number}
-                className="stack-card absolute inset-0 rounded-[1.5rem] border border-gray-200 overflow-hidden will-change-transform bg-white"
+                className="stack-card relative lg:absolute lg:inset-0 rounded-[1.5rem] border border-gray-200 overflow-hidden lg:will-change-transform bg-white"
                 style={{
                   boxShadow:
                     "0 25px 50px -12px rgba(0,0,0,0.12), 0 0 0 1px rgba(0,0,0,0.03)",
@@ -320,7 +323,7 @@ export default function FeaturesShowcase() {
                 <div className="stack-card__overlay absolute inset-0 bg-white opacity-0 z-10 pointer-events-none" />
 
                 {/* Content layout */}
-                <div className="relative z-[2] h-full flex flex-col lg:flex-row items-center gap-6 lg:gap-10 p-6 sm:p-8 lg:p-12">
+                <div className="relative z-[2] lg:h-full flex flex-col lg:flex-row items-center gap-6 lg:gap-10 p-6 sm:p-8 lg:p-12">
                   {/* Text side */}
                   <div
                     className={`flex flex-col justify-center gap-4 lg:gap-5 flex-1 min-w-0 ${i % 2 !== 0 ? "lg:order-2" : ""}`}

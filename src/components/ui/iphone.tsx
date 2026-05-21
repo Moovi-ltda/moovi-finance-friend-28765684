@@ -63,6 +63,8 @@ export function Iphone({ src, videoSrc, embedSrc, className, style, ...props }: 
           <img
             src={src}
             alt=""
+            loading="lazy"
+            decoding="async"
             className="block size-full object-contain object-center"
             style={{ imageRendering: "-webkit-optimize-contrast" } as React.CSSProperties}
           />

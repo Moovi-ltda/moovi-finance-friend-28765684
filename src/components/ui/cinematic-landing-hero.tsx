@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { cn } from "@/lib/utils";
 import { scrollToSection } from "@/utils/scroll";
-import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { ArrowRight, Sparkles, MessageCircle, Star, ChevronDown, X } from "lucide-react";
 import TrustMarquee from "@/components/TrustMarquee";
 import avatar1 from "@/assets/avatars/a1.jpg";
@@ -18,32 +18,45 @@ const PANDA_THUMBNAIL_URL = `https://b-vz-c1e2f242-e38.tv.pandavideo.com.br/${PA
 const AVATAR_URLS = [avatar1, avatar2, avatar3, avatar4];
 
 // ─── LAZY VIDEO PLAYER ─────────────────────────────────────────────────────────
-// Injeta o iframe automaticamente após ~1.5s (depois que o browser
-// termina de renderizar o conteúdo crítico), mantendo autoplay e loop.
+// Só injeta o iframe quando o mockup está realmente visível na viewport,
+// evitando download/parse pesado durante o carregamento e o scroll inicial.
 function LazyPandaPlayer({ className }: { className?: string }) {
+  const containerRef = useRef<HTMLDivElement>(null);
   const [ready, setReady] = useState(false);
 
   useEffect(() => {
-    // Usa requestIdleCallback se disponível, senão setTimeout
-    if (typeof window !== "undefined") {
-      if ("requestIdleCallback" in window) {
-        (window as any).requestIdleCallback(() => setReady(true), { timeout: 1500 });
-      } else {
-        const t = setTimeout(() => setReady(true), 1200);
-        return () => clearTimeout(t);
-      }
+    const el = containerRef.current;
+    if (!el || ready) return;
+
+    if (typeof IntersectionObserver === "undefined") {
+      const t = setTimeout(() => setReady(true), 2000);
+      return () => clearTimeout(t);
     }
-  }, []);
+
+    const io = new IntersectionObserver(
+      (entries) => {
+        if (entries.some((e) => e.isIntersecting)) {
+          setReady(true);
+          io.disconnect();
+        }
+      },
+      { rootMargin: "200px" }
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, [ready]);
 
   return (
-    <div className={cn("relative w-full h-full bg-black overflow-hidden", className)}>
-      {/* Thumbnail leve enquanto o iframe não carregou */}
+    <div
+      ref={containerRef}
+      className={cn("relative w-full h-full bg-black overflow-hidden", className)}
+    >
       {!ready && (
         <img
           src={PANDA_THUMBNAIL_URL}
           alt="Preview do app Moovi"
           className="absolute inset-0 w-full h-full object-cover"
-          loading="eager"
+          loading="lazy"
           decoding="async"
           onError={(e) => {
             (e.target as HTMLImageElement).style.opacity = "0";
@@ -51,7 +64,6 @@ function LazyPandaPlayer({ className }: { className?: string }) {
         />
       )}
 
-      {/* Iframe injetado após o delay — autoplay + loop */}
       {ready && (
         <div className="absolute inset-0 pointer-events-none" tabIndex={-1}>
           <iframe
@@ -62,6 +74,7 @@ function LazyPandaPlayer({ className }: { className?: string }) {
             allow="accelerometer;gyroscope;autoplay;encrypted-media;picture-in-picture"
             tabIndex={-1}
             allowFullScreen
+            loading="lazy"
           />
         </div>
       )}
@@ -458,12 +471,6 @@ export interface CinematicHeroProps extends React.HTMLAttributes<HTMLDivElement>
 
 export function CinematicHero({ className, ...props }: CinematicHeroProps) {
   const sectionRef = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: sectionRef,
-    offset: ["start start", "end start"],
-  });
-  const bgY = useTransform(scrollYProgress, [0, 1], ["0%", "15%"]);
-  const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0.3]);
 
   const headlineWords = ["Seu", "dinheiro", "organizado."];
   const headlineAccent = ["Sua", "vida", "mais", "leve."];
@@ -481,8 +488,8 @@ export function CinematicHero({ className, ...props }: CinematicHeroProps) {
         )}
         {...props}
       >
-        {/* ─── BACKGROUND LAYERS ─────────────────────────────────────── */}
-        <motion.div style={{ y: bgY }} className="absolute inset-0 pointer-events-none">
+        {/* ─── BACKGROUND LAYERS (estático, sem parallax) ──────────── */}
+        <div className="absolute inset-0 pointer-events-none">
           {/* Subtle grid */}
           <div
             className="absolute inset-0 opacity-[0.03]"
@@ -497,11 +504,11 @@ export function CinematicHero({ className, ...props }: CinematicHeroProps) {
             }}
           />
 
-          {/* Ambient orbs */}
-          <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[600px] bg-[#25D366]/[0.03] rounded-full blur-[120px]" />
-          <div className="absolute bottom-0 right-0 translate-x-1/4 translate-y-1/4 w-[500px] h-[500px] bg-[#0F6B3A]/[0.04] rounded-full blur-[100px]" />
-          <div className="absolute top-1/3 left-0 -translate-x-1/3 w-[400px] h-[400px] bg-emerald-900/[0.03] rounded-full blur-[100px]" />
-        </motion.div>
+          {/* Ambient orbs — menos camadas e blur menor no mobile */}
+          <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[500px] bg-[#25D366]/[0.03] rounded-full blur-[80px]" />
+          <div className="hidden md:block absolute bottom-0 right-0 translate-x-1/4 translate-y-1/4 w-[500px] h-[500px] bg-[#0F6B3A]/[0.04] rounded-full blur-[100px]" />
+        </div>
+
 
         {/* Noise texture */}
         <div
