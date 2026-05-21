@@ -323,7 +323,7 @@ export default function FeaturesShowcase() {
                 <div className="stack-card__overlay absolute inset-0 bg-white opacity-0 z-10 pointer-events-none" />
 
                 {/* Content layout */}
-                <div className="relative z-[2] h-full flex flex-col lg:flex-row items-center gap-6 lg:gap-10 p-6 sm:p-8 lg:p-12">
+                <div className="relative z-[2] lg:h-full flex flex-col lg:flex-row items-center gap-6 lg:gap-10 p-6 sm:p-8 lg:p-12">
                   {/* Text side */}
                   <div
                     className={`flex flex-col justify-center gap-4 lg:gap-5 flex-1 min-w-0 ${i % 2 !== 0 ? "lg:order-2" : ""}`}
