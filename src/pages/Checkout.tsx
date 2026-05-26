@@ -175,7 +175,7 @@ export default function Checkout() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setHasAttemptedSubmit(true);
-    const errors = validateStep3();
+    const errors = validateStep2();
     if (Object.keys(errors).length > 0) {
       setFieldErrors(errors);
       return;
@@ -192,12 +192,8 @@ export default function Checkout() {
       forma_pagamento: method,
       nome: nome.trim(),
       telefone: `+${selectedCountry.ddi}${onlyDigits(telefone)}`,
-      email: email.trim(),
       cpf_cnpj: docDigits,
       tipo_documento: docDigits.length === 14 ? "CNPJ" : "CPF",
-      cep: onlyDigits(cep),
-      numero_endereco: numero.trim(),
-      endereco: { rua, bairro, cidade, uf },
       afiliado_id: localStorage.getItem("moovi_afiliado_id") || "",
     };
 
