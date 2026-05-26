@@ -11,18 +11,7 @@
     <meta name="author" content="MOOVI" />
     <link rel="apple-touch-icon" sizes="180x180" href="/favicons/moovi-favicon.png?v=2" />
 
-    <script>
-      !function(f,b,e,v,n,t,s)
-      {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-      n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-      if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-      n.queue=[];t=b.createElement(e);t.async=!0;
-      t.src=v;s=b.getElementsByTagName(e)[0];
-      s.parentNode.insertBefore(t,s)}(window, document,'script',
-      'https://connect.facebook.net/en_US/fbevents.js');
-      fbq('init', '1508120273749046');
-      fbq('track', 'PageView');
-    </script>
+    <!-- Meta Pixel é injetado dinamicamente após consentimento LGPD (ver CookieConsent.tsx) -->
     <style>
       .lovable-badge, .lovable-watermark, #lovable-badge, #lovable-root, #lovable-floating-button,
       .lovable-floating-button, [id*="lovable"], [class*="lovable"], .button-lovable, .edit-with-lovable {
@@ -67,13 +56,7 @@
     <meta name="twitter:site" content="@lovable_dev" />
     <meta name="twitter:image" content="https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/b2dc54fe-a36b-4f29-b98d-eabf82eee583/id-preview-5df90900--71f6e7a7-ebf6-4777-9cf7-bd8994c1abfd.lovable.app-1777123836453.png">
 
-    <script
-      src="https://cdn.utmify.com.br/scripts/utms/latest.js"
-      data-utmify-prevent-xcod-sck
-      data-utmify-prevent-subids
-      async
-      defer
-    ></script>
+    <!-- UTMify é injetado dinamicamente após consentimento LGPD -->
     <meta property="og:title" content="MOOVI - Controle Financeiro Fácil no WhatsApp">
   <meta name="twitter:title" content="MOOVI - Controle Financeiro Fácil no WhatsApp">
   <meta property="og:description" content="Controle financeiro simples e prático direto no WhatsApp. Registre gastos, receba alertas e organize seu dinheiro sem complicação. Teste grátis por 3 dias.">
@@ -81,22 +64,12 @@
 </head>
 
   <body>
-    <noscript
-      ><img
-        height="1"
-        width="1"
-        style="display:none"
-        src="https://www.facebook.com/tr?id=1508120273749046&ev=PageView&noscript=1"
-    /></noscript>
+    <!-- Pixel noscript fallback removido para conformidade LGPD -->
 
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
 
-    <script
-      async
-      src="https://cdn.promotekit.com/promotekit.js"
-      data-promotekit="560dec5e-0938-422d-bee3-2e6c985c5a21"
-    ></script>
+    <!-- Promotekit é injetado dinamicamente após consentimento LGPD -->
     <script>
       // Função segura para React que roda periodicamente para garantir que
       // os links sejam atualizados mesmo após animações ou navegação entre páginas.

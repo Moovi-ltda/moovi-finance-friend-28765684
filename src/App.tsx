@@ -9,6 +9,7 @@ import NotFound from "./pages/NotFound";
 import Privacidade from "./pages/Privacidade";
 import Termos from "./pages/Termos";
 import Checkout from "./pages/Checkout";
+import CookieConsent from "./components/CookieConsent";
 
 
 const queryClient = new QueryClient();
@@ -39,7 +40,7 @@ const App = () => (
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
-        
+        <CookieConsent />
       </BrowserRouter>
     </TooltipProvider>
   </QueryClientProvider>
