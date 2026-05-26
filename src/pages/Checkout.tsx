@@ -131,28 +131,6 @@ export default function Checkout() {
     window.scrollTo({ top: 0, behavior: "instant" as ScrollBehavior });
   }, [step]);
 
-  // Auto-fill via ViaCEP
-  useEffect(() => {
-    const d = onlyDigits(cep);
-    if (d.length !== 8) return;
-    let cancelled = false;
-    setCepLoading(true);
-    fetch(`https://viacep.com.br/ws/${d}/json/`)
-      .then((r) => r.json())
-      .then((data) => {
-        if (cancelled || data.erro) return;
-        setRua(data.logradouro || "");
-        setBairro(data.bairro || "");
-        setCidade(data.localidade || "");
-        setUf(data.uf || "");
-      })
-      .catch(() => {})
-      .finally(() => !cancelled && setCepLoading(false));
-    return () => {
-      cancelled = true;
-    };
-  }, [cep]);
-
   const totalValue = plan?.totalPrice ?? plan?.yearlyTotal ?? 0;
   const monthlyValue = plan?.installmentPrice ?? totalValue / 12;
 
@@ -165,19 +143,13 @@ export default function Checkout() {
 
   const validateStep1 = () => {
     if (nome.trim().length < 3) return "Informe seu nome completo.";
-    if (!email.includes("@") || email.trim().length < 5) return "Informe um e-mail válido.";
     if (onlyDigits(telefone).length < 10) return "Informe um WhatsApp válido.";
     return null;
   };
   const validateStep2 = () => {
-    const docDigits = onlyDigits(cpf).length;
-    if (docDigits !== 11 && docDigits !== 14) return "Informe um CPF ou CNPJ válido.";
-    if (onlyDigits(cep).length !== 8) return "CEP inválido.";
-    if (!numero.trim()) return "Informe o número do endereço.";
-    return null;
-  };
-  const validateStep3 = () => {
     const errors: Record<string, string> = {};
+    const docDigits = onlyDigits(cpf).length;
+    if (docDigits !== 11 && docDigits !== 14) errors.cpf = "Informe um CPF ou CNPJ válido.";
     if (method === "PIX") return errors;
     if (onlyDigits(cardNumber).length < 13) errors.cardNumber = "Número do cartão inválido.";
     if (!cardHolder.trim()) errors.cardHolder = "Informe o nome impresso no cartão.";
@@ -187,9 +159,9 @@ export default function Checkout() {
   };
 
   const next = () => {
-    const err = step === 1 ? validateStep1() : step === 2 ? validateStep2() : null;
+    const err = step === 1 ? validateStep1() : null;
     if (err) return toast.error(err);
-    setStep((s) => Math.min(3, s + 1));
+    setStep((s) => Math.min(2, s + 1));
     setHasAttemptedSubmit(false);
     setFieldErrors({});
   };
@@ -198,6 +170,7 @@ export default function Checkout() {
     setHasAttemptedSubmit(false);
     setFieldErrors({});
   };
+
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
