@@ -104,7 +104,7 @@ export const CookieConsent = () => {
       role="dialog"
       aria-live="polite"
       aria-label="Aviso de cookies"
-      className={`fixed z-50 bottom-4 left-1/2 -translate-x-1/2 w-[calc(100%-1.5rem)] max-w-md
+      className={`fixed z-[9999] bottom-4 left-1/2 -translate-x-1/2 w-[calc(100%-1.5rem)] max-w-md
         transition-all duration-300 ease-out
         ${mounted ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"}`}
     >
