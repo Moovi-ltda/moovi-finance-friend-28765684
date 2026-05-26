@@ -374,58 +374,15 @@ export default function Checkout() {
 
                   {step === 2 && (
                     <>
-                      <h3 className="text-xl font-bold text-slate-900">Dados de faturamento</h3>
-                      <p className="text-sm text-slate-500 -mt-2">
-                        Necessário para emissão da nota fiscal.
-                      </p>
+                      <h3 className="text-xl font-bold text-slate-900">Forma de pagamento</h3>
                       <Field
                         label="CPF / CNPJ"
                         value={cpf}
                         onChange={(v) => setCpf(maskCpfCnpj(v))}
                         placeholder="000.000.000-00"
                         inputMode="numeric"
+                        error={hasAttemptedSubmit ? fieldErrors.cpf : undefined}
                       />
-                      <div className="grid grid-cols-3 gap-3">
-                        <div className="col-span-2">
-                          <Field
-                            label="CEP"
-                            value={cep}
-                            onChange={(v) => setCep(maskCEP(v))}
-                            placeholder="00000-000"
-                            inputMode="numeric"
-                          />
-                        </div>
-                        <Field
-                          label="Número"
-                          value={numero}
-                          onChange={setNumero}
-                          placeholder="123"
-                          inputMode="numeric"
-                        />
-                      </div>
-                      <div className="rounded-lg bg-slate-50 border border-slate-200 p-3 space-y-2">
-                        <p className="text-xs font-semibold text-slate-500 uppercase tracking-wider flex items-center gap-2">
-                          {cepLoading ? (
-                            <>
-                              <Loader2 className="h-3 w-3 animate-spin" /> Buscando endereço...
-                            </>
-                          ) : (
-                            "Endereço (preenchido pelo CEP)"
-                          )}
-                        </p>
-                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm">
-                          <ReadField label="Rua" value={rua} />
-                          <ReadField label="Bairro" value={bairro} />
-                          <ReadField label="Cidade" value={cidade} />
-                          <ReadField label="UF" value={uf} />
-                        </div>
-                      </div>
-                    </>
-                  )}
-
-                  {step === 3 && (
-                    <>
-                      <h3 className="text-xl font-bold text-slate-900">Forma de pagamento</h3>
                       <div className="grid grid-cols-2 gap-1 p-1 bg-slate-100 rounded-lg">
                         <button
                           type="button"
