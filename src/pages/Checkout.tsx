@@ -104,22 +104,14 @@ export default function Checkout() {
 
   // Step 1
   const [nome, setNome] = useState("");
-  const [email, setEmail] = useState("");
   const [telefone, setTelefone] = useState("");
   const [selectedCountry, setSelectedCountry] = useState(COUNTRIES[0]);
   const [countryOpen, setCountryOpen] = useState(false);
 
   // Step 2
   const [cpf, setCpf] = useState("");
-  const [cep, setCep] = useState("");
-  const [numero, setNumero] = useState("");
-  const [rua, setRua] = useState("");
-  const [bairro, setBairro] = useState("");
-  const [cidade, setCidade] = useState("");
-  const [uf, setUf] = useState("");
-  const [cepLoading, setCepLoading] = useState(false);
 
-  // Step 3 - card
+  // Step 2 - card
   const [cardNumber, setCardNumber] = useState("");
   const [cardHolder, setCardHolder] = useState("");
   const [cardExpiry, setCardExpiry] = useState("");
