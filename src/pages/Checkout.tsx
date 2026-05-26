@@ -87,8 +87,7 @@ const maskCVV = (v: string) => onlyDigits(v).slice(0, 4);
 
 const STEPS = [
   { id: 1, label: "Identificação" },
-  { id: 2, label: "Faturamento" },
-  { id: 3, label: "Pagamento" },
+  { id: 2, label: "Pagamento" },
 ];
 
 export default function Checkout() {
@@ -105,22 +104,14 @@ export default function Checkout() {
 
   // Step 1
   const [nome, setNome] = useState("");
-  const [email, setEmail] = useState("");
   const [telefone, setTelefone] = useState("");
   const [selectedCountry, setSelectedCountry] = useState(COUNTRIES[0]);
   const [countryOpen, setCountryOpen] = useState(false);
 
   // Step 2
   const [cpf, setCpf] = useState("");
-  const [cep, setCep] = useState("");
-  const [numero, setNumero] = useState("");
-  const [rua, setRua] = useState("");
-  const [bairro, setBairro] = useState("");
-  const [cidade, setCidade] = useState("");
-  const [uf, setUf] = useState("");
-  const [cepLoading, setCepLoading] = useState(false);
 
-  // Step 3 - card
+  // Step 2 - card
   const [cardNumber, setCardNumber] = useState("");
   const [cardHolder, setCardHolder] = useState("");
   const [cardExpiry, setCardExpiry] = useState("");
@@ -140,28 +131,6 @@ export default function Checkout() {
     window.scrollTo({ top: 0, behavior: "instant" as ScrollBehavior });
   }, [step]);
 
-  // Auto-fill via ViaCEP
-  useEffect(() => {
-    const d = onlyDigits(cep);
-    if (d.length !== 8) return;
-    let cancelled = false;
-    setCepLoading(true);
-    fetch(`https://viacep.com.br/ws/${d}/json/`)
-      .then((r) => r.json())
-      .then((data) => {
-        if (cancelled || data.erro) return;
-        setRua(data.logradouro || "");
-        setBairro(data.bairro || "");
-        setCidade(data.localidade || "");
-        setUf(data.uf || "");
-      })
-      .catch(() => {})
-      .finally(() => !cancelled && setCepLoading(false));
-    return () => {
-      cancelled = true;
-    };
-  }, [cep]);
-
   const totalValue = plan?.totalPrice ?? plan?.yearlyTotal ?? 0;
   const monthlyValue = plan?.installmentPrice ?? totalValue / 12;
 
@@ -174,19 +143,13 @@ export default function Checkout() {
 
   const validateStep1 = () => {
     if (nome.trim().length < 3) return "Informe seu nome completo.";
-    if (!email.includes("@") || email.trim().length < 5) return "Informe um e-mail válido.";
     if (onlyDigits(telefone).length < 10) return "Informe um WhatsApp válido.";
     return null;
   };
   const validateStep2 = () => {
-    const docDigits = onlyDigits(cpf).length;
-    if (docDigits !== 11 && docDigits !== 14) return "Informe um CPF ou CNPJ válido.";
-    if (onlyDigits(cep).length !== 8) return "CEP inválido.";
-    if (!numero.trim()) return "Informe o número do endereço.";
-    return null;
-  };
-  const validateStep3 = () => {
     const errors: Record<string, string> = {};
+    const docDigits = onlyDigits(cpf).length;
+    if (docDigits !== 11 && docDigits !== 14) errors.cpf = "Informe um CPF ou CNPJ válido.";
     if (method === "PIX") return errors;
     if (onlyDigits(cardNumber).length < 13) errors.cardNumber = "Número do cartão inválido.";
     if (!cardHolder.trim()) errors.cardHolder = "Informe o nome impresso no cartão.";
@@ -196,9 +159,9 @@ export default function Checkout() {
   };
 
   const next = () => {
-    const err = step === 1 ? validateStep1() : step === 2 ? validateStep2() : null;
+    const err = step === 1 ? validateStep1() : null;
     if (err) return toast.error(err);
-    setStep((s) => Math.min(3, s + 1));
+    setStep((s) => Math.min(2, s + 1));
     setHasAttemptedSubmit(false);
     setFieldErrors({});
   };
@@ -208,10 +171,11 @@ export default function Checkout() {
     setFieldErrors({});
   };
 
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setHasAttemptedSubmit(true);
-    const errors = validateStep3();
+    const errors = validateStep2();
     if (Object.keys(errors).length > 0) {
       setFieldErrors(errors);
       return;
@@ -228,12 +192,8 @@ export default function Checkout() {
       forma_pagamento: method,
       nome: nome.trim(),
       telefone: `+${selectedCountry.ddi}${onlyDigits(telefone)}`,
-      email: email.trim(),
       cpf_cnpj: docDigits,
       tipo_documento: docDigits.length === 14 ? "CNPJ" : "CPF",
-      cep: onlyDigits(cep),
-      numero_endereco: numero.trim(),
-      endereco: { rua, bairro, cidade, uf },
       afiliado_id: localStorage.getItem("moovi_afiliado_id") || "",
     };
 
@@ -367,13 +327,6 @@ export default function Checkout() {
                         onChange={setNome}
                         placeholder="João da Silva"
                       />
-                      <Field
-                        label="E-mail"
-                        type="email"
-                        value={email}
-                        onChange={setEmail}
-                        placeholder="voce@email.com"
-                      />
                       <div>
                         <span className="text-sm font-medium text-slate-700">WhatsApp</span>
                         <div className="mt-1 flex gap-2">
@@ -421,58 +374,15 @@ export default function Checkout() {
 
                   {step === 2 && (
                     <>
-                      <h3 className="text-xl font-bold text-slate-900">Dados de faturamento</h3>
-                      <p className="text-sm text-slate-500 -mt-2">
-                        Necessário para emissão da nota fiscal.
-                      </p>
+                      <h3 className="text-xl font-bold text-slate-900">Forma de pagamento</h3>
                       <Field
                         label="CPF / CNPJ"
                         value={cpf}
                         onChange={(v) => setCpf(maskCpfCnpj(v))}
                         placeholder="000.000.000-00"
                         inputMode="numeric"
+                        error={hasAttemptedSubmit ? fieldErrors.cpf : undefined}
                       />
-                      <div className="grid grid-cols-3 gap-3">
-                        <div className="col-span-2">
-                          <Field
-                            label="CEP"
-                            value={cep}
-                            onChange={(v) => setCep(maskCEP(v))}
-                            placeholder="00000-000"
-                            inputMode="numeric"
-                          />
-                        </div>
-                        <Field
-                          label="Número"
-                          value={numero}
-                          onChange={setNumero}
-                          placeholder="123"
-                          inputMode="numeric"
-                        />
-                      </div>
-                      <div className="rounded-lg bg-slate-50 border border-slate-200 p-3 space-y-2">
-                        <p className="text-xs font-semibold text-slate-500 uppercase tracking-wider flex items-center gap-2">
-                          {cepLoading ? (
-                            <>
-                              <Loader2 className="h-3 w-3 animate-spin" /> Buscando endereço...
-                            </>
-                          ) : (
-                            "Endereço (preenchido pelo CEP)"
-                          )}
-                        </p>
-                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm">
-                          <ReadField label="Rua" value={rua} />
-                          <ReadField label="Bairro" value={bairro} />
-                          <ReadField label="Cidade" value={cidade} />
-                          <ReadField label="UF" value={uf} />
-                        </div>
-                      </div>
-                    </>
-                  )}
-
-                  {step === 3 && (
-                    <>
-                      <h3 className="text-xl font-bold text-slate-900">Forma de pagamento</h3>
                       <div className="grid grid-cols-2 gap-1 p-1 bg-slate-100 rounded-lg">
                         <button
                           type="button"
@@ -577,7 +487,7 @@ export default function Checkout() {
                     ) : (
                       <span />
                     )}
-                    {step < 3 ? (
+                    {step < 2 ? (
                       <button
                         type="button"
                         onClick={next}
@@ -760,7 +670,7 @@ export default function Checkout() {
               <ChevronLeft className="h-4 w-4" />
             </button>
           )}
-          {step < 3 ? (
+          {step < 2 ? (
             <button
               type="button"
               onClick={next}
