@@ -327,13 +327,6 @@ export default function Checkout() {
                         onChange={setNome}
                         placeholder="João da Silva"
                       />
-                      <Field
-                        label="E-mail"
-                        type="email"
-                        value={email}
-                        onChange={setEmail}
-                        placeholder="voce@email.com"
-                      />
                       <div>
                         <span className="text-sm font-medium text-slate-700">WhatsApp</span>
                         <div className="mt-1 flex gap-2">
