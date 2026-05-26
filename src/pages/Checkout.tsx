@@ -487,7 +487,7 @@ export default function Checkout() {
                     ) : (
                       <span />
                     )}
-                    {step < 3 ? (
+                    {step < 2 ? (
                       <button
                         type="button"
                         onClick={next}
@@ -670,7 +670,7 @@ export default function Checkout() {
               <ChevronLeft className="h-4 w-4" />
             </button>
           )}
-          {step < 3 ? (
+          {step < 2 ? (
             <button
               type="button"
               onClick={next}
