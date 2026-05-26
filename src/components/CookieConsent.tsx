@@ -4,13 +4,19 @@ import { Cookie, X } from "lucide-react";
 
 const CONSENT_KEY = "moovi_cookie_consent";
 
+function safe(fn: () => void, label: string) {
+  try {
+    fn();
+  } catch (err) {
+    console.warn(`[CookieConsent] Falha ao injetar ${label}:`, err);
+  }
+}
+
 function injectMetaPixel() {
   if (typeof window === "undefined" || (window as any).fbq) return;
-
-  // Inline Meta Pixel loader
-  (function(f: any, b: Document, e: string, v: string, n?: any, t?: any, s?: any) {
+  (function (f: any, b: Document, e: string, v: string, n?: any, t?: any, s?: any) {
     if (f.fbq) return;
-    n = f.fbq = function() {
+    n = f.fbq = function () {
       n.callMethod ? n.callMethod.apply(n, arguments) : n.queue.push(arguments);
     };
     if (!f._fbq) f._fbq = n;
@@ -24,11 +30,9 @@ function injectMetaPixel() {
     s = b.getElementsByTagName(e)[0];
     s.parentNode?.insertBefore(t, s);
   })(window, document, "script", "https://connect.facebook.net/en_US/fbevents.js");
-
   (window as any).fbq("init", "1508120273749046");
   (window as any).fbq("track", "PageView");
 
-  // No-script fallback pixel image
   if (!document.getElementById("fb-pixel-noscript")) {
     const noscript = document.createElement("noscript");
     noscript.id = "fb-pixel-noscript";
@@ -51,6 +55,7 @@ function injectUTMify() {
   script.defer = true;
   script.setAttribute("data-utmify-prevent-xcod-sck", "");
   script.setAttribute("data-utmify-prevent-subids", "");
+  script.onerror = () => console.warn("[CookieConsent] UTMify falhou ao carregar");
   document.head.appendChild(script);
 }
 
@@ -61,60 +66,68 @@ function injectPromotekit() {
   script.async = true;
   script.src = "https://cdn.promotekit.com/promotekit.js";
   script.setAttribute("data-promotekit", "560dec5e-0938-422d-bee3-2e6c985c5a21");
+  script.onerror = () => console.warn("[CookieConsent] Promotekit falhou ao carregar");
   document.body.appendChild(script);
 
-  // Attach referral updater interval
-  const interval = setInterval(() => {
-    const referralId = (window as any).promotekit_referral;
-    if (referralId) {
+  const interval = window.setInterval(() => {
+    try {
+      const referralId = (window as any).promotekit_referral;
+      if (!referralId) return;
       document.querySelectorAll('a[href^="https://buy.stripe.com/"]').forEach((link) => {
         const oldUrl = link.getAttribute("href");
         if (oldUrl && !oldUrl.includes("client_reference_id")) {
-          const separator = oldUrl.includes("?") ? "&" : "?";
-          link.setAttribute("href", oldUrl + separator + "client_reference_id=" + referralId);
+          const sep = oldUrl.includes("?") ? "&" : "?";
+          link.setAttribute("href", oldUrl + sep + "client_reference_id=" + referralId);
         }
       });
+    } catch (e) {
+      /* noop */
     }
   }, 2000);
-
-  // Store interval reference so it can be cleared if needed
   (window as any).__promotekit_interval = interval;
 }
 
 export function activateThirdPartyScripts() {
-  injectMetaPixel();
-  injectUTMify();
-  injectPromotekit();
+  if (typeof window === "undefined") return;
+  // Defer to next tick so it never blocks render
+  setTimeout(() => {
+    safe(injectMetaPixel, "Meta Pixel");
+    safe(injectUTMify, "UTMify");
+    safe(injectPromotekit, "Promotekit");
+  }, 0);
 }
 
 export function CookieConsent() {
   const [visible, setVisible] = useState(false);
-  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    setMounted(true);
-    const stored = localStorage.getItem(CONSENT_KEY);
-    if (!stored) {
-      // Delay appearance slightly to avoid layout shift on initial paint
-      const timer = setTimeout(() => setVisible(true), 800);
-      return () => clearTimeout(timer);
-    } else if (stored === "accepted") {
-      activateThirdPartyScripts();
+    try {
+      const stored = localStorage.getItem(CONSENT_KEY);
+      if (!stored) {
+        const timer = setTimeout(() => setVisible(true), 800);
+        return () => clearTimeout(timer);
+      } else if (stored === "accepted") {
+        activateThirdPartyScripts();
+      }
+    } catch (err) {
+      console.warn("[CookieConsent] localStorage indisponível:", err);
     }
   }, []);
 
   const handleAccept = useCallback(() => {
-    localStorage.setItem(CONSENT_KEY, "accepted");
+    try {
+      localStorage.setItem(CONSENT_KEY, "accepted");
+    } catch {}
     setVisible(false);
     activateThirdPartyScripts();
   }, []);
 
   const handleReject = useCallback(() => {
-    localStorage.setItem(CONSENT_KEY, "rejected");
+    try {
+      localStorage.setItem(CONSENT_KEY, "rejected");
+    } catch {}
     setVisible(false);
   }, []);
-
-  if (!mounted) return null;
 
   return (
     <div
