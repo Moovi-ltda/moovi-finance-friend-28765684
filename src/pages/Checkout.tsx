@@ -87,8 +87,7 @@ const maskCVV = (v: string) => onlyDigits(v).slice(0, 4);
 
 const STEPS = [
   { id: 1, label: "Identificação" },
-  { id: 2, label: "Faturamento" },
-  { id: 3, label: "Pagamento" },
+  { id: 2, label: "Pagamento" },
 ];
 
 export default function Checkout() {
