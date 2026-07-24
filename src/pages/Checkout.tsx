@@ -330,13 +330,23 @@ export default function Checkout() {
                     <>
                       <h3 className="text-xl font-bold text-slate-900">Quem é você?</h3>
                       <p className="text-sm text-slate-500 -mt-2">
-                        Vamos liberar o acesso no seu WhatsApp.
+                        Crie sua conta para acessar o seu painel financeiro.
                       </p>
                       <Field
                         label="Nome completo"
                         value={nome}
                         onChange={setNome}
                         placeholder="João da Silva"
+                        error={fieldErrors.nome}
+                      />
+                      <Field
+                        label="E-mail"
+                        value={email}
+                        onChange={setEmail}
+                        placeholder="seu.email@exemplo.com"
+                        type="email"
+                        inputMode="email"
+                        error={fieldErrors.email}
                       />
                       <div>
                         <span className="text-sm font-medium text-slate-700">WhatsApp</span>
