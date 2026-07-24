@@ -104,6 +104,7 @@ export default function Checkout() {
 
   // Step 1
   const [nome, setNome] = useState("");
+  const [email, setEmail] = useState("");
   const [telefone, setTelefone] = useState("");
   const [selectedCountry, setSelectedCountry] = useState(COUNTRIES[0]);
   const [countryOpen, setCountryOpen] = useState(false);
@@ -142,9 +143,13 @@ export default function Checkout() {
   if (!plan) return null;
 
   const validateStep1 = () => {
-    if (nome.trim().length < 3) return "Informe seu nome completo.";
-    if (onlyDigits(telefone).length < 10) return "Informe um WhatsApp válido.";
-    return null;
+    const errors: Record<string, string> = {};
+    if (nome.trim().length < 3) errors.nome = "Informe seu nome completo.";
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!email.trim()) errors.email = "Informe seu e-mail.";
+    else if (!emailRegex.test(email.trim())) errors.email = "Informe um e-mail válido.";
+    if (onlyDigits(telefone).length < 10) errors.telefone = "Informe um WhatsApp válido.";
+    return errors;
   };
   const validateStep2 = () => {
     const errors: Record<string, string> = {};
@@ -159,11 +164,16 @@ export default function Checkout() {
   };
 
   const next = () => {
-    const err = step === 1 ? validateStep1() : null;
-    if (err) return toast.error(err);
+    if (step === 1) {
+      const errors = validateStep1();
+      if (Object.keys(errors).length > 0) {
+        setFieldErrors(errors);
+        return;
+      }
+      setFieldErrors({});
+    }
     setStep((s) => Math.min(2, s + 1));
     setHasAttemptedSubmit(false);
-    setFieldErrors({});
   };
   const back = () => {
     setStep((s) => Math.max(1, s - 1));
@@ -191,6 +201,7 @@ export default function Checkout() {
       valor: totalValue,
       forma_pagamento: method,
       nome: nome.trim(),
+      email: email.trim(),
       telefone: `+${selectedCountry.ddi}${onlyDigits(telefone)}`,
       cpf_cnpj: docDigits,
       tipo_documento: docDigits.length === 14 ? "CNPJ" : "CPF",
@@ -319,13 +330,23 @@ export default function Checkout() {
                     <>
                       <h3 className="text-xl font-bold text-slate-900">Quem é você?</h3>
                       <p className="text-sm text-slate-500 -mt-2">
-                        Vamos liberar o acesso no seu WhatsApp.
+                        Crie sua conta para acessar o seu painel financeiro.
                       </p>
                       <Field
                         label="Nome completo"
                         value={nome}
                         onChange={setNome}
                         placeholder="João da Silva"
+                        error={fieldErrors.nome}
+                      />
+                      <Field
+                        label="E-mail"
+                        value={email}
+                        onChange={setEmail}
+                        placeholder="seu.email@exemplo.com"
+                        type="email"
+                        inputMode="email"
+                        error={fieldErrors.email}
                       />
                       <div>
                         <span className="text-sm font-medium text-slate-700">WhatsApp</span>
@@ -365,9 +386,12 @@ export default function Checkout() {
                             onChange={(e) => setTelefone(maskPhone(e.target.value))}
                             placeholder="(99) 99999-9999"
                             inputMode="numeric"
-                            className="flex-1 bg-white border border-slate-200 rounded-lg px-3 h-[44px] text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                            className={`flex-1 bg-white border rounded-lg px-3 h-[44px] text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 ${
+                              fieldErrors.telefone ? "border-red-300 focus:border-red-500 focus:ring-red-200" : "border-slate-200"
+                            }`}
                           />
                         </div>
+                        {fieldErrors.telefone && <p className="mt-1 text-xs text-red-500">{fieldErrors.telefone}</p>}
                       </div>
                     </>
                   )}
