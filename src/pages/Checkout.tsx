@@ -386,9 +386,12 @@ export default function Checkout() {
                             onChange={(e) => setTelefone(maskPhone(e.target.value))}
                             placeholder="(99) 99999-9999"
                             inputMode="numeric"
-                            className="flex-1 bg-white border border-slate-200 rounded-lg px-3 h-[44px] text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                            className={`flex-1 bg-white border rounded-lg px-3 h-[44px] text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 ${
+                              fieldErrors.telefone ? "border-red-300 focus:border-red-500 focus:ring-red-200" : "border-slate-200"
+                            }`}
                           />
                         </div>
+                        {fieldErrors.telefone && <p className="mt-1 text-xs text-red-500">{fieldErrors.telefone}</p>}
                       </div>
                     </>
                   )}
