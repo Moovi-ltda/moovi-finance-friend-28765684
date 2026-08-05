@@ -380,7 +380,7 @@ export default function Checkout() {
                         error={fieldErrors.email}
                       />
                       <div>
-                        <span className="text-sm font-medium text-slate-700">WhatsApp</span>
+                        <span className="text-sm font-medium text-slate-700">Telefone de Contato</span>
                         <div className="mt-1 flex gap-2">
                           <Popover open={countryOpen} onOpenChange={setCountryOpen}>
                             <PopoverTrigger asChild>
