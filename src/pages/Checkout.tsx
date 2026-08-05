@@ -252,6 +252,9 @@ export default function Checkout() {
       });
     }
 
+    const fallbackError =
+      "Falha ao processar o pagamento. Verifique seus dados e tente novamente.";
+
     try {
       const res = await fetch(WEBHOOK_URL, {
         method: "POST",
@@ -259,10 +262,15 @@ export default function Checkout() {
         body: JSON.stringify(payload),
       });
       const data = await res.json().catch(() => ({}));
-      if (!res.ok) {
-        throw new Error(
-          (data as { message?: string })?.message || "Pagamento não autorizado",
-        );
+
+      const backendStatus = (data.status || "").toString().toLowerCase();
+      const backendMessage =
+        (data as { mensagem?: string; message?: string }).mensagem ||
+        (data as { mensagem?: string; message?: string }).message ||
+        "";
+
+      if (!res.ok || backendStatus === "erro") {
+        throw new Error(backendMessage || fallbackError);
       }
 
       if (method === "PIX") {
@@ -275,18 +283,16 @@ export default function Checkout() {
         const st = (data.status || "").toString().toUpperCase();
         const approved = ["SUCESSO", "SUCCESS", "CONFIRMED", "RECEIVED", "APPROVED", "OK"];
         if (!approved.includes(st)) {
-          throw new Error(data.message || "Pagamento recusado pela operadora");
+          throw new Error(backendMessage || "Pagamento recusado pela operadora");
         }
         setStatus("card-success");
       }
     } catch (err: unknown) {
-      setErrorMsg(err instanceof Error ? err.message : "Erro inesperado");
+      const displayError = err instanceof Error ? err.message : fallbackError;
+      setErrorMsg(displayError);
       // Mantém o usuário no formulário para corrigir os dados
       setStatus("form");
-      toast.error(
-        "Pagamento não autorizado. Verifique os dados do cartão e tente novamente.",
-        { duration: 6000 },
-      );
+      toast.error(displayError, { duration: 6000 });
     }
 
   };
