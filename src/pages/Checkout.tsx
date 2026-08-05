@@ -691,7 +691,7 @@ export default function Checkout() {
 
             {status === "error" && (
               <div className="py-10 text-center">
-                <h3 className="text-xl font-bold text-slate-900">Não conseguimos processar 😕</h3>
+                <h3 className="text-xl font-bold text-slate-900">Não conseguimos processar</h3>
                 <p className="mt-2 text-sm text-slate-600">
                   {errorMsg || "Verifique seus dados e tente novamente."}
                 </p>
