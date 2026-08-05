@@ -283,7 +283,7 @@ export default function Checkout() {
         const st = (data.status || "").toString().toUpperCase();
         const approved = ["SUCESSO", "SUCCESS", "CONFIRMED", "RECEIVED", "APPROVED", "OK"];
         if (!approved.includes(st)) {
-          throw new Error(backendMessage || "Pagamento recusado pela operadora");
+          throw new Error(backendMessage || fallbackError);
         }
         setStatus("card-success");
       }
@@ -691,7 +691,7 @@ export default function Checkout() {
 
             {status === "error" && (
               <div className="py-10 text-center">
-                <h3 className="text-xl font-bold text-slate-900">Não conseguimos processar 😕</h3>
+                <h3 className="text-xl font-bold text-slate-900">Não conseguimos processar</h3>
                 <p className="mt-2 text-sm text-slate-600">
                   {errorMsg || "Verifique seus dados e tente novamente."}
                 </p>
