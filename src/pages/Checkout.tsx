@@ -584,7 +584,7 @@ export default function Checkout() {
                   </div>
                 )}
                 <p className="mt-6 text-xs text-slate-500">
-                  Após o pagamento, seu acesso será enviado no WhatsApp informado.
+                  Após o pagamento, seu acesso será enviado para o e-mail informado.
                 </p>
               </div>
             )}
@@ -594,10 +594,10 @@ export default function Checkout() {
                 <div className="mx-auto w-20 h-20 rounded-full bg-emerald-50 flex items-center justify-center border border-emerald-100">
                   <Check className="h-10 w-10 text-emerald-600" strokeWidth={3} />
                 </div>
-                <h3 className="mt-5 text-2xl font-bold text-slate-900">Pagamento Aprovado! 🎉</h3>
+                <h3 className="mt-5 text-2xl font-bold text-slate-900">Pagamento Aprovado!</h3>
                 <p className="mt-2 text-sm text-slate-600 max-w-sm mx-auto">
-                  Acabamos de enviar seu acesso no WhatsApp{" "}
-                  <span className="text-emerald-600 font-semibold">{telefone}</span>.
+                  Acabamos de enviar seu acesso para o e-mail:{" "}
+                  <span className="text-[#1AAD55] font-semibold">{email}</span>.
                 </p>
                 <Link
                   to="/"
@@ -666,7 +666,7 @@ export default function Checkout() {
                 </li>
                 <li className="flex items-start gap-2">
                   <Check className="h-3.5 w-3.5 text-emerald-600 mt-0.5 flex-shrink-0" />
-                  Acesso liberado no seu WhatsApp
+                  Acesso liberado imediatamente no seu e-mail
                 </li>
               </ul>
             </div>
