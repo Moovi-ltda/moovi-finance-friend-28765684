@@ -258,8 +258,12 @@ export default function Checkout() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
       });
-      if (!res.ok) throw new Error("Falha no processamento");
       const data = await res.json().catch(() => ({}));
+      if (!res.ok) {
+        throw new Error(
+          (data as { message?: string })?.message || "Pagamento não autorizado",
+        );
+      }
 
       if (method === "PIX") {
         const copyPaste = data.copyPaste || data.payload || data.pix_copia_cola || "";
@@ -269,15 +273,22 @@ export default function Checkout() {
         setStatus("pix-success");
       } else {
         const st = (data.status || "").toString().toUpperCase();
-        if (st && !["CONFIRMED", "RECEIVED", "APPROVED", "OK"].includes(st)) {
+        const approved = ["SUCESSO", "SUCCESS", "CONFIRMED", "RECEIVED", "APPROVED", "OK"];
+        if (!approved.includes(st)) {
           throw new Error(data.message || "Pagamento recusado pela operadora");
         }
         setStatus("card-success");
       }
     } catch (err: unknown) {
       setErrorMsg(err instanceof Error ? err.message : "Erro inesperado");
-      setStatus("error");
+      // Mantém o usuário no formulário para corrigir os dados
+      setStatus("form");
+      toast.error(
+        "Pagamento não autorizado. Verifique os dados do cartão e tente novamente.",
+        { duration: 6000 },
+      );
     }
+
   };
 
   const copyPix = async () => {
@@ -553,6 +564,14 @@ export default function Checkout() {
                       )}
                     </>
                   )}
+
+                  {errorMsg && step === 2 && (
+                    <div className="rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
+                      Pagamento não autorizado. Verifique os dados do cartão e tente novamente.
+                    </div>
+                  )}
+
+
 
                   {/* Desktop nav buttons */}
                   <div className="hidden lg:flex items-center justify-between pt-4">
