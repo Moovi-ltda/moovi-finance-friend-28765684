@@ -594,10 +594,10 @@ export default function Checkout() {
                 <div className="mx-auto w-20 h-20 rounded-full bg-emerald-50 flex items-center justify-center border border-emerald-100">
                   <Check className="h-10 w-10 text-emerald-600" strokeWidth={3} />
                 </div>
-                <h3 className="mt-5 text-2xl font-bold text-slate-900">Pagamento Aprovado! 🎉</h3>
+                <h3 className="mt-5 text-2xl font-bold text-slate-900">Pagamento Aprovado!</h3>
                 <p className="mt-2 text-sm text-slate-600 max-w-sm mx-auto">
-                  Acabamos de enviar seu acesso no WhatsApp{" "}
-                  <span className="text-emerald-600 font-semibold">{telefone}</span>.
+                  Acabamos de enviar seu acesso para o e-mail:{" "}
+                  <span className="text-[#1AAD55] font-semibold">{email}</span>.
                 </p>
                 <Link
                   to="/"
