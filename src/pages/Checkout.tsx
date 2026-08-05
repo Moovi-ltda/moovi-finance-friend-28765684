@@ -252,6 +252,9 @@ export default function Checkout() {
       });
     }
 
+    const fallbackError =
+      "Falha ao processar o pagamento. Verifique seus dados e tente novamente.";
+
     try {
       const res = await fetch(WEBHOOK_URL, {
         method: "POST",
@@ -265,8 +268,6 @@ export default function Checkout() {
         (data as { mensagem?: string; message?: string }).mensagem ||
         (data as { mensagem?: string; message?: string }).message ||
         "";
-      const fallbackError =
-        "Falha ao processar o pagamento. Verifique seus dados e tente novamente.";
 
       if (!res.ok || backendStatus === "erro") {
         throw new Error(backendMessage || fallbackError);
