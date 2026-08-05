@@ -108,6 +108,10 @@ export default function Checkout() {
   const [telefone, setTelefone] = useState("");
   const [selectedCountry, setSelectedCountry] = useState(COUNTRIES[0]);
   const [countryOpen, setCountryOpen] = useState(false);
+  const [cep, setCep] = useState("");
+  const [endereco, setEndereco] = useState("");
+  const [numero, setNumero] = useState("");
+  const [cepLoading, setCepLoading] = useState(false);
 
   // Step 2
   const [cpf, setCpf] = useState("");
