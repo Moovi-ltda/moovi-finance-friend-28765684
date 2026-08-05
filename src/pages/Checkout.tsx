@@ -584,7 +584,7 @@ export default function Checkout() {
                   </div>
                 )}
                 <p className="mt-6 text-xs text-slate-500">
-                  Após o pagamento, seu acesso será enviado no WhatsApp informado.
+                  Após o pagamento, seu acesso será enviado para o e-mail informado.
                 </p>
               </div>
             )}
