@@ -152,9 +152,33 @@ export default function Checkout() {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!email.trim()) errors.email = "Informe seu e-mail.";
     else if (!emailRegex.test(email.trim())) errors.email = "Informe um e-mail válido.";
-    if (onlyDigits(telefone).length < 10) errors.telefone = "Informe um WhatsApp válido.";
+    if (onlyDigits(telefone).length < 10) errors.telefone = "Informe um telefone válido.";
+    if (onlyDigits(cep).length !== 8) errors.cep = "Informe um CEP válido.";
+    if (endereco.trim().length < 3) errors.endereco = "Informe seu endereço.";
+    if (!numero.trim()) errors.numero = "Informe o número.";
     return errors;
   };
+
+  const handleCepChange = async (value: string) => {
+    const masked = maskCEP(value);
+    setCep(masked);
+    const digits = onlyDigits(masked);
+    if (digits.length === 8) {
+      setCepLoading(true);
+      try {
+        const res = await fetch(`https://viacep.com.br/ws/${digits}/json/`);
+        const data = await res.json();
+        if (!data.erro) {
+          setEndereco([data.logradouro, data.bairro, data.localidade && `${data.localidade}/${data.uf}`].filter(Boolean).join(", "));
+        }
+      } catch {
+        /* preenchimento manual */
+      } finally {
+        setCepLoading(false);
+      }
+    }
+  };
+
   const validateStep2 = () => {
     const errors: Record<string, string> = {};
     const docDigits = onlyDigits(cpf).length;
