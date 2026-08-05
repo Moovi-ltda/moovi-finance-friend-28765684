@@ -666,7 +666,7 @@ export default function Checkout() {
                 </li>
                 <li className="flex items-start gap-2">
                   <Check className="h-3.5 w-3.5 text-emerald-600 mt-0.5 flex-shrink-0" />
-                  Acesso liberado no seu WhatsApp
+                  Acesso liberado imediatamente no seu e-mail
                 </li>
               </ul>
             </div>
