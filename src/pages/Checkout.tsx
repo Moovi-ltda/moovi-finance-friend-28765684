@@ -283,7 +283,7 @@ export default function Checkout() {
         const st = (data.status || "").toString().toUpperCase();
         const approved = ["SUCESSO", "SUCCESS", "CONFIRMED", "RECEIVED", "APPROVED", "OK"];
         if (!approved.includes(st)) {
-          throw new Error(backendMessage || "Pagamento recusado pela operadora");
+          throw new Error(backendMessage || fallbackError);
         }
         setStatus("card-success");
       }
