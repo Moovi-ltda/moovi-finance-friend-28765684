@@ -424,6 +424,31 @@ export default function Checkout() {
                         </div>
                         {fieldErrors.telefone && <p className="mt-1 text-xs text-red-500">{fieldErrors.telefone}</p>}
                       </div>
+                      <div className="grid grid-cols-2 gap-3">
+                        <Field
+                          label={cepLoading ? "CEP (buscando...)" : "CEP"}
+                          value={cep}
+                          onChange={handleCepChange}
+                          placeholder="00000-000"
+                          inputMode="numeric"
+                          error={fieldErrors.cep}
+                        />
+                        <Field
+                          label="Número"
+                          value={numero}
+                          onChange={setNumero}
+                          placeholder="123"
+                          inputMode="numeric"
+                          error={fieldErrors.numero}
+                        />
+                      </div>
+                      <Field
+                        label="Endereço / Rua"
+                        value={endereco}
+                        onChange={setEndereco}
+                        placeholder="Rua das Flores, Centro, São Paulo/SP"
+                        error={fieldErrors.endereco}
+                      />
                     </>
                   )}
 
