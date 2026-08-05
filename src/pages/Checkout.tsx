@@ -108,6 +108,10 @@ export default function Checkout() {
   const [telefone, setTelefone] = useState("");
   const [selectedCountry, setSelectedCountry] = useState(COUNTRIES[0]);
   const [countryOpen, setCountryOpen] = useState(false);
+  const [cep, setCep] = useState("");
+  const [endereco, setEndereco] = useState("");
+  const [numero, setNumero] = useState("");
+  const [cepLoading, setCepLoading] = useState(false);
 
   // Step 2
   const [cpf, setCpf] = useState("");
@@ -148,9 +152,33 @@ export default function Checkout() {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!email.trim()) errors.email = "Informe seu e-mail.";
     else if (!emailRegex.test(email.trim())) errors.email = "Informe um e-mail válido.";
-    if (onlyDigits(telefone).length < 10) errors.telefone = "Informe um WhatsApp válido.";
+    if (onlyDigits(telefone).length < 10) errors.telefone = "Informe um telefone válido.";
+    if (onlyDigits(cep).length !== 8) errors.cep = "Informe um CEP válido.";
+    if (endereco.trim().length < 3) errors.endereco = "Informe seu endereço.";
+    if (!numero.trim()) errors.numero = "Informe o número.";
     return errors;
   };
+
+  const handleCepChange = async (value: string) => {
+    const masked = maskCEP(value);
+    setCep(masked);
+    const digits = onlyDigits(masked);
+    if (digits.length === 8) {
+      setCepLoading(true);
+      try {
+        const res = await fetch(`https://viacep.com.br/ws/${digits}/json/`);
+        const data = await res.json();
+        if (!data.erro) {
+          setEndereco([data.logradouro, data.bairro, data.localidade && `${data.localidade}/${data.uf}`].filter(Boolean).join(", "));
+        }
+      } catch {
+        /* preenchimento manual */
+      } finally {
+        setCepLoading(false);
+      }
+    }
+  };
+
   const validateStep2 = () => {
     const errors: Record<string, string> = {};
     const docDigits = onlyDigits(cpf).length;
@@ -203,6 +231,9 @@ export default function Checkout() {
       nome: nome.trim(),
       email: email.trim(),
       telefone: `+${selectedCountry.ddi}${onlyDigits(telefone)}`,
+      cep: onlyDigits(cep),
+      endereco: endereco.trim(),
+      numero: numero.trim(),
       cpf_cnpj: docDigits,
       tipo_documento: docDigits.length === 14 ? "CNPJ" : "CPF",
       afiliado_id: localStorage.getItem("moovi_afiliado_id") || "",
@@ -349,7 +380,7 @@ export default function Checkout() {
                         error={fieldErrors.email}
                       />
                       <div>
-                        <span className="text-sm font-medium text-slate-700">WhatsApp</span>
+                        <span className="text-sm font-medium text-slate-700">Telefone de Contato</span>
                         <div className="mt-1 flex gap-2">
                           <Popover open={countryOpen} onOpenChange={setCountryOpen}>
                             <PopoverTrigger asChild>
@@ -393,6 +424,31 @@ export default function Checkout() {
                         </div>
                         {fieldErrors.telefone && <p className="mt-1 text-xs text-red-500">{fieldErrors.telefone}</p>}
                       </div>
+                      <div className="grid grid-cols-2 gap-3">
+                        <Field
+                          label={cepLoading ? "CEP (buscando...)" : "CEP"}
+                          value={cep}
+                          onChange={handleCepChange}
+                          placeholder="00000-000"
+                          inputMode="numeric"
+                          error={fieldErrors.cep}
+                        />
+                        <Field
+                          label="Número"
+                          value={numero}
+                          onChange={setNumero}
+                          placeholder="123"
+                          inputMode="numeric"
+                          error={fieldErrors.numero}
+                        />
+                      </div>
+                      <Field
+                        label="Endereço / Rua"
+                        value={endereco}
+                        onChange={setEndereco}
+                        placeholder="Rua das Flores, Centro, São Paulo/SP"
+                        error={fieldErrors.endereco}
+                      />
                     </>
                   )}
 
