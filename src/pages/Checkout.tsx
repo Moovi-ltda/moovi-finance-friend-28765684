@@ -292,7 +292,10 @@ export default function Checkout() {
       setErrorMsg(displayError);
       // Mantém o usuário no formulário para corrigir os dados
       setStatus("form");
-      toast.error(displayError, { duration: 6000 });
+      const cleanMessage = displayError.startsWith("=")
+        ? displayError.substring(1)
+        : displayError;
+      toast.error(cleanMessage, { duration: 6000 });
     }
 
   };
