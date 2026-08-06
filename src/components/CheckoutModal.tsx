@@ -3,6 +3,7 @@ import { Dialog, DialogContent, DialogTitle, DialogDescription } from "@/compone
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Loader2, QrCode, CreditCard, Copy, Check, ShieldCheck, Sparkles, ChevronDown } from "lucide-react";
 import { toast } from "sonner";
+import { loadAsaasJs, tokenizeCard } from "@/lib/asaas";
 
 const WEBHOOK_URL = "https://n8n.fisherai.shop/webhook/checkout-transparente";
 
@@ -136,6 +137,7 @@ export function CheckoutModal({ open, onOpenChange, plan }: CheckoutModalProps) 
   }, [totalValue]);
 
   useEffect(() => {
+    if (open) loadAsaasJs().catch(() => {});
     if (!open) {
       // small delay to allow close animation
       const t = setTimeout(() => {
@@ -197,12 +199,13 @@ export function CheckoutModal({ open, onOpenChange, plan }: CheckoutModalProps) 
     setErrorMsg("");
 
     const docDigits = onlyDigits(cpf);
+    const customerPhone = `${selectedCountry.ddi}${onlyDigits(telefone)}`;
     const payload: Record<string, unknown> = {
       plano: plan.name,
       valor: totalValue,
       forma_pagamento: method,
       nome: nome.trim(),
-      telefone: `+${selectedCountry.ddi}${onlyDigits(telefone)}`,
+      telefone: `+${customerPhone}`,
       email: email.trim(),
       cpf_cnpj: docDigits,
       tipo_documento: docDigits.length === 14 ? "CNPJ" : "CPF",
@@ -210,18 +213,32 @@ export function CheckoutModal({ open, onOpenChange, plan }: CheckoutModalProps) 
     };
 
     if (method === "CREDIT_CARD") {
-      Object.assign(payload, {
-        cep: onlyDigits(cep),
-        numero_endereco: numero.trim(),
-        parcelas: installments,
-        valor_parcela: Number((totalValue / installments).toFixed(2)),
-        cartao: {
-          numero: onlyDigits(cardNumber),
-          titular: cardHolder.trim(),
-          validade: cardExpiry, // MM/AA
-          cvv: cardCvv,
-        },
-      });
+      try {
+        const tokenCartao = await tokenizeCard({
+          customerName: nome,
+          customerEmail: email,
+          customerCpfCnpj: docDigits,
+          customerPhone,
+          number: cardNumber,
+          expiry: cardExpiry,
+          ccv: cardCvv,
+        });
+        Object.assign(payload, {
+          cep: onlyDigits(cep),
+          numero_endereco: numero.trim(),
+          parcelas: installments,
+          valor_parcela: Number((totalValue / installments).toFixed(2)),
+          token_cartao: tokenCartao,
+        });
+      } catch (tokenError: unknown) {
+        const message = tokenError instanceof Error
+          ? tokenError.message
+          : "Não foi possível validar os dados do cartão.";
+        setErrorMsg(message);
+        setScreen("form");
+        toast.error(message);
+        return;
+      }
     }
 
     try {

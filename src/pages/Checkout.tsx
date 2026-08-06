@@ -253,8 +253,11 @@ export default function Checkout() {
     if (method === "CREDIT_CARD") {
       try {
         const tokenCartao = await tokenizeCard({
+          customerName: nome,
+          customerEmail: email,
+          customerCpfCnpj: docDigits,
+          customerPhone: `${selectedCountry.ddi}${onlyDigits(telefone)}`,
           number: cardNumber,
-          holderName: cardHolder,
           expiry: cardExpiry,
           ccv: cardCvv,
         });
