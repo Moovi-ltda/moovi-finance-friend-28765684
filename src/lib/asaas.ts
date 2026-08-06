@@ -97,7 +97,8 @@ export const tokenizeCard = async (input: {
   customerCpfCnpj: string;
   customerPhone: string;
   number: string;
-  expiry: string;
+  mes: string;
+  anoCompleto: string;
   ccv: string;
 }): Promise<string> => {
   const asaas = await loadAsaasJs();
@@ -106,32 +107,40 @@ export const tokenizeCard = async (input: {
     throw new Error("Serviço de tokenização indisponível. Tente novamente em instantes.");
   }
 
-  const [month = "", shortYear = ""] = input.expiry.split("/");
-  const year = shortYear.length === 2 ? `20${shortYear}` : shortYear;
   const creditCard: AsaasCreditCard = {
     customerName: input.customerName.trim(),
     customerEmail: input.customerEmail.trim(),
     customerCpfCnpj: input.customerCpfCnpj.replace(/\D/g, ""),
     customerPhone: input.customerPhone.replace(/\D/g, ""),
     creditCardNumber: input.number.replace(/\D/g, ""),
-    creditCardBrand: "",
-    creditCardMonth: month.padStart(2, "0"),
-    creditCardYear: year,
+    creditCardMonth: String(input.mes || "").padStart(2, "0"),
+    creditCardYear: String(input.anoCompleto || ""),
     creditCardCcv: input.ccv.replace(/\D/g, ""),
   };
 
   return new Promise<string>((resolve, reject) => {
-    tokenize(creditCard, {
-      onSuccess: (data) => {
-        if (!data.creditCardToken) {
-          reject(new Error("Token do cartão não retornado pelo serviço de pagamento."));
-          return;
-        }
-        resolve(data.creditCardToken);
-      },
-      onError: (error) => {
-        reject(new Error(error.description || error.message || "Não foi possível validar os dados do cartão."));
-      },
-    });
+    const timeout = window.setTimeout(() => {
+      reject(new Error("Tempo esgotado ao validar o cartão. Tente novamente."));
+    }, 20000);
+
+    try {
+      tokenize(creditCard, {
+        onSuccess: (data) => {
+          window.clearTimeout(timeout);
+          if (!data?.creditCardToken) {
+            reject(new Error("Token do cartão não retornado pelo serviço de pagamento."));
+            return;
+          }
+          resolve(data.creditCardToken);
+        },
+        onError: (error) => {
+          window.clearTimeout(timeout);
+          reject(new Error(error?.description || error?.message || "Não foi possível validar os dados do cartão."));
+        },
+      });
+    } catch (err) {
+      window.clearTimeout(timeout);
+      reject(err instanceof Error ? err : new Error("Falha ao validar os dados do cartão."));
+    }
   });
 };
