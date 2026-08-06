@@ -239,21 +239,34 @@ export default function Checkout() {
       afiliado_id: localStorage.getItem("moovi_afiliado_id") || "",
     };
 
-    if (method === "CREDIT_CARD") {
-      Object.assign(payload, {
-        parcelas: installments,
-        valor_parcela: Number((totalValue / installments).toFixed(2)),
-        cartao: {
-          numero: onlyDigits(cardNumber),
-          titular: cardHolder.trim(),
-          validade: cardExpiry,
-          cvv: cardCvv,
-        },
-      });
-    }
-
     const fallbackError =
       "Falha ao processar o pagamento. Verifique seus dados e tente novamente.";
+
+    if (method === "CREDIT_CARD") {
+      try {
+        const tokenCartao = await tokenizeCard({
+          number: cardNumber,
+          holderName: cardHolder,
+          expiry: cardExpiry,
+          ccv: cardCvv,
+        });
+        Object.assign(payload, {
+          parcelas: installments,
+          valor_parcela: Number((totalValue / installments).toFixed(2)),
+          token_cartao: tokenCartao,
+        });
+      } catch (err: unknown) {
+        const displayError = err instanceof Error ? err.message : fallbackError;
+        setErrorMsg(displayError);
+        setStatus("form");
+        const cleanMessage = displayError.startsWith("=")
+          ? displayError.substring(1)
+          : displayError;
+        toast.error(cleanMessage, { duration: 6000 });
+        return;
+      }
+    }
+
 
     try {
       const res = await fetch(WEBHOOK_URL, {
