@@ -16,6 +16,8 @@ import {
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { toast } from "sonner";
 import logoMoovi from "@/assets/moovi-logo.png";
+import { tokenizeCard, loadAsaasJs } from "@/lib/asaas";
+
 
 const WEBHOOK_URL = "https://n8n.fisherai.shop/webhook/checkout-transparente";
 
