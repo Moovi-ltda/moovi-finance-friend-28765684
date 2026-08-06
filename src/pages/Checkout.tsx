@@ -252,13 +252,16 @@ export default function Checkout() {
 
     if (method === "CREDIT_CARD") {
       try {
+        const [mes, ano] = cardExpiry.split("/");
+        const anoCompleto = ano && ano.length === 2 ? `20${ano}` : ano;
         const tokenCartao = await tokenizeCard({
           customerName: nome,
           customerEmail: email,
           customerCpfCnpj: docDigits,
           customerPhone: `${selectedCountry.ddi}${onlyDigits(telefone)}`,
           number: cardNumber,
-          expiry: cardExpiry,
+          mes,
+          anoCompleto,
           ccv: cardCvv,
         });
         Object.assign(payload, {
