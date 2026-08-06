@@ -214,13 +214,16 @@ export function CheckoutModal({ open, onOpenChange, plan }: CheckoutModalProps) 
 
     if (method === "CREDIT_CARD") {
       try {
+        const [mes, ano] = cardExpiry.split("/");
+        const anoCompleto = ano && ano.length === 2 ? `20${ano}` : ano;
         const tokenCartao = await tokenizeCard({
           customerName: nome,
           customerEmail: email,
           customerCpfCnpj: docDigits,
           customerPhone,
           number: cardNumber,
-          expiry: cardExpiry,
+          mes,
+          anoCompleto,
           ccv: cardCvv,
         });
         Object.assign(payload, {
