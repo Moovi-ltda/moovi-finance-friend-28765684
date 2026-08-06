@@ -135,8 +135,14 @@ export default function Checkout() {
   }, [plan, navigate]);
 
   useEffect(() => {
+    // Pré-carrega o Asaas.js para tokenização do cartão
+    loadAsaasJs().catch(() => {});
+  }, []);
+
+  useEffect(() => {
     window.scrollTo({ top: 0, behavior: "instant" as ScrollBehavior });
   }, [step]);
+
 
   const totalValue = plan?.totalPrice ?? plan?.yearlyTotal ?? 0;
   const monthlyValue = plan?.installmentPrice ?? totalValue / 12;
