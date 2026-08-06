@@ -16,6 +16,8 @@ import {
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { toast } from "sonner";
 import logoMoovi from "@/assets/moovi-logo.png";
+import { tokenizeCard, loadAsaasJs } from "@/lib/asaas";
+
 
 const WEBHOOK_URL = "https://n8n.fisherai.shop/webhook/checkout-transparente";
 
@@ -133,8 +135,14 @@ export default function Checkout() {
   }, [plan, navigate]);
 
   useEffect(() => {
+    // Pré-carrega o Asaas.js para tokenização do cartão
+    loadAsaasJs().catch(() => {});
+  }, []);
+
+  useEffect(() => {
     window.scrollTo({ top: 0, behavior: "instant" as ScrollBehavior });
   }, [step]);
+
 
   const totalValue = plan?.totalPrice ?? plan?.yearlyTotal ?? 0;
   const monthlyValue = plan?.installmentPrice ?? totalValue / 12;
@@ -239,21 +247,34 @@ export default function Checkout() {
       afiliado_id: localStorage.getItem("moovi_afiliado_id") || "",
     };
 
-    if (method === "CREDIT_CARD") {
-      Object.assign(payload, {
-        parcelas: installments,
-        valor_parcela: Number((totalValue / installments).toFixed(2)),
-        cartao: {
-          numero: onlyDigits(cardNumber),
-          titular: cardHolder.trim(),
-          validade: cardExpiry,
-          cvv: cardCvv,
-        },
-      });
-    }
-
     const fallbackError =
       "Falha ao processar o pagamento. Verifique seus dados e tente novamente.";
+
+    if (method === "CREDIT_CARD") {
+      try {
+        const tokenCartao = await tokenizeCard({
+          number: cardNumber,
+          holderName: cardHolder,
+          expiry: cardExpiry,
+          ccv: cardCvv,
+        });
+        Object.assign(payload, {
+          parcelas: installments,
+          valor_parcela: Number((totalValue / installments).toFixed(2)),
+          token_cartao: tokenCartao,
+        });
+      } catch (err: unknown) {
+        const displayError = err instanceof Error ? err.message : fallbackError;
+        setErrorMsg(displayError);
+        setStatus("form");
+        const cleanMessage = displayError.startsWith("=")
+          ? displayError.substring(1)
+          : displayError;
+        toast.error(cleanMessage, { duration: 6000 });
+        return;
+      }
+    }
+
 
     try {
       const res = await fetch(WEBHOOK_URL, {
