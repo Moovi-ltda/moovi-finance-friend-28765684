@@ -12,7 +12,7 @@ type AsaasCreditCard = {
   customerCpfCnpj: string;
   customerPhone: string;
   creditCardNumber: string;
-  creditCardBrand: string;
+  creditCardBrand?: string;
   creditCardMonth: string;
   creditCardYear: string;
   creditCardCcv: string;
