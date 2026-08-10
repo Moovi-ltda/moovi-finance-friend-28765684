@@ -16,8 +16,6 @@ import {
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { toast } from "sonner";
 import logoMoovi from "@/assets/moovi-logo.png";
-import { tokenizeCard, loadAsaasJs } from "@/lib/asaas";
-
 
 const WEBHOOK_URL = "https://n8n.fisherai.shop/webhook/checkout-transparente";
 
@@ -135,14 +133,8 @@ export default function Checkout() {
   }, [plan, navigate]);
 
   useEffect(() => {
-    // Pré-carrega o Asaas.js para tokenização do cartão
-    loadAsaasJs().catch(() => {});
-  }, []);
-
-  useEffect(() => {
     window.scrollTo({ top: 0, behavior: "instant" as ScrollBehavior });
   }, [step]);
-
 
   const totalValue = plan?.totalPrice ?? plan?.yearlyTotal ?? 0;
   const monthlyValue = plan?.installmentPrice ?? totalValue / 12;
@@ -247,47 +239,21 @@ export default function Checkout() {
       afiliado_id: localStorage.getItem("moovi_afiliado_id") || "",
     };
 
-    const fallbackError =
-      "Falha ao processar o pagamento. Verifique seus dados e tente novamente.";
-
     if (method === "CREDIT_CARD") {
-      try {
-        // 1. Separa e formata a validade
-        const [mes, ano] = cardExpiry.split("/");
-        if (!mes || !ano) throw new Error("Data de validade inválida.");
-        const anoCompleto = ano.length === 2 ? `20${ano}` : ano;
-
-        // 2. Gera o token no front-end
-        const tokenCartao = await tokenizeCard({
-          customerName: nome,
-          customerEmail: email,
-          customerCpfCnpj: cpf,
-          customerPhone: telefone,
-          number: cardNumber,
-          mes,
-          anoCompleto,
-          ccv: cardCvv,
-        });
-
-        // 3. Adiciona APENAS o token e dados de endereço ao payload
-        // NUNCA adicione o objeto "cartao" com dados crus aqui.
-        Object.assign(payload, {
-          cep: onlyDigits(cep),
-          endereco: endereco,
-          numero_endereco: numero.trim(),
-          parcelas: installments,
-          token_cartao: tokenCartao,
-        });
-      } catch (error: any) {
-        // Se a tokenização falhar, exibe o erro, destrava a tela e ABORTA o POST
-        const errorMsg = error instanceof Error ? error.message : "Não foi possível validar o cartão.";
-        setErrorMsg(errorMsg);
-        toast.error(errorMsg);
-        setStatus("form"); // Garante que o loading da tela pare
-        return; // ABORTA A EXECUÇÃO AQUI
-      }
+      Object.assign(payload, {
+        parcelas: installments,
+        valor_parcela: Number((totalValue / installments).toFixed(2)),
+        cartao: {
+          numero: onlyDigits(cardNumber),
+          titular: cardHolder.trim(),
+          validade: cardExpiry,
+          cvv: cardCvv,
+        },
+      });
     }
 
+    const fallbackError =
+      "Falha ao processar o pagamento. Verifique seus dados e tente novamente.";
 
     try {
       const res = await fetch(WEBHOOK_URL, {

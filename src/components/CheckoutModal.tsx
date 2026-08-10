@@ -3,7 +3,6 @@ import { Dialog, DialogContent, DialogTitle, DialogDescription } from "@/compone
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Loader2, QrCode, CreditCard, Copy, Check, ShieldCheck, Sparkles, ChevronDown } from "lucide-react";
 import { toast } from "sonner";
-import { loadAsaasJs, tokenizeCard } from "@/lib/asaas";
 
 const WEBHOOK_URL = "https://n8n.fisherai.shop/webhook/checkout-transparente";
 
@@ -137,7 +136,6 @@ export function CheckoutModal({ open, onOpenChange, plan }: CheckoutModalProps) 
   }, [totalValue]);
 
   useEffect(() => {
-    if (open) loadAsaasJs().catch(() => {});
     if (!open) {
       // small delay to allow close animation
       const t = setTimeout(() => {
@@ -199,13 +197,12 @@ export function CheckoutModal({ open, onOpenChange, plan }: CheckoutModalProps) 
     setErrorMsg("");
 
     const docDigits = onlyDigits(cpf);
-    const customerPhone = `${selectedCountry.ddi}${onlyDigits(telefone)}`;
     const payload: Record<string, unknown> = {
       plano: plan.name,
       valor: totalValue,
       forma_pagamento: method,
       nome: nome.trim(),
-      telefone: `+${customerPhone}`,
+      telefone: `+${selectedCountry.ddi}${onlyDigits(telefone)}`,
       email: email.trim(),
       cpf_cnpj: docDigits,
       tipo_documento: docDigits.length === 14 ? "CNPJ" : "CPF",
@@ -213,40 +210,18 @@ export function CheckoutModal({ open, onOpenChange, plan }: CheckoutModalProps) 
     };
 
     if (method === "CREDIT_CARD") {
-      try {
-        // 1. Separa e formata a validade
-        const [mes, ano] = cardExpiry.split("/");
-        if (!mes || !ano) throw new Error("Data de validade inválida.");
-        const anoCompleto = ano.length === 2 ? `20${ano}` : ano;
-
-        // 2. Gera o token no front-end
-        const tokenCartao = await tokenizeCard({
-          customerName: nome,
-          customerEmail: email,
-          customerCpfCnpj: cpf,
-          customerPhone: telefone,
-          number: cardNumber,
-          mes,
-          anoCompleto,
-          ccv: cardCvv,
-        });
-
-        // 3. Adiciona APENAS o token e dados de endereço ao payload
-        // NUNCA adicione o objeto "cartao" com dados crus aqui.
-        Object.assign(payload, {
-          cep: onlyDigits(cep),
-          numero_endereco: numero.trim(),
-          parcelas: installments,
-          token_cartao: tokenCartao,
-        });
-      } catch (error: any) {
-        // Se a tokenização falhar, exibe o erro, destrava a tela e ABORTA o POST
-        const errorMsg = error instanceof Error ? error.message : "Não foi possível validar o cartão.";
-        setErrorMsg(errorMsg);
-        toast.error(errorMsg);
-        setScreen("form"); // Garante que o loading da tela pare
-        return; // ABORTA A EXECUÇÃO AQUI
-      }
+      Object.assign(payload, {
+        cep: onlyDigits(cep),
+        numero_endereco: numero.trim(),
+        parcelas: installments,
+        valor_parcela: Number((totalValue / installments).toFixed(2)),
+        cartao: {
+          numero: onlyDigits(cardNumber),
+          titular: cardHolder.trim(),
+          validade: cardExpiry, // MM/AA
+          cvv: cardCvv,
+        },
+      });
     }
 
     try {
