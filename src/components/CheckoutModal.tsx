@@ -214,33 +214,38 @@ export function CheckoutModal({ open, onOpenChange, plan }: CheckoutModalProps) 
 
     if (method === "CREDIT_CARD") {
       try {
+        // 1. Separa e formata a validade
         const [mes, ano] = cardExpiry.split("/");
-        const anoCompleto = ano && ano.length === 2 ? `20${ano}` : ano;
+        if (!mes || !ano) throw new Error("Data de validade inválida.");
+        const anoCompleto = ano.length === 2 ? `20${ano}` : ano;
+
+        // 2. Gera o token no front-end
         const tokenCartao = await tokenizeCard({
           customerName: nome,
           customerEmail: email,
-          customerCpfCnpj: docDigits,
-          customerPhone,
+          customerCpfCnpj: cpf,
+          customerPhone: telefone,
           number: cardNumber,
           mes,
           anoCompleto,
           ccv: cardCvv,
         });
+
+        // 3. Adiciona APENAS o token e dados de endereço ao payload
+        // NUNCA adicione o objeto "cartao" com dados crus aqui.
         Object.assign(payload, {
           cep: onlyDigits(cep),
           numero_endereco: numero.trim(),
           parcelas: installments,
-          valor_parcela: Number((totalValue / installments).toFixed(2)),
           token_cartao: tokenCartao,
         });
-      } catch (tokenError: unknown) {
-        const message = tokenError instanceof Error
-          ? tokenError.message
-          : "Não foi possível validar os dados do cartão.";
-        setErrorMsg(message);
-        setScreen("form");
-        toast.error(message);
-        return;
+      } catch (error: any) {
+        // Se a tokenização falhar, exibe o erro, destrava a tela e ABORTA o POST
+        const errorMsg = error instanceof Error ? error.message : "Não foi possível validar o cartão.";
+        setErrorMsg(errorMsg);
+        toast.error(errorMsg);
+        setScreen("form"); // Garante que o loading da tela pare
+        return; // ABORTA A EXECUÇÃO AQUI
       }
     }
 

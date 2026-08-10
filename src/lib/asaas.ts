@@ -91,7 +91,7 @@ export const loadAsaasJs = (): Promise<AsaasGlobal> => {
   return loader;
 };
 
-export const tokenizeCard = async (input: {
+export const tokenizeCard = (input: {
   customerName: string;
   customerEmail: string;
   customerCpfCnpj: string;
@@ -101,46 +101,36 @@ export const tokenizeCard = async (input: {
   anoCompleto: string;
   ccv: string;
 }): Promise<string> => {
-  const asaas = await loadAsaasJs();
-  const tokenize = asaas.creditCard?.tokenize;
-  if (!tokenize) {
-    throw new Error("Serviço de tokenização indisponível. Tente novamente em instantes.");
-  }
-
-  const creditCard: AsaasCreditCard = {
-    customerName: input.customerName.trim(),
-    customerEmail: input.customerEmail.trim(),
-    customerCpfCnpj: input.customerCpfCnpj.replace(/\D/g, ""),
-    customerPhone: input.customerPhone.replace(/\D/g, ""),
-    creditCardNumber: input.number.replace(/\D/g, ""),
-    creditCardMonth: String(input.mes || "").padStart(2, "0"),
-    creditCardYear: String(input.anoCompleto || ""),
-    creditCardCcv: input.ccv.replace(/\D/g, ""),
-  };
-
-  return new Promise<string>((resolve, reject) => {
-    const timeout = window.setTimeout(() => {
-      reject(new Error("Tempo esgotado ao validar o cartão. Tente novamente."));
-    }, 20000);
-
-    try {
-      tokenize(creditCard, {
-        onSuccess: (data) => {
-          window.clearTimeout(timeout);
-          if (!data?.creditCardToken) {
-            reject(new Error("Token do cartão não retornado pelo serviço de pagamento."));
-            return;
-          }
-          resolve(data.creditCardToken);
-        },
-        onError: (error) => {
-          window.clearTimeout(timeout);
-          reject(new Error(error?.description || error?.message || "Não foi possível validar os dados do cartão."));
-        },
-      });
-    } catch (err) {
-      window.clearTimeout(timeout);
-      reject(err instanceof Error ? err : new Error("Falha ao validar os dados do cartão."));
+  return new Promise((resolve, reject) => {
+    // Verifica se o SDK do Asaas foi carregado no index.html ou via script
+    if (typeof window === "undefined" || !(window as any).asaas) {
+      return reject(
+        new Error("Erro de conexão com o gateway de pagamento. Tente recarregar a página."),
+      );
     }
+
+    const creditCard = {
+      customerName: input.customerName.trim(),
+      customerEmail: input.customerEmail.trim(),
+      customerCpfCnpj: input.customerCpfCnpj.replace(/\D/g, ""),
+      customerPhone: input.customerPhone.replace(/\D/g, ""),
+      creditCardNumber: input.number.replace(/\D/g, ""),
+      creditCardMonth: input.mes.trim().padStart(2, "0"),
+      creditCardYear: input.anoCompleto.trim(),
+      creditCardCcv: input.ccv.trim(),
+    };
+
+    (window as any).asaas.creditCard.tokenize(creditCard, {
+      onSuccess: (data: any) => {
+        if (data && data.creditCardToken) {
+          resolve(data.creditCardToken);
+        } else {
+          reject(new Error("Falha ao gerar token de segurança do cartão."));
+        }
+      },
+      onError: (error: any) => {
+        reject(new Error(error?.description || error?.message || "Dados do cartão inválidos."));
+      },
+    });
   });
 };
