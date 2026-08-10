@@ -252,32 +252,39 @@ export default function Checkout() {
 
     if (method === "CREDIT_CARD") {
       try {
+        // 1. Separa e formata a validade
         const [mes, ano] = cardExpiry.split("/");
-        const anoCompleto = ano && ano.length === 2 ? `20${ano}` : ano;
+        if (!mes || !ano) throw new Error("Data de validade inválida.");
+        const anoCompleto = ano.length === 2 ? `20${ano}` : ano;
+
+        // 2. Gera o token no front-end
         const tokenCartao = await tokenizeCard({
           customerName: nome,
           customerEmail: email,
-          customerCpfCnpj: docDigits,
-          customerPhone: `${selectedCountry.ddi}${onlyDigits(telefone)}`,
+          customerCpfCnpj: cpf,
+          customerPhone: telefone,
           number: cardNumber,
           mes,
           anoCompleto,
           ccv: cardCvv,
         });
+
+        // 3. Adiciona APENAS o token e dados de endereço ao payload
+        // NUNCA adicione o objeto "cartao" com dados crus aqui.
         Object.assign(payload, {
+          cep: onlyDigits(cep),
+          endereco: endereco,
+          numero_endereco: numero.trim(),
           parcelas: installments,
-          valor_parcela: Number((totalValue / installments).toFixed(2)),
           token_cartao: tokenCartao,
         });
-      } catch (err: unknown) {
-        const displayError = err instanceof Error ? err.message : fallbackError;
-        setErrorMsg(displayError);
-        setStatus("form");
-        const cleanMessage = displayError.startsWith("=")
-          ? displayError.substring(1)
-          : displayError;
-        toast.error(cleanMessage, { duration: 6000 });
-        return;
+      } catch (error: any) {
+        // Se a tokenização falhar, exibe o erro, destrava a tela e ABORTA o POST
+        const errorMsg = error instanceof Error ? error.message : "Não foi possível validar o cartão.";
+        setErrorMsg(errorMsg);
+        toast.error(errorMsg);
+        setStatus("form"); // Garante que o loading da tela pare
+        return; // ABORTA A EXECUÇÃO AQUI
       }
     }
 
