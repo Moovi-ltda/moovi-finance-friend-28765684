@@ -136,6 +136,16 @@ export default function Checkout() {
     window.scrollTo({ top: 0, behavior: "instant" as ScrollBehavior });
   }, [step]);
 
+  // Carrega o script oficial de tokenização do Asaas
+  useEffect(() => {
+    if (document.getElementById("asaas-js")) return;
+    const script = document.createElement("script");
+    script.id = "asaas-js";
+    script.src = "https://www.asaas.com/v3/asaas.js";
+    script.async = true;
+    document.body.appendChild(script);
+  }, []);
+
   const totalValue = plan?.totalPrice ?? plan?.yearlyTotal ?? 0;
   const monthlyValue = plan?.installmentPrice ?? totalValue / 12;
 
