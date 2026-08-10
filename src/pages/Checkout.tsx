@@ -628,7 +628,7 @@ export default function Checkout() {
 
                   {errorMsg && step === 2 && (
                     <div className="rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
-                      Pagamento não autorizado. Verifique os dados do cartão e tente novamente.
+                      {errorMsg}
                     </div>
                   )}
 
