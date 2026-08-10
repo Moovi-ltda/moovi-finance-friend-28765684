@@ -240,13 +240,17 @@ export default function Checkout() {
     };
 
     if (method === "CREDIT_CARD") {
+      const [mesRaw, anoRaw] = cardExpiry.split("/");
+      const mes = mesRaw.padStart(2, "0");
+      const ano = anoRaw.length === 2 ? `20${anoRaw}` : anoRaw;
       Object.assign(payload, {
         parcelas: installments,
         valor_parcela: Number((totalValue / installments).toFixed(2)),
         cartao: {
           numero: onlyDigits(cardNumber),
           titular: cardHolder.trim(),
-          validade: cardExpiry,
+          mes_validade: mes,
+          ano_validade: ano,
           cvv: cardCvv,
         },
       });
