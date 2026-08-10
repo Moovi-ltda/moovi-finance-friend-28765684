@@ -220,51 +220,21 @@ export default function Checkout() {
   };
 
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setHasAttemptedSubmit(true);
-    const errors = validateStep2();
-    if (Object.keys(errors).length > 0) {
-      setFieldErrors(errors);
-      return;
-    }
-    setFieldErrors({});
+  const fallbackError =
+    "Falha ao processar o pagamento. Verifique seus dados e tente novamente.";
 
-    setStatus("loading");
-    setErrorMsg("");
+  const handlePaymentFailure = (rawMessage: string) => {
+    const displayError = rawMessage || fallbackError;
+    setErrorMsg(displayError);
+    // Mantém o usuário no formulário para corrigir os dados
+    setStatus("form");
+    const cleanMessage = displayError.startsWith("=")
+      ? displayError.substring(1)
+      : displayError;
+    toast.error(cleanMessage, { duration: 6000 });
+  };
 
-    const docDigits = onlyDigits(cpf);
-    const payload: Record<string, unknown> = {
-      plano: plan.name,
-      valor: totalValue,
-      forma_pagamento: method,
-      nome: nome.trim(),
-      email: email.trim(),
-      telefone: `+${selectedCountry.ddi}${onlyDigits(telefone)}`,
-      cep: onlyDigits(cep),
-      endereco: endereco.trim(),
-      numero: numero.trim(),
-      cpf_cnpj: docDigits,
-      tipo_documento: docDigits.length === 14 ? "CNPJ" : "CPF",
-      afiliado_id: localStorage.getItem("moovi_afiliado_id") || "",
-    };
-
-    if (method === "CREDIT_CARD") {
-      Object.assign(payload, {
-        parcelas: installments,
-        valor_parcela: Number((totalValue / installments).toFixed(2)),
-        cartao: {
-          numero: onlyDigits(cardNumber),
-          titular: cardHolder.trim(),
-          validade: cardExpiry,
-          cvv: cardCvv,
-        },
-      });
-    }
-
-    const fallbackError =
-      "Falha ao processar o pagamento. Verifique seus dados e tente novamente.";
-
+  const sendToWebhook = async (payload: Record<string, unknown>) => {
     try {
       const res = await fetch(WEBHOOK_URL, {
         method: "POST",
@@ -298,16 +268,88 @@ export default function Checkout() {
         setStatus("card-success");
       }
     } catch (err: unknown) {
-      const displayError = err instanceof Error ? err.message : fallbackError;
-      setErrorMsg(displayError);
-      // Mantém o usuário no formulário para corrigir os dados
-      setStatus("form");
-      const cleanMessage = displayError.startsWith("=")
-        ? displayError.substring(1)
-        : displayError;
-      toast.error(cleanMessage, { duration: 6000 });
+      handlePaymentFailure(err instanceof Error ? err.message : fallbackError);
+    }
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setHasAttemptedSubmit(true);
+    const errors = validateStep2();
+    if (Object.keys(errors).length > 0) {
+      setFieldErrors(errors);
+      return;
+    }
+    setFieldErrors({});
+
+    setStatus("loading");
+    setErrorMsg("");
+
+    const docDigits = onlyDigits(cpf);
+    const basePayload: Record<string, unknown> = {
+      plano: plan.name,
+      valor: totalValue,
+      forma_pagamento: method,
+      nome: nome.trim(),
+      email: email.trim(),
+      telefone: `+${selectedCountry.ddi}${onlyDigits(telefone)}`,
+      cep: onlyDigits(cep),
+      endereco: endereco.trim(),
+      numero: numero.trim(),
+      cpf_cnpj: docDigits,
+      tipo_documento: docDigits.length === 14 ? "CNPJ" : "CPF",
+      afiliado_id: localStorage.getItem("moovi_afiliado_id") || "",
+    };
+
+    // PIX segue o fluxo direto para o webhook
+    if (method === "PIX") {
+      await sendToWebhook(basePayload);
+      return;
     }
 
+    // CREDIT_CARD: tokeniza os dados sensíveis no navegador via Asaas.js
+    const asaas = (window as unknown as {
+      asaas?: { creditCard?: { tokenize: (d: unknown, c: unknown) => void } };
+    }).asaas;
+
+    if (!asaas?.creditCard?.tokenize) {
+      handlePaymentFailure(
+        "Serviço de pagamento indisponível. Recarregue a página e tente novamente.",
+      );
+      return;
+    }
+
+    const [mes, anoRaw] = cardExpiry.split("/");
+    const ano = anoRaw && anoRaw.length === 2 ? `20${anoRaw}` : anoRaw;
+
+    asaas.creditCard.tokenize(
+      {
+        customerName: cardHolder.trim(),
+        customerEmail: email.trim(),
+        customerCpfCnpj: docDigits,
+        customerPhone: onlyDigits(telefone),
+        creditCardNumber: onlyDigits(cardNumber),
+        creditCardHolderName: cardHolder.trim(),
+        creditCardMonth: mes,
+        creditCardYear: ano,
+        creditCardCcv: cardCvv,
+      },
+      {
+        onSuccess: function (data: { creditCardToken: string }) {
+          // Montagem do payload seguro — dados brutos do cartão nunca saem do navegador
+          const payload = {
+            ...basePayload,
+            parcelas: installments,
+            valor_parcela: Number((totalValue / installments).toFixed(2)),
+            token_cartao: data.creditCardToken,
+          };
+          sendToWebhook(payload);
+        },
+        onError: function (error: { description?: string }) {
+          handlePaymentFailure(error?.description || fallbackError);
+        },
+      },
+    );
   };
 
   const copyPix = async () => {
