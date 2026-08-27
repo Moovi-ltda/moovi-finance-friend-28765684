@@ -3,9 +3,9 @@ import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Iphone } from "@/components/ui/iphone";
 import {
-  MessageCircle,
-  LayoutDashboard,
   Bell,
+  LayoutDashboard,
+  PieChart,
   Tags,
   Target,
   CreditCard,
@@ -28,39 +28,38 @@ interface Feature {
 const features: Feature[] = [
   {
     number: "01",
-    icon: MessageCircle,
-    title: "Registre Tudo pelo WhatsApp",
+    icon: LayoutDashboard,
+    title: "Dashboard Intuitivo",
     description:
-      "Envie uma mensagem ou áudio de 5 segundos. A IA categoriza automaticamente seus gastos e receitas.",
-    images: [
-      "/features/concertar.png",
-      "/features/whatsapp_2.png",
-    ],
+      "Lance e categorize receitas e despesas em segundos. Saldo, resultado do mês e evolução financeira sempre atualizados.",
+    image: "/dashboard/dash-15.png",
   },
   {
     number: "02",
-    icon: LayoutDashboard,
-    title: "Painel Profissional",
+    icon: PieChart,
+    title: "Relatórios Visuais",
     description:
-      "Visualize saldo, receitas, despesas e histórico dos últimos 30 dias com gráficos claros.",
-    images: [
-      "/features/painel_profissional_1.jpeg",
-      "/features/painel_profissional_2.jpeg",
-    ],
+      "Gráficos claros de para onde está indo o seu dinheiro, com filtros por período, categoria e conta — e exportação em PDF ou Excel.",
+    image: "/dashboard/dash-17.png",
   },
   {
     number: "03",
     icon: Bell,
-    title: "Lembretes Personalizados",
+    title: "Alertas por WhatsApp",
     description:
-      "Fale em linguagem natural: 'me lembre de pagar a academia dia 20'. O Moovi avisa na hora certa.",
-    images: [
-      "/features/lembretes_1.png",
-      "/features/lembretes_2.png",
-    ],
+      "Lembretes automáticos de vencimento e relatórios de pendências chegam direto no seu celular. Todo o gerenciamento acontece no Dashboard.",
+    image: "/dashboard/dash-18.png",
   },
   {
     number: "04",
+    icon: CreditCard,
+    title: "Contas a Pagar e Receber",
+    description:
+      "Acompanhe pendências, parcelas e vencimentos em uma única tela, com status de cada compromisso.",
+    image: "/dashboard/dash-16.png",
+  },
+  {
+    number: "05",
     icon: Tags,
     title: "Categorias Personalizadas",
     description:
@@ -71,25 +70,15 @@ const features: Feature[] = [
     ],
   },
   {
-    number: "05",
+    number: "06",
     icon: Target,
     title: "Limites Inteligentes",
     description:
       "Defina limites por categoria e receba alertas antes de estourar o orçamento.",
     image: "/features/Limites_Inteligentes.png",
   },
-  {
-    number: "06",
-    icon: CreditCard,
-    title: "Gestão de Contas e Cartões",
-    description:
-      "Adicione contas e cartões em linguagem natural. Controle saldos e limites em um só lugar.",
-    images: [
-      "/features/gestao_contas_1.jpeg",
-      "/features/gestao_contas_2.jpeg",
-    ],
-  },
 ];
+
 
 function FloatingPiggy({
   sectionRef,

@@ -2,85 +2,15 @@ import React, { useEffect, useRef, useState } from "react";
 import { cn } from "@/lib/utils";
 import { scrollToSection } from "@/utils/scroll";
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowRight, Sparkles, MessageCircle, Star, ChevronDown, X } from "lucide-react";
+import { ArrowRight, Sparkles, Star, ChevronDown, X } from "lucide-react";
 import TrustMarquee from "@/components/TrustMarquee";
 import avatar1 from "@/assets/avatars/a1.jpg";
 import avatar2 from "@/assets/avatars/a2.jpg";
 import avatar3 from "@/assets/avatars/a3.jpg";
 import avatar4 from "@/assets/avatars/a4.jpg";
 
-// ─── CONFIG ────────────────────────────────────────────────────────────────────
-const PANDA_VIDEO_ID = "4e6c28e8-f6eb-4e20-b216-224be1bc17f8";
-const PANDA_VIDEO_URL = `https://player-vz-c1e2f242-e38.tv.pandavideo.com.br/embed/?v=${PANDA_VIDEO_ID}&autoplay=1`;
-// Thumbnail oficial do Panda Video (leve, sem iframe)
-const PANDA_THUMBNAIL_URL = `https://b-vz-c1e2f242-e38.tv.pandavideo.com.br/${PANDA_VIDEO_ID}/thumbnail.jpg`;
-
 const AVATAR_URLS = [avatar1, avatar2, avatar3, avatar4];
 
-// ─── LAZY VIDEO PLAYER ─────────────────────────────────────────────────────────
-// Só injeta o iframe quando o mockup está realmente visível na viewport,
-// evitando download/parse pesado durante o carregamento e o scroll inicial.
-function LazyPandaPlayer({ className }: { className?: string }) {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const [ready, setReady] = useState(false);
-
-  useEffect(() => {
-    const el = containerRef.current;
-    if (!el || ready) return;
-
-    if (typeof IntersectionObserver === "undefined") {
-      const t = setTimeout(() => setReady(true), 2000);
-      return () => clearTimeout(t);
-    }
-
-    const io = new IntersectionObserver(
-      (entries) => {
-        if (entries.some((e) => e.isIntersecting)) {
-          setReady(true);
-          io.disconnect();
-        }
-      },
-      { rootMargin: "200px" }
-    );
-    io.observe(el);
-    return () => io.disconnect();
-  }, [ready]);
-
-  return (
-    <div
-      ref={containerRef}
-      className={cn("relative w-full h-full bg-black overflow-hidden", className)}
-    >
-      {!ready && (
-        <img
-          src={PANDA_THUMBNAIL_URL}
-          alt="Preview do app Moovi"
-          className="absolute inset-0 w-full h-full object-cover"
-          loading="lazy"
-          decoding="async"
-          onError={(e) => {
-            (e.target as HTMLImageElement).style.opacity = "0";
-          }}
-        />
-      )}
-
-      {ready && (
-        <div className="absolute inset-0 pointer-events-none" tabIndex={-1}>
-          <iframe
-            id="panda-player-hero"
-            src={PANDA_VIDEO_URL}
-            className="w-full h-full"
-            style={{ border: "none" }}
-            allow="accelerometer;gyroscope;autoplay;encrypted-media;picture-in-picture"
-            tabIndex={-1}
-            allowFullScreen
-            loading="lazy"
-          />
-        </div>
-      )}
-    </div>
-  );
-}
 
 // ─── HEADLINE WORDS ANIMATION ──────────────────────────────────────────────────
 const headlineVariants = {
@@ -341,23 +271,21 @@ function FloatingBadge({
   );
 }
 
-// ─── PHONE MOCKUP ───────────────────────────────────────────────────────────────
-function PhoneMockup() {
+// ─── DASHBOARD MOCKUP ───────────────────────────────────────────────────────────
+function DashboardMockup() {
   return (
     <motion.div
-      variants={fadeUp(1.8)}
+      variants={fadeUp(1.5)}
       initial="hidden"
       animate="visible"
       className="relative w-full flex items-center justify-center"
     >
-      {/* Ambient glow behind phone */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[340px] h-[340px] md:w-[500px] md:h-[500px] bg-[#25D366]/[0.06] rounded-full blur-[100px] pointer-events-none" />
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[200px] h-[400px] md:w-[300px] md:h-[600px] bg-[#25D366]/[0.04] rounded-full blur-[80px] pointer-events-none" />
+      {/* Ambient glow behind dashboard */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[420px] h-[320px] md:w-[620px] md:h-[460px] bg-[#25D366]/[0.07] rounded-full blur-[110px] pointer-events-none" />
 
-      {/* Phone Container */}
-      <div className="relative">
+      <div className="relative w-full max-w-[620px]">
         {/* Floating Badge — Left */}
-        <FloatingBadge className="top-12 -left-[160px]" delay={0}>
+        <FloatingBadge className="-bottom-7 left-6" delay={0}>
           <div className="w-9 h-9 rounded-full bg-gradient-to-br from-[#25D366]/20 to-[#25D366]/5 flex items-center justify-center border border-[#25D366]/20">
             <span className="text-lg">💰</span>
           </div>
@@ -368,77 +296,50 @@ function PhoneMockup() {
         </FloatingBadge>
 
         {/* Floating Badge — Right */}
-        <FloatingBadge className="bottom-24 -right-[150px]" delay={0.2}>
+        <FloatingBadge className="-top-8 -right-[90px]" delay={0.2}>
           <div className="w-9 h-9 rounded-full bg-gradient-to-br from-emerald-500/20 to-emerald-500/5 flex items-center justify-center border border-emerald-400/20">
             <Sparkles className="w-4 h-4 text-emerald-400" />
           </div>
           <div>
-            <p className="text-white text-[13px] font-semibold tracking-tight">IA no WhatsApp</p>
-            <p className="text-white/35 text-[11px] font-medium">Gastos categorizados</p>
+            <p className="text-white text-[13px] font-semibold tracking-tight">Alertas no WhatsApp</p>
+            <p className="text-white/35 text-[11px] font-medium">Nunca atrase uma conta</p>
           </div>
         </FloatingBadge>
 
-        {/* THE PHONE */}
+        {/* Browser window */}
         <div
-          className="relative w-[260px] h-[530px] md:w-[290px] md:h-[600px] rounded-[3rem] overflow-hidden"
+          className="relative rounded-2xl overflow-hidden border border-white/10 bg-[#0b0f0d]"
           style={{
-            background: "#111",
-            boxShadow: `
-              inset 0 0 0 2px #333,
-              inset 0 0 0 5px #000,
-              0 40px 100px -20px rgba(0,0,0,0.8),
-              0 20px 40px -10px rgba(0,0,0,0.6),
-              0 0 80px -20px rgba(37,211,102,0.08)
-            `,
+            boxShadow:
+              "0 40px 100px -20px rgba(0,0,0,0.8), 0 20px 40px -10px rgba(0,0,0,0.6), 0 0 80px -20px rgba(37,211,102,0.12)",
           }}
         >
-          {/* Dynamic Island */}
-          <div className="absolute top-[8px] left-1/2 -translate-x-1/2 w-[90px] h-[26px] bg-black rounded-full z-50 flex items-center justify-end pr-3">
-            <div className="w-[5px] h-[5px] rounded-full bg-[#25D366] shadow-[0_0_6px_rgba(37,211,102,0.8)]" />
+          {/* Title bar */}
+          <div className="flex items-center gap-2 px-4 h-9 bg-[#101614] border-b border-white/[0.06]">
+            <span className="w-2.5 h-2.5 rounded-full bg-[#ff5f57]" />
+            <span className="w-2.5 h-2.5 rounded-full bg-[#febc2e]" />
+            <span className="w-2.5 h-2.5 rounded-full bg-[#28c840]" />
+            <div className="ml-4 flex-1 max-w-[220px] h-5 rounded-md bg-white/[0.05] flex items-center justify-center">
+              <span className="text-[10px] text-white/40 font-medium">dash.moovi.chat</span>
+            </div>
           </div>
 
-          {/* Screen */}
-          <div className="absolute inset-[5px] bg-black rounded-[2.7rem] overflow-hidden">
-            {/* Screen glare */}
-            <div
-              className="absolute inset-0 z-40 pointer-events-none"
-              style={{
-                background:
-                  "linear-gradient(115deg, rgba(255,255,255,0.06) 0%, rgba(255,255,255,0) 40%)",
-              }}
-            />
+          <img
+            src="/dashboard/dash-15.png"
+            alt="Dashboard financeiro Moovi com saldo, gráficos e gastos por categoria"
+            className="w-full h-auto block"
+            loading="eager"
+            decoding="async"
+            // @ts-ignore
+            fetchpriority="high"
+          />
 
-            {/* Video — carregamento lazy (thumbnail + play on click) */}
-            <LazyPandaPlayer />
-          </div>
-
-          {/* Hardware buttons */}
+          {/* Screen glare */}
           <div
-            className="absolute top-[120px] -left-[2px] w-[3px] h-[24px] rounded-l-sm"
+            className="absolute inset-0 pointer-events-none"
             style={{
-              background: "linear-gradient(90deg, #444 0%, #1a1a1a 100%)",
-              boxShadow: "-1px 0 3px rgba(0,0,0,0.7)",
-            }}
-          />
-          <div
-            className="absolute top-[160px] -left-[2px] w-[3px] h-[40px] rounded-l-sm"
-            style={{
-              background: "linear-gradient(90deg, #444 0%, #1a1a1a 100%)",
-              boxShadow: "-1px 0 3px rgba(0,0,0,0.7)",
-            }}
-          />
-          <div
-            className="absolute top-[210px] -left-[2px] w-[3px] h-[40px] rounded-l-sm"
-            style={{
-              background: "linear-gradient(90deg, #444 0%, #1a1a1a 100%)",
-              boxShadow: "-1px 0 3px rgba(0,0,0,0.7)",
-            }}
-          />
-          <div
-            className="absolute top-[170px] -right-[2px] w-[3px] h-[60px] rounded-r-sm"
-            style={{
-              background: "linear-gradient(-90deg, #444 0%, #1a1a1a 100%)",
-              boxShadow: "1px 0 3px rgba(0,0,0,0.7)",
+              background:
+                "linear-gradient(115deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0) 45%)",
             }}
           />
         </div>
@@ -446,6 +347,7 @@ function PhoneMockup() {
     </motion.div>
   );
 }
+
 
 // ─── TRUST PILL ─────────────────────────────────────────────────────────────────
 function TrustPill() {
@@ -460,7 +362,7 @@ function TrustPill() {
         <Sparkles className="w-3.5 h-3.5 text-[#25D366]" />
       </div>
       <span className="text-[12px] sm:text-[13px] font-medium text-white/60">
-        Inteligência Artificial + WhatsApp
+        Dashboard Web + Alertas no WhatsApp
       </span>
     </motion.div>
   );
@@ -472,8 +374,9 @@ export interface CinematicHeroProps extends React.HTMLAttributes<HTMLDivElement>
 export function CinematicHero({ className, ...props }: CinematicHeroProps) {
   const sectionRef = useRef<HTMLDivElement>(null);
 
-  const headlineWords = ["Seu", "dinheiro", "organizado."];
-  const headlineAccent = ["Sua", "vida", "mais", "leve."];
+  const headlineWords = ["Seu", "controle", "financeiro"];
+  const headlineAccent = ["definitivo,", "simples", "e", "inteligente."];
+
 
   return (
     <>
@@ -571,8 +474,9 @@ export function CinematicHero({ className, ...props }: CinematicHeroProps) {
                   animate="visible"
                   className="mt-6 md:mt-7 text-[15px] md:text-[17px] text-white/85 leading-relaxed max-w-[480px] font-medium"
                 >
-                  A Moovi organiza automaticamente, usando Inteligência Artificial. 
-                  Sem planilha, sem esforço.
+                  Gerencie seus orçamentos, acompanhe gráficos em tempo real no seu Dashboard
+                  e receba lembretes automáticos no WhatsApp para nunca mais atrasar uma conta.
+
                 </motion.p>
 
                 {/* CTA Buttons */}
@@ -588,7 +492,7 @@ export function CinematicHero({ className, ...props }: CinematicHeroProps) {
 
               {/* ─── RIGHT COLUMN: Phone Mockup ────────────────────── */}
               <div className="order-2 mt-14 lg:mt-0 w-full flex flex-col items-center lg:items-end">
-                <PhoneMockup />
+                <DashboardMockup />
                 {/* Social proof — mobile only, below phone */}
                 <div className="lg:hidden mt-10 flex justify-center w-full">
                   <SocialProof />

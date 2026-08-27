@@ -17,14 +17,14 @@ export function Pricing() {
       totalPrice: 178.8,
       period: "x12",
       features: [
-        { text: "Registro de despesas/receitas via WhatsApp", included: true },
+        { text: "Acesso completo ao Dashboard Web", included: true },
+        { text: "Lembretes e alertas automáticos via WhatsApp", included: true },
         { text: "Categorização inteligente de gastos", included: true },
         { text: "Compromissos automáticos", included: true },
         { text: "Controle de orçamentos", included: true },
-        { text: "Lembretes automáticos de vencimento", included: true },
-        { text: "Acesso ao Dashboard", included: true },
         { text: "Suporte padrão", included: true },
       ],
+
       description: "Ideal para começar a organizar suas finanças.",
       buttonText: "Assinar Básico",
       href: "#",
@@ -69,7 +69,7 @@ export function Pricing() {
         { text: "Gestão de múltiplos cartões de crédito", included: true },
         { text: "Gestão de múltiplas contas bancárias", included: true },
         { text: "Leitura automatizada de comprovantes", included: true },
-        { text: "Modo Áudio", included: true },
+        { text: "Anexos e comprovantes no Dashboard", included: true },
         { text: "Conversão de moedas automático", included: true },
         { text: "Open Finance (em breve)", included: true },
         { text: "Atendimento VIP exclusivo", included: true },
@@ -143,7 +143,7 @@ export function Pricing() {
           variants={revealVariants}
           className="text-gray-500 text-lg"
         >
-          Controle financeiro direto no WhatsApp, 24h por dia.
+          Dashboard completo no seu navegador e alertas automáticos no WhatsApp.
         </motion.p>
       </article>
 

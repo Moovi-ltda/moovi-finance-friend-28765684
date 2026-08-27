@@ -2,28 +2,29 @@ import { motion } from "framer-motion";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 
 const ROW_1 = [
-  "Paguei 30 reais de gasolina",
-  "Recebi 10 mil reais de salário",
-  "Quanto gastei hoje?",
-  "Saldo do mês?",
-  "Pergunte e registre o que quiser",
+  "Lembrete: aluguel vence hoje",
+  "Sua fatura do cartão fecha amanhã",
+  "Você tem 3 contas a pagar essa semana",
+  "Resumo do mês pronto no Dashboard",
+  "Alerta: 80% do orçamento de alimentação",
 ];
 
 const ROW_2 = [
-  "Quais lembretes eu tenho hoje?",
-  "Paguei 100 reais no mercado",
-  "Tenho 2 mil reais pro aluguel dia 22",
-  "Quanto gastei esse mês?",
-  "Anotar dentista amanhã às 14h",
+  "Lembrete: academia vence dia 20",
+  "Conta de luz vence em 2 dias",
+  "Nenhuma pendência para hoje",
+  "Relatório mensal disponível",
+  "Dentista amanhã às 14h",
 ];
 
 const ROW_3 = [
-  "Tenho saldo positivo?",
-  "Tenho 3 reuniões hoje?",
-  "Gastei quanto em alimentação?",
-  "Recebi quanto esse mês?",
-  "Fiz um PIX de 50 reais",
+  "Boleto do internet vence hoje",
+  "Meta de economia atingida",
+  "Cartão Nubank fecha em 5 dias",
+  "Seus gastos subiram 12% este mês",
+  "2 contas a receber esta semana",
 ];
+
 
 const Pill = ({ text }: { text: string }) => (
   <div className="px-5 py-3 md:px-6 md:py-3.5 rounded-full border border-primary/30 bg-background text-foreground hover:border-primary hover:bg-primary/5 transition-all duration-300 whitespace-nowrap font-medium text-[15px] md:text-base cursor-default flex-shrink-0 shadow-sm">
@@ -61,11 +62,12 @@ export default function InteractionExamples() {
           transition={{ duration: 0.6 }}
         >
           <h2 className="text-[20px] min-[375px]:text-[22px] sm:text-3xl md:text-5xl font-bold text-white mb-4 md:mb-6 tracking-tighter sm:tracking-tight whitespace-nowrap">
-            Interaja com a <span className="text-[#25D366]">Moovi</span> 24h por dia
+            Avisos da <span className="text-[#25D366]">Moovi</span> no seu WhatsApp
           </h2>
           <p className="text-white/60 text-[15px] md:text-lg max-w-2xl mx-auto leading-relaxed">
-            Pergunte o que quiser e como quiser sobre as suas finanças ou seus compromissos.
+            Lembretes de vencimento, alertas de orçamento e resumos automáticos — enquanto todo o gerenciamento acontece no seu Dashboard.
           </p>
+
         </motion.div>
       </div>
 

@@ -18,9 +18,14 @@ export function FAQ() {
       answer: "100% seguro. Utilizamos a mesma criptografia de ponta a ponta que os grandes bancos usam. O Moovi não movimenta seu dinheiro e não tem acesso às suas contas bancárias. Seus dados são seus e de mais ninguém."
     },
     {
-      question: "Preciso baixar algum aplicativo?",
-      answer: "Não! Essa é a mágica. O Moovi funciona direto no seu WhatsApp, o app que você já usa todo dia. Nada de apps pesados ocupando memória do seu celular."
+      question: "Como funcionam os avisos do WhatsApp?",
+      answer: "O WhatsApp é o seu assistente de alertas. Ele envia lembretes automáticos de contas a vencer e avisos da sua conta, enquanto todo o gerenciamento e visualização ocorrem no seu Dashboard."
     },
+    {
+      question: "Preciso baixar algum aplicativo?",
+      answer: "Não! O Moovi é uma plataforma web: você acessa o seu Dashboard direto pelo navegador, no computador ou no celular. Nada de apps pesados ocupando memória."
+    },
+
     {
       question: "Como funciona o pagamento?",
       answer: "Você escolhe o plano ideal para você, realiza o pagamento de forma segura e recebe acesso imediato no WhatsApp. Sem espera, sem burocracia. É pagar e começar a usar."

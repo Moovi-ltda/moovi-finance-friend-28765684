@@ -21,7 +21,7 @@ const testimonialsData: Testimonial[] = [
     id: 1,
     image: "/testimonials/testimonial-1.jpg",
     title: "Rapidez impressionante",
-    quote: "Fiquei impressionado com a rapidez. Em mando uma mensagem e em segundos já tenho tudo registrado!",
+    quote: "Fiquei impressionado com a rapidez. Lanço tudo no Dashboard em segundos e os lembretes chegam no WhatsApp!",
     initials: "CM",
     name: "Carlos Mendes",
     date: "15/11/2025",
