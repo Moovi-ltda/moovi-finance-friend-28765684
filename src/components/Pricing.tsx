@@ -17,14 +17,14 @@ export function Pricing() {
       totalPrice: 178.8,
       period: "x12",
       features: [
-        { text: "Registro de despesas/receitas via WhatsApp", included: true },
+        { text: "Acesso completo ao Dashboard Web", included: true },
+        { text: "Lembretes e alertas automáticos via WhatsApp", included: true },
         { text: "Categorização inteligente de gastos", included: true },
         { text: "Compromissos automáticos", included: true },
         { text: "Controle de orçamentos", included: true },
-        { text: "Lembretes automáticos de vencimento", included: true },
-        { text: "Acesso ao Dashboard", included: true },
         { text: "Suporte padrão", included: true },
       ],
+
       description: "Ideal para começar a organizar suas finanças.",
       buttonText: "Assinar Básico",
       href: "#",

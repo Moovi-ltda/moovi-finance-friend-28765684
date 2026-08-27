@@ -8,13 +8,14 @@ const ComparisonSection = () => {
   const { elementRef, isVisible } = useScrollAnimation({ threshold: 0.15 });
 
   const comparisons = [
-    { feature: "Registrar gastos", moovi: "Mensagem no WhatsApp", others: "Abrir app, preencher campos" },
+    { feature: "Registrar gastos", moovi: "Interface Web Rápida & Notificações via WhatsApp", others: "Abrir app, preencher campos" },
     { feature: "Categorização", moovi: "Automática com IA", others: "Manual, uma por uma" },
     { feature: "Alertas de orçamento", moovi: "Automáticos no WhatsApp", others: "Não tem ou por e-mail" },
     { feature: "Dashboard profissional", moovi: "Completo com gráficos", others: "Básico ou inexistente" },
     { feature: "Exportar relatórios", moovi: "PDF e Excel", others: "Limitado" },
     { feature: "Lembretes de contas", moovi: "No WhatsApp", others: "Notificação genérica" },
   ];
+
 
   return (
     <section className="py-20 md:py-32 relative overflow-hidden">
