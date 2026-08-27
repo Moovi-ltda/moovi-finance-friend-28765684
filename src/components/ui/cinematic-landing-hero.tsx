@@ -2,85 +2,16 @@ import React, { useEffect, useRef, useState } from "react";
 import { cn } from "@/lib/utils";
 import { scrollToSection } from "@/utils/scroll";
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowRight, Sparkles, MessageCircle, Star, ChevronDown, X } from "lucide-react";
+import { ArrowRight, Sparkles, Star, ChevronDown, X } from "lucide-react";
 import TrustMarquee from "@/components/TrustMarquee";
 import avatar1 from "@/assets/avatars/a1.jpg";
 import avatar2 from "@/assets/avatars/a2.jpg";
 import avatar3 from "@/assets/avatars/a3.jpg";
 import avatar4 from "@/assets/avatars/a4.jpg";
-
-// ─── CONFIG ────────────────────────────────────────────────────────────────────
-const PANDA_VIDEO_ID = "4e6c28e8-f6eb-4e20-b216-224be1bc17f8";
-const PANDA_VIDEO_URL = `https://player-vz-c1e2f242-e38.tv.pandavideo.com.br/embed/?v=${PANDA_VIDEO_ID}&autoplay=1`;
-// Thumbnail oficial do Panda Video (leve, sem iframe)
-const PANDA_THUMBNAIL_URL = `https://b-vz-c1e2f242-e38.tv.pandavideo.com.br/${PANDA_VIDEO_ID}/thumbnail.jpg`;
+import dashboardHero from "@/assets/dash-15.png.asset.json";
 
 const AVATAR_URLS = [avatar1, avatar2, avatar3, avatar4];
 
-// ─── LAZY VIDEO PLAYER ─────────────────────────────────────────────────────────
-// Só injeta o iframe quando o mockup está realmente visível na viewport,
-// evitando download/parse pesado durante o carregamento e o scroll inicial.
-function LazyPandaPlayer({ className }: { className?: string }) {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const [ready, setReady] = useState(false);
-
-  useEffect(() => {
-    const el = containerRef.current;
-    if (!el || ready) return;
-
-    if (typeof IntersectionObserver === "undefined") {
-      const t = setTimeout(() => setReady(true), 2000);
-      return () => clearTimeout(t);
-    }
-
-    const io = new IntersectionObserver(
-      (entries) => {
-        if (entries.some((e) => e.isIntersecting)) {
-          setReady(true);
-          io.disconnect();
-        }
-      },
-      { rootMargin: "200px" }
-    );
-    io.observe(el);
-    return () => io.disconnect();
-  }, [ready]);
-
-  return (
-    <div
-      ref={containerRef}
-      className={cn("relative w-full h-full bg-black overflow-hidden", className)}
-    >
-      {!ready && (
-        <img
-          src={PANDA_THUMBNAIL_URL}
-          alt="Preview do app Moovi"
-          className="absolute inset-0 w-full h-full object-cover"
-          loading="lazy"
-          decoding="async"
-          onError={(e) => {
-            (e.target as HTMLImageElement).style.opacity = "0";
-          }}
-        />
-      )}
-
-      {ready && (
-        <div className="absolute inset-0 pointer-events-none" tabIndex={-1}>
-          <iframe
-            id="panda-player-hero"
-            src={PANDA_VIDEO_URL}
-            className="w-full h-full"
-            style={{ border: "none" }}
-            allow="accelerometer;gyroscope;autoplay;encrypted-media;picture-in-picture"
-            tabIndex={-1}
-            allowFullScreen
-            loading="lazy"
-          />
-        </div>
-      )}
-    </div>
-  );
-}
 
 // ─── HEADLINE WORDS ANIMATION ──────────────────────────────────────────────────
 const headlineVariants = {
