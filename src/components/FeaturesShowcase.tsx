@@ -10,10 +10,6 @@ import {
   Target,
   CreditCard,
 } from "lucide-react";
-import dashOverview from "@/assets/dash-15.png.asset.json";
-import dashBills from "@/assets/dash-16.png.asset.json";
-import dashReports from "@/assets/dash-17.png.asset.json";
-import waAlert from "@/assets/dash-18.png.asset.json";
 
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
@@ -36,7 +32,7 @@ const features: Feature[] = [
     title: "Dashboard Intuitivo",
     description:
       "Lance e categorize receitas e despesas em segundos. Saldo, resultado do mês e evolução financeira sempre atualizados.",
-    image: dashOverview.url,
+    image: "/dashboard/dash-15.png",
   },
   {
     number: "02",
@@ -44,7 +40,7 @@ const features: Feature[] = [
     title: "Relatórios Visuais",
     description:
       "Gráficos claros de para onde está indo o seu dinheiro, com filtros por período, categoria e conta — e exportação em PDF ou Excel.",
-    image: dashReports.url,
+    image: "/dashboard/dash-17.png",
   },
   {
     number: "03",
@@ -52,7 +48,7 @@ const features: Feature[] = [
     title: "Alertas por WhatsApp",
     description:
       "Lembretes automáticos de vencimento e relatórios de pendências chegam direto no seu celular. Todo o gerenciamento acontece no Dashboard.",
-    image: waAlert.url,
+    image: "/dashboard/dash-18.png",
   },
   {
     number: "04",
@@ -60,7 +56,7 @@ const features: Feature[] = [
     title: "Contas a Pagar e Receber",
     description:
       "Acompanhe pendências, parcelas e vencimentos em uma única tela, com status de cada compromisso.",
-    image: dashBills.url,
+    image: "/dashboard/dash-16.png",
   },
   {
     number: "05",

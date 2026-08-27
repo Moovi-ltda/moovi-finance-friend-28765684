@@ -8,7 +8,6 @@ import avatar1 from "@/assets/avatars/a1.jpg";
 import avatar2 from "@/assets/avatars/a2.jpg";
 import avatar3 from "@/assets/avatars/a3.jpg";
 import avatar4 from "@/assets/avatars/a4.jpg";
-import dashboardHero from "@/assets/dash-15.png.asset.json";
 
 const AVATAR_URLS = [avatar1, avatar2, avatar3, avatar4];
 
@@ -326,7 +325,7 @@ function DashboardMockup() {
           </div>
 
           <img
-            src={dashboardHero.url}
+            src="/dashboard/dash-15.png"
             alt="Dashboard financeiro Moovi com saldo, gráficos e gastos por categoria"
             className="w-full h-auto block"
             loading="eager"
