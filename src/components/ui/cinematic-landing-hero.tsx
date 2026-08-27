@@ -363,7 +363,7 @@ function TrustPill() {
         <Sparkles className="w-3.5 h-3.5 text-[#25D366]" />
       </div>
       <span className="text-[12px] sm:text-[13px] font-medium text-white/60">
-        Inteligência Artificial + WhatsApp
+        Dashboard Web + Alertas no WhatsApp
       </span>
     </motion.div>
   );
@@ -375,8 +375,9 @@ export interface CinematicHeroProps extends React.HTMLAttributes<HTMLDivElement>
 export function CinematicHero({ className, ...props }: CinematicHeroProps) {
   const sectionRef = useRef<HTMLDivElement>(null);
 
-  const headlineWords = ["Seu", "dinheiro", "organizado."];
-  const headlineAccent = ["Sua", "vida", "mais", "leve."];
+  const headlineWords = ["Seu", "controle", "financeiro"];
+  const headlineAccent = ["definitivo,", "simples", "e", "inteligente."];
+
 
   return (
     <>
@@ -474,8 +475,9 @@ export function CinematicHero({ className, ...props }: CinematicHeroProps) {
                   animate="visible"
                   className="mt-6 md:mt-7 text-[15px] md:text-[17px] text-white/85 leading-relaxed max-w-[480px] font-medium"
                 >
-                  A Moovi organiza automaticamente, usando Inteligência Artificial. 
-                  Sem planilha, sem esforço.
+                  Gerencie seus orçamentos, acompanhe gráficos em tempo real no seu Dashboard
+                  e receba lembretes automáticos no WhatsApp para nunca mais atrasar uma conta.
+
                 </motion.p>
 
                 {/* CTA Buttons */}
@@ -491,7 +493,7 @@ export function CinematicHero({ className, ...props }: CinematicHeroProps) {
 
               {/* ─── RIGHT COLUMN: Phone Mockup ────────────────────── */}
               <div className="order-2 mt-14 lg:mt-0 w-full flex flex-col items-center lg:items-end">
-                <PhoneMockup />
+                <DashboardMockup />
                 {/* Social proof — mobile only, below phone */}
                 <div className="lg:hidden mt-10 flex justify-center w-full">
                   <SocialProof />
