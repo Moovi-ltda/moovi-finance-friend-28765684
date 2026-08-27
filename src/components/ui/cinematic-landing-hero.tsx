@@ -285,7 +285,7 @@ function DashboardMockup() {
 
       <div className="relative w-full max-w-[620px]">
         {/* Floating Badge — Left */}
-        <FloatingBadge className="-bottom-8 -left-[110px]" delay={0}>
+        <FloatingBadge className="-bottom-7 left-6" delay={0}>
           <div className="w-9 h-9 rounded-full bg-gradient-to-br from-[#25D366]/20 to-[#25D366]/5 flex items-center justify-center border border-[#25D366]/20">
             <span className="text-lg">💰</span>
           </div>
