@@ -143,7 +143,7 @@ export function Pricing() {
           variants={revealVariants}
           className="text-gray-500 text-lg"
         >
-          Controle financeiro direto no WhatsApp, 24h por dia.
+          Dashboard completo no seu navegador e alertas automáticos no WhatsApp.
         </motion.p>
       </article>
 
