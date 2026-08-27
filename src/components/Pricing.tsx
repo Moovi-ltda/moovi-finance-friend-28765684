@@ -69,7 +69,7 @@ export function Pricing() {
         { text: "Gestão de múltiplos cartões de crédito", included: true },
         { text: "Gestão de múltiplas contas bancárias", included: true },
         { text: "Leitura automatizada de comprovantes", included: true },
-        { text: "Modo Áudio", included: true },
+        { text: "Anexos e comprovantes no Dashboard", included: true },
         { text: "Conversão de moedas automático", included: true },
         { text: "Open Finance (em breve)", included: true },
         { text: "Atendimento VIP exclusivo", included: true },
