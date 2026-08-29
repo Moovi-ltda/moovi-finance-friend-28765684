@@ -6,6 +6,8 @@ import { Check, Star, ChevronLeft, ChevronRight } from "lucide-react";
 interface Testimonial {
   id: number;
   image: string;
+  imageAlt: string;
+  imagePosition: string;
   title: string;
   quote: string;
   initials: string;
@@ -19,9 +21,11 @@ interface Testimonial {
 const testimonialsData: Testimonial[] = [
   {
     id: 1,
-    image: "/testimonials/testimonial-1.jpg",
-    title: "Rapidez impressionante",
-    quote: "Fiquei impressionado com a rapidez. Lanço tudo no Dashboard em segundos e os lembretes chegam no WhatsApp!",
+    image: "/testimonials/testimonial-dashboard-insights.webp",
+    imageAlt: "Dashboard da Moovi com comparação mensal, alertas de orçamento e saldo por conta",
+    imagePosition: "object-[center_43%]",
+    title: "Visão do mês em segundos",
+    quote: "Abro o painel e já entendo para onde meu dinheiro foi. A comparação mensal e os alertas de orçamento deixaram minhas decisões muito mais rápidas.",
     initials: "CM",
     name: "Carlos Mendes",
     date: "15/11/2025",
@@ -30,8 +34,10 @@ const testimonialsData: Testimonial[] = [
   {
     id: 2,
     image: "/testimonials/testimonial-2.jpg",
-    title: "Organização facilitada",
-    quote: "Nunca fui organizado com dinheiro, mas o Moovi tornou tudo fácil. Ele me lembra de tudo!",
+    imageAlt: "Mensagem de uma cliente contando como os lembretes da Moovi ajudam na organização",
+    imagePosition: "object-center",
+    title: "Lembretes que ajudam",
+    quote: "Nunca fui organizada com dinheiro, mas o Dashboard do Moovi tornou tudo simples. E os lembretes não me deixam esquecer de nada.",
     initials: "AP",
     name: "Ana Paula",
     date: "22/05/2025",
@@ -39,9 +45,11 @@ const testimonialsData: Testimonial[] = [
   },
   {
     id: 3,
-    image: "/testimonials/testimonial-3.jpg",
-    title: "Alertas que salvam",
-    quote: "Me avisou na hora certa e evitei estourar o orçamento. Salvou meu mês!",
+    image: "/testimonials/testimonial-goals.webp",
+    imageAlt: "Tela de metas da Moovi com objetivos financeiros e barras de progresso",
+    imagePosition: "object-[center_52%]",
+    title: "Metas mais claras",
+    quote: "Configurei os vencimentos no Dashboard e o lembrete chegou na hora certa. Salvou meu mês!",
     initials: "RS",
     name: "Ricardo Silva",
     date: "28/10/2025",
@@ -49,9 +57,11 @@ const testimonialsData: Testimonial[] = [
   },
   {
     id: 4,
-    image: "/testimonials/testimonial-4.jpg",
-    title: "Funciona mesmo",
-    quote: "Achei que seria mais um app enrolado, mas funciona MESMO. Me salvou nesses dias corridos!",
+    image: "/testimonials/testimonial-dashboard-overview.webp",
+    imageAlt: "Dashboard da Moovi com saldo, receitas, despesas e evolução financeira",
+    imagePosition: "object-[center_46%]",
+    title: "Controle sem complicação",
+    quote: "O dashboard reúne saldo, receitas e despesas de um jeito direto. Em poucos segundos eu entendo como está meu mês.",
     initials: "JF",
     name: "Juliana Ferreira",
     date: "03/09/2025",
@@ -67,9 +77,10 @@ const TestimonialCard = ({ testimonial }: { testimonial: Testimonial }) => (
     <div className="relative w-full h-64 md:h-72 overflow-hidden bg-muted">
       <img
         src={testimonial.image}
-        alt={`Depoimento de ${testimonial.name}`}
-        className="w-full h-full object-cover"
+        alt={testimonial.imageAlt}
+        className={`w-full h-full object-cover ${testimonial.imagePosition}`}
         loading="lazy"
+        decoding="async"
       />
     </div>
 

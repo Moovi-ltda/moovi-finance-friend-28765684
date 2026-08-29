@@ -4,6 +4,7 @@ import { scrollToSection } from "@/utils/scroll";
 import { motion, AnimatePresence } from "framer-motion";
 import { ArrowRight, Sparkles, Star, ChevronDown, X } from "lucide-react";
 import TrustMarquee from "@/components/TrustMarquee";
+import PhoneMockupBasic from "@/components/ui/phone-mockups-1";
 import avatar1 from "@/assets/avatars/a1.jpg";
 import avatar2 from "@/assets/avatars/a2.jpg";
 import avatar3 from "@/assets/avatars/a3.jpg";
@@ -272,7 +273,7 @@ function FloatingBadge({
 }
 
 // ─── DASHBOARD MOCKUP ───────────────────────────────────────────────────────────
-function DashboardMockup() {
+function DashboardMockup({ showBadges = true }: { showBadges?: boolean }) {
   return (
     <motion.div
       variants={fadeUp(1.5)}
@@ -285,26 +286,30 @@ function DashboardMockup() {
 
       <div className="relative w-full max-w-[620px]">
         {/* Floating Badge — Left */}
-        <FloatingBadge className="-bottom-7 left-6" delay={0}>
-          <div className="w-9 h-9 rounded-full bg-gradient-to-br from-[#25D366]/20 to-[#25D366]/5 flex items-center justify-center border border-[#25D366]/20">
-            <span className="text-lg">💰</span>
-          </div>
-          <div>
-            <p className="text-white text-[13px] font-semibold tracking-tight">R$450 economizados</p>
-            <p className="text-white/35 text-[11px] font-medium">Esse mês com Moovi</p>
-          </div>
-        </FloatingBadge>
+        {showBadges && (
+          <FloatingBadge className="-bottom-7 left-6" delay={0}>
+            <div className="w-9 h-9 rounded-full bg-gradient-to-br from-[#25D366]/20 to-[#25D366]/5 flex items-center justify-center border border-[#25D366]/20">
+              <span className="text-lg">💰</span>
+            </div>
+            <div>
+              <p className="text-white text-[13px] font-semibold tracking-tight">R$450 economizados</p>
+              <p className="text-white/35 text-[11px] font-medium">Esse mês com Moovi</p>
+            </div>
+          </FloatingBadge>
+        )}
 
         {/* Floating Badge — Right */}
-        <FloatingBadge className="-top-8 -right-[90px]" delay={0.2}>
-          <div className="w-9 h-9 rounded-full bg-gradient-to-br from-emerald-500/20 to-emerald-500/5 flex items-center justify-center border border-emerald-400/20">
-            <Sparkles className="w-4 h-4 text-emerald-400" />
-          </div>
-          <div>
-            <p className="text-white text-[13px] font-semibold tracking-tight">Alertas no WhatsApp</p>
-            <p className="text-white/35 text-[11px] font-medium">Nunca atrase uma conta</p>
-          </div>
-        </FloatingBadge>
+        {showBadges && (
+          <FloatingBadge className="-top-8 -right-[90px]" delay={0.2}>
+            <div className="w-9 h-9 rounded-full bg-gradient-to-br from-emerald-500/20 to-emerald-500/5 flex items-center justify-center border border-emerald-400/20">
+              <Sparkles className="w-4 h-4 text-emerald-400" />
+            </div>
+            <div>
+              <p className="text-white text-[13px] font-semibold tracking-tight">Lembretes no WhatsApp</p>
+              <p className="text-white/35 text-[11px] font-medium">Você agenda, a Moovi te avisa</p>
+            </div>
+          </FloatingBadge>
+        )}
 
         {/* Browser window */}
         <div
@@ -348,6 +353,36 @@ function DashboardMockup() {
   );
 }
 
+function HeroDeviceShowcase() {
+  return (
+    <motion.div
+      variants={fadeUp(1.45)}
+      initial="hidden"
+      animate="visible"
+      className="relative mx-auto min-h-[565px] w-full max-w-[650px] sm:min-h-[600px] lg:min-h-[530px]"
+    >
+      {/* Dashboard web como contexto; no mobile o telefone assume o protagonismo. */}
+      <div className="absolute left-[-10%] top-[22%] hidden w-[96%] origin-left scale-[0.82] opacity-75 lg:block xl:left-[-4%] xl:scale-[0.88]">
+        <DashboardMockup showBadges={false} />
+      </div>
+
+      <div className="pointer-events-none absolute left-[3%] top-[10%] z-30 hidden items-center gap-2 rounded-full border border-[#25D366]/15 bg-[#07110b]/80 px-3 py-2 shadow-xl backdrop-blur-xl lg:flex">
+        <span className="relative flex size-2">
+          <span className="absolute inline-flex size-full animate-ping rounded-full bg-[#25D366] opacity-60 motion-reduce:animate-none" />
+          <span className="relative inline-flex size-2 rounded-full bg-[#25D366]" />
+        </span>
+        <span className="text-[10px] font-semibold tracking-[0.14em] text-white/65 uppercase">
+          Ao vivo no celular
+        </span>
+      </div>
+
+      <div className="relative z-20 mx-auto w-full max-w-[330px] lg:absolute lg:-right-[2%] lg:top-0 lg:max-w-[290px] xl:right-0 xl:max-w-[315px]">
+        <PhoneMockupBasic />
+      </div>
+    </motion.div>
+  );
+}
+
 
 // ─── TRUST PILL ─────────────────────────────────────────────────────────────────
 function TrustPill() {
@@ -362,7 +397,7 @@ function TrustPill() {
         <Sparkles className="w-3.5 h-3.5 text-[#25D366]" />
       </div>
       <span className="text-[12px] sm:text-[13px] font-medium text-white/60">
-        Dashboard Web + Alertas no WhatsApp
+        Plataforma Web + Lembretes no WhatsApp
       </span>
     </motion.div>
   );
@@ -474,8 +509,9 @@ export function CinematicHero({ className, ...props }: CinematicHeroProps) {
                   animate="visible"
                   className="mt-6 md:mt-7 text-[15px] md:text-[17px] text-white/85 leading-relaxed max-w-[480px] font-medium"
                 >
-                  Gerencie seus orçamentos, acompanhe gráficos em tempo real no seu Dashboard
-                  e receba lembretes automáticos no WhatsApp para nunca mais atrasar uma conta.
+                  Lance receitas e despesas, controle orçamentos, cartões e metas e acompanhe
+                  gráficos em tempo real no seu Dashboard. Os lembretes que você agendar chegam
+                  no seu WhatsApp na hora certa.
 
                 </motion.p>
 
@@ -490,9 +526,9 @@ export function CinematicHero({ className, ...props }: CinematicHeroProps) {
                 </div>
               </div>
 
-              {/* ─── RIGHT COLUMN: Phone Mockup ────────────────────── */}
+              {/* ─── RIGHT COLUMN: Dashboard + Phone Carousel ──────── */}
               <div className="order-2 mt-14 lg:mt-0 w-full flex flex-col items-center lg:items-end">
-                <DashboardMockup />
+                <HeroDeviceShowcase />
                 {/* Social proof — mobile only, below phone */}
                 <div className="lg:hidden mt-10 flex justify-center w-full">
                   <SocialProof />

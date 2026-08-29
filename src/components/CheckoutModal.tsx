@@ -166,7 +166,7 @@ export function CheckoutModal({ open, onOpenChange, plan }: CheckoutModalProps) 
 
   const validatePix = () => {
     if (!nome.trim() || nome.trim().length < 3) return "Informe seu nome completo.";
-    if (onlyDigits(telefone).length < 10) return "Informe um WhatsApp válido.";
+    if (onlyDigits(telefone).length < 10) return "Informe um WhatsApp válido para receber seus lembretes agendados.";
     if (!email.includes("@") || email.trim().length < 5) return "Informe um e-mail válido.";
     const docDigits = onlyDigits(cpf).length;
     if (docDigits !== 11 && docDigits !== 14) return "Informe um CPF ou CNPJ válido.";
@@ -325,7 +325,7 @@ export function CheckoutModal({ open, onOpenChange, plan }: CheckoutModalProps) 
               <form onSubmit={handleSubmit} className="space-y-3">
                 <Field label="Nome Completo" value={nome} onChange={setNome} placeholder="João da Silva" />
                 <label className="block">
-                  <span className="text-sm font-medium text-slate-700">WhatsApp</span>
+                  <span className="text-sm font-medium text-slate-700">WhatsApp dos lembretes</span>
                   <div className="mt-1 flex gap-2">
                     <Popover open={countryOpen} onOpenChange={setCountryOpen}>
                       <PopoverTrigger asChild>
@@ -526,7 +526,7 @@ export function CheckoutModal({ open, onOpenChange, plan }: CheckoutModalProps) 
               )}
 
               <p className="mt-5 text-xs text-slate-500">
-                Após o pagamento, seu acesso será enviado no WhatsApp informado.
+                Após o pagamento, seu acesso ao Dashboard será liberado.
               </p>
             </div>
           )}
@@ -538,7 +538,7 @@ export function CheckoutModal({ open, onOpenChange, plan }: CheckoutModalProps) 
               </div>
               <h3 className="mt-4 text-xl font-bold text-slate-900">Pagamento Aprovado! 🎉</h3>
               <p className="mt-2 text-sm text-slate-600 max-w-xs mx-auto">
-                Tudo certo! Acabamos de enviar seu acesso no WhatsApp <span className="text-emerald-600 font-semibold">{telefone}</span>.
+                Seu acesso ao Dashboard está pronto. Os lembretes que você agendar serão enviados para o WhatsApp <span className="text-emerald-600 font-semibold">{telefone}</span>.
               </p>
               <button
                 type="button"

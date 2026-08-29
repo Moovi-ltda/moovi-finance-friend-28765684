@@ -879,7 +879,7 @@ function ReadField({ label, value }: { label: string; value: string }) {
   return (
     <div>
       <p className="text-[11px] uppercase tracking-wider text-slate-400 font-semibold">{label}</p>
-      <p className="text-sm text-slate-700 truncate">{value || <span className="text-slate-300">—</span>}</p>
+      <p className="text-sm text-slate-700 truncate">{value || <span className="text-slate-300">Não informado</span>}</p>
     </div>
   );
 }

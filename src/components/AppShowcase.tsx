@@ -19,7 +19,7 @@ export function AppShowcase() {
               Seu Assessor Financeiro Pessoal
             </TextAnimate>
           </h2>
-          <p className="text-xl text-muted-foreground">Direto no WhatsApp 💚</p>
+          <p className="text-xl text-muted-foreground">Direto no seu Dashboard 💚</p>
         </div>
 
         {/* Container dos iPhones */}

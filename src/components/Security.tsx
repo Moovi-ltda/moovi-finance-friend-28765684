@@ -4,7 +4,7 @@ import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 const securityFeatures = [{
   icon: Lock,
   title: "Criptografia ponta-a-ponta",
-  description: "Suas conversas e dados financeiros são protegidos com a mesma segurança do WhatsApp."
+  description: "Seus dados financeiros são protegidos com criptografia e segurança em toda a plataforma."
 }, {
   icon: Database,
   title: "Armazenamento seguro",

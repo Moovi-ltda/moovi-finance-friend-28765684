@@ -18,8 +18,8 @@ export function FAQ() {
       answer: "100% seguro. Utilizamos a mesma criptografia de ponta a ponta que os grandes bancos usam. O Moovi não movimenta seu dinheiro e não tem acesso às suas contas bancárias. Seus dados são seus e de mais ninguém."
     },
     {
-      question: "Como funcionam os avisos do WhatsApp?",
-      answer: "O WhatsApp é o seu assistente de alertas. Ele envia lembretes automáticos de contas a vencer e avisos da sua conta, enquanto todo o gerenciamento e visualização ocorrem no seu Dashboard."
+      question: "Como funcionam os lembretes no WhatsApp?",
+      answer: "Você agenda os vencimentos e compromissos dentro da plataforma e a Moovi envia o lembrete no seu WhatsApp na data e hora que você definiu. Essa é a única função do WhatsApp: todo o gerenciamento, os lançamentos, os gráficos e os relatórios acontecem no seu Dashboard."
     },
     {
       question: "Preciso baixar algum aplicativo?",
@@ -28,11 +28,11 @@ export function FAQ() {
 
     {
       question: "Como funciona o pagamento?",
-      answer: "Você escolhe o plano ideal para você, realiza o pagamento de forma segura e recebe acesso imediato no WhatsApp. Sem espera, sem burocracia. É pagar e começar a usar."
+      answer: "Você escolhe o plano ideal para você, realiza o pagamento de forma segura e recebe acesso imediato ao Dashboard. Sem espera, sem burocracia. É pagar e começar a usar."
     },
     {
       question: "Posso cancelar quando quiser?",
-      answer: "Sim! Sem multa, sem taxa, sem burocracia. Você pode cancelar a qualquer momento pelo próprio WhatsApp ou entrando em contato com nosso suporte."
+      answer: "Sim! Sem multa, sem taxa, sem burocracia. Você pode cancelar a qualquer momento pelo Dashboard ou entrando em contato com nosso suporte."
     },
     {
       question: "Serve para quem ganha pouco?",

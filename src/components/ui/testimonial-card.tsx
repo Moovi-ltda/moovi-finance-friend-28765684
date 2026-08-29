@@ -47,7 +47,7 @@ export function TestimonialCard({
       
       <div className="flex flex-col gap-0.5">
         <p className="text-sm font-semibold text-foreground">
-          — {author.name}
+          {author.name}
         </p>
         <p className="text-xs text-muted-foreground">
           {author.role}

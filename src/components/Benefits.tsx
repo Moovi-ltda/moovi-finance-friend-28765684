@@ -14,33 +14,33 @@ import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 const benefits = [
   {
     icon: MessageCircle,
-    title: "Registre por texto",
-    description: "Apenas envie uma mensagem: 'Gastei R$ 50 no mercado'. Pronto! Registrado automaticamente.",
+    title: "Registre em segundos",
+    description: "Lance receitas e despesas direto no Dashboard e mantenha tudo organizado automaticamente.",
   },
   {
     icon: Mic,
-    title: "Ou use sua voz",
-    description: "Envie um áudio enquanto dirige ou caminha. O MOOVI entende e registra para você.",
+    title: "Categorias inteligentes",
+    description: "Organize cada lançamento com categorias e filtros que facilitam sua rotina.",
   },
   {
     icon: Camera,
-    title: "Tire foto da nota",
-    description: "Fotografe o cupom fiscal e deixe o MOOVI extrair os valores. Sem digitação.",
+    title: "Anexe comprovantes",
+    description: "Guarde notas e comprovantes junto dos lançamentos no Dashboard.",
   },
   {
     icon: Bell,
     title: "Alertas inteligentes",
-    description: "Receba lembretes de contas a vencer e avisos quando estiver perto do limite.",
+    description: "Acompanhe alertas de orçamento no Dashboard e agende lembretes de vencimentos.",
   },
   {
     icon: BarChart3,
     title: "Relatórios visuais",
-    description: "Veja gráficos claros sobre onde seu dinheiro está indo, direto no WhatsApp.",
+    description: "Veja gráficos claros sobre onde seu dinheiro está indo, direto no Dashboard.",
   },
   {
     icon: Calendar,
     title: "Lembrete de contas",
-    description: "Nunca mais esqueça boletos ou assinaturas. O MOOVI avisa você no momento certo.",
+    description: "Agende boletos e compromissos na plataforma. O lembrete chega no seu WhatsApp na hora certa.",
   },
 ];
 

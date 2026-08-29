@@ -6,7 +6,7 @@ const ITEMS = [
   { icon: DollarSign, text: "+R$ 2.1 milhões organizados" },
   { icon: ShieldCheck, text: "Segurança nível bancário" },
   { icon: Cpu, text: "99,9% de precisão na IA" },
-  { icon: Link2, text: "Integrado ao WhatsApp" },
+  { icon: Link2, text: "Lembretes no WhatsApp" },
 ];
 
 const Row = () => (

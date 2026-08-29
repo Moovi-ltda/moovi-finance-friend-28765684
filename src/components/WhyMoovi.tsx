@@ -14,7 +14,7 @@ import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 const reasons = [
   {
     icon: Smartphone,
-    title: "Você já está no WhatsApp",
+    title: "Tudo no seu navegador",
     description: "Sem precisar baixar mais um app. Funciona onde você já passa o dia.",
   },
   {

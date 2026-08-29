@@ -11,20 +11,19 @@ const ImageDisplay = ({ imagePath, alt }: { imagePath: string; alt: string }) =>
 
 const features = [
   {
-    title: "Controle direto no Whatsapp",
+    title: "Controle direto no Dashboard",
     description: (
       <>
         <p className="mb-4">
-          <strong className="text-foreground font-bold">O Moovi organiza suas finanças direto no WhatsApp.</strong> É só
-          enviar mensagens como <em>"gastei 100 no mercado"</em> e o Moovi entende, registra e classifica tudo
-          automaticamente.
+          <strong className="text-foreground font-bold">O Moovi organiza suas finanças direto no Dashboard.</strong> Você
+          lança receitas e despesas, e a plataforma registra e classifica tudo automaticamente.
         </p>
         <p className="mb-4">
           <strong className="text-foreground font-bold">Você acompanha seus gastos e receitas</strong> com relatórios
           inteligentes, gráficos claros e lembretes diários, tudo sem planilhas e sem complicação.
         </p>
         <p>
-          <strong className="text-foreground font-bold">Simples, rápido e 100% no WhatsApp</strong>, para você ter mais
+          <strong className="text-foreground font-bold">Simples, rápido e 100% no seu navegador</strong>, para você ter mais
           controle do seu dinheiro no dia a dia.
         </p>
       </>
@@ -40,7 +39,7 @@ const features = [
           <strong className="text-foreground font-bold block mb-1">Visão clara de todo o seu dinheiro!</strong>
         </p>
         <p className="mb-4">
-          Tudo o que você registra no WhatsApp vira um{" "}
+          Tudo o que você registra no Dashboard vira um{" "}
           <strong className="text-foreground">painel simples e fácil de entender</strong>, com a visão completa do seu
           dinheiro em um só lugar.
         </p>
@@ -81,21 +80,21 @@ const features = [
       <>
         <p className="mb-4 text-lg">
           <strong className="text-foreground font-bold block mb-1">
-            Organize seus compromissos direto no WhatsApp.
+            Organize seus compromissos direto no Dashboard.
           </strong>
         </p>
         <p className="mb-4">
-          Basta enviar mensagens como <em>"médico amanhã às 16h"</em>.{" "}
+          Basta agendar compromissos como <em>"médico amanhã às 16h"</em> dentro da plataforma.{" "}
           <strong className="text-foreground">
             O Moovi registra tudo e cria lembretes personalizados automaticamente.
           </strong>
         </p>
         <p className="mb-4">
-          Receba avisos no momento certo, resumos do dia e uma visão clara dos seus compromissos!{" "}
+          Receba no WhatsApp os lembretes que você agendar e veja seus compromissos no Dashboard!{" "}
           <strong className="text-foreground">Sem anotações manuais e sem esquecer nada.</strong>
         </p>
         <p>
-          <strong className="text-foreground">Simples, rápido e sempre no WhatsApp!</strong> Para manter sua rotina sob
+          <strong className="text-foreground">Você agenda na plataforma e recebe o lembrete no WhatsApp!</strong> Para manter sua rotina sob
           controle todos os dias.
         </p>
       </>
@@ -139,7 +138,7 @@ const features = [
               <Check className="w-4 h-4 text-green-700" />
             </div>
             <span>
-              Relatórios por categoria <strong className="text-foreground">direto no WhatsApp</strong>.
+              Relatórios por categoria <strong className="text-foreground">direto no Dashboard</strong>.
             </span>
           </li>
         </ul>
@@ -181,7 +180,7 @@ const features = [
               <Check className="w-4 h-4 text-green-600" />
             </div>
             <span>
-              <strong className="text-foreground">Alertas automáticos</strong> no WhatsApp.
+              <strong className="text-foreground">Alertas automáticos</strong> no Dashboard.
             </span>
           </li>
           <li className="flex items-start gap-3">
@@ -212,7 +211,7 @@ const features = [
           <strong className="text-foreground">O Moovi permite acompanhar tudo junto.</strong>
         </p>
         <p className="mb-4">
-          Registre gastos normalmente no WhatsApp e o Moovi identifica de onde saiu o dinheiro e em qual cartão foi
+          Registre gastos normalmente no Dashboard e o Moovi identifica de onde saiu o dinheiro e em qual cartão foi
           feito o gasto.
         </p>
         <ul className="space-y-3">
@@ -256,7 +255,7 @@ export const ContainerScroll = ({ titleComponent, children }: any) => {
           {titleComponent || (
             <>
               <h2 className="text-3xl md:text-5xl font-bold tracking-tight mb-4">
-                Tudo o ,que você precisa direto no <span className="text-green-600">WhatsApp</span>
+                Tudo o que você precisa direto no <span className="text-green-600">Dashboard</span>
               </h2>
               <p className="text-lg text-muted-foreground">
                 Conheça todas as funcionalidades que vão transformar sua vida financeira.

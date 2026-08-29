@@ -21,7 +21,7 @@ export default function FinalCTASection() {
           </h2>
 
           <p className="text-white/70 text-base md:text-lg mb-8 max-w-xl mx-auto">
-            Pare de perder dinheiro por falta de organização. Comece a ter controle real direto no WhatsApp.
+            Pare de perder dinheiro por falta de organização. Tenha controle real da sua vida financeira direto no seu Dashboard.
           </p>
 
           {/* Stars */}

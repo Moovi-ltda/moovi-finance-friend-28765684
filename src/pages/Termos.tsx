@@ -9,7 +9,7 @@ const Termos = () => {
       <header className="border-b border-border bg-background">
         <div className="container mx-auto px-4 py-4 flex items-center justify-between">
           <Link to="/" className="flex items-center">
-            <img src={mooviLogo} alt="Moovi.chat" className="h-10" />
+            <img src={mooviLogo} alt="Moovi" className="h-10" />
           </Link>
           <Link
             to="/"
@@ -32,7 +32,7 @@ const Termos = () => {
 
           <p className="text-base text-foreground/90 leading-relaxed mb-8">
             Bem-vindo(a) ao Moovi! Estes Termos de Uso regulam o acesso e a
-            utilização do nosso assistente financeiro pessoal via WhatsApp. Ao
+            utilização da nossa plataforma web de controle financeiro. Ao
             usar o serviço, você concorda integralmente com as condições
             descritas abaixo.
           </p>
@@ -42,8 +42,8 @@ const Termos = () => {
               1. Aceite dos Termos
             </h2>
             <p className="text-foreground/90 leading-relaxed">
-              Ao enviar a primeira mensagem para o número oficial do Moovi no
-              WhatsApp, você declara que leu, entendeu e concorda com estes
+              Ao criar sua conta e acessar a plataforma do Moovi, você declara
+              que leu, entendeu e concorda com estes
               Termos de Uso e com a nossa{" "}
               <Link to="/privacidade" className="text-primary hover:underline">
                 Política de Privacidade
@@ -85,8 +85,8 @@ const Termos = () => {
             <ul className="list-disc pl-6 space-y-2 text-foreground/90">
               <li>
                 O usuário pode <strong>cancelar a assinatura a qualquer
-                momento</strong> diretamente pelo WhatsApp ou pelos canais de
-                suporte oficiais.
+                momento</strong> pelo Dashboard ou pelos canais de suporte
+                oficiais.
               </li>
               <li>
                 Após o cancelamento, o acesso permanece ativo até o fim do
@@ -109,7 +109,7 @@ const Termos = () => {
             </p>
             <ul className="list-disc pl-6 space-y-2 text-foreground/90">
               <li>
-                Utilizar o bot para envio de spam, mensagens em massa ou
+                Utilizar a plataforma para envio de spam, mensagens em massa ou
                 automações não autorizadas.
               </li>
               <li>
@@ -149,7 +149,7 @@ const Termos = () => {
             </h2>
             <p className="text-foreground/90 leading-relaxed">
               Podemos atualizar estes Termos de Uso periodicamente. Alterações
-              relevantes serão comunicadas pelo WhatsApp ou no site. O uso
+              relevantes serão comunicadas no Dashboard, por e-mail ou no site. O uso
               continuado do serviço após mudanças implica concordância com os
               novos termos.
             </p>

@@ -4,25 +4,25 @@ import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 const ROW_1 = [
   "Lembrete: aluguel vence hoje",
   "Sua fatura do cartão fecha amanhã",
-  "Você tem 3 contas a pagar essa semana",
-  "Resumo do mês pronto no Dashboard",
-  "Alerta: 80% do orçamento de alimentação",
+  "Lembrete: parcela do carro vence amanhã",
+  "IPVA vence dia 10",
+  "Reunião com o contador às 9h",
 ];
 
 const ROW_2 = [
   "Lembrete: academia vence dia 20",
   "Conta de luz vence em 2 dias",
-  "Nenhuma pendência para hoje",
-  "Relatório mensal disponível",
+  "Lembrete: seguro do carro vence sexta",
+  "Consulta médica amanhã às 10h",
   "Dentista amanhã às 14h",
 ];
 
 const ROW_3 = [
-  "Boleto do internet vence hoje",
-  "Meta de economia atingida",
+  "Boleto da internet vence hoje",
+  "Lembrete: condomínio vence em 3 dias",
   "Cartão Nubank fecha em 5 dias",
-  "Seus gastos subiram 12% este mês",
-  "2 contas a receber esta semana",
+  "Renovação do seguro vence amanhã",
+  "Lembrete: escola vence dia 8",
 ];
 
 
@@ -61,11 +61,11 @@ export default function InteractionExamples() {
           animate={isVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
           transition={{ duration: 0.6 }}
         >
-          <h2 className="text-[20px] min-[375px]:text-[22px] sm:text-3xl md:text-5xl font-bold text-white mb-4 md:mb-6 tracking-tighter sm:tracking-tight whitespace-nowrap">
-            Avisos da <span className="text-[#25D366]">Moovi</span> no seu WhatsApp
+          <h2 className="mx-auto mb-4 max-w-[22rem] text-[clamp(1.5rem,6.5vw,2rem)] font-bold leading-[1.12] tracking-tight text-white [text-wrap:balance] sm:mb-6 sm:max-w-3xl sm:text-3xl md:text-5xl">
+            Os lembretes que você agenda chegam no seu <span className="text-[#25D366]">WhatsApp</span>
           </h2>
-          <p className="text-white/60 text-[15px] md:text-lg max-w-2xl mx-auto leading-relaxed">
-            Lembretes de vencimento, alertas de orçamento e resumos automáticos — enquanto todo o gerenciamento acontece no seu Dashboard.
+          <p className="mx-auto max-w-[21rem] text-[15px] leading-relaxed text-white/60 sm:max-w-2xl md:text-lg">
+            Você programa os vencimentos e compromissos dentro da plataforma. No WhatsApp, a Moovi faz só uma coisa: te lembrar na hora certa.
           </p>
 
         </motion.div>

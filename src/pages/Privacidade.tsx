@@ -9,7 +9,7 @@ const Privacidade = () => {
       <header className="border-b border-border bg-background">
         <div className="container mx-auto px-4 py-4 flex items-center justify-between">
           <Link to="/" className="flex items-center">
-            <img src={mooviLogo} alt="Moovi.chat" className="h-10" />
+            <img src={mooviLogo} alt="Moovi" className="h-10" />
           </Link>
           <Link
             to="/"
@@ -33,8 +33,8 @@ const Privacidade = () => {
           <p className="text-base text-foreground/90 leading-relaxed mb-8">
             A sua privacidade é prioridade para o Moovi. Esta Política de
             Privacidade descreve, de forma clara e transparente, como coletamos,
-            usamos e protegemos as suas informações ao utilizar nosso assistente
-            financeiro via WhatsApp.
+            usamos e protegemos as suas informações ao utilizar nossa plataforma
+            web de controle financeiro.
           </p>
 
           <section className="mb-10">
@@ -47,18 +47,18 @@ const Privacidade = () => {
             </p>
             <ul className="list-disc pl-6 space-y-2 text-foreground/90">
               <li>
-                <strong>Número de WhatsApp:</strong> usado como identificador
-                único da sua conta e canal principal de comunicação.
+                <strong>Número de celular:</strong> usado para identificar sua
+                conta e enviar no WhatsApp os lembretes que você agendar.
               </li>
               <li>
                 <strong>Nome:</strong> coletado para personalizar o atendimento
-                e a experiência dentro do chat.
+                e a experiência dentro da plataforma.
               </li>
               <li>
                 <strong>Dados de transações financeiras:</strong> registros de
                 receitas, despesas, categorias, metas, lembretes e demais
-                informações que você insere voluntariamente no chat para que o
-                assistente possa organizar suas finanças.
+                informações que você insere voluntariamente no Dashboard para
+                organizar suas finanças.
               </li>
             </ul>
             <p className="text-foreground/90 leading-relaxed mt-3">
@@ -73,8 +73,8 @@ const Privacidade = () => {
             </h2>
             <p className="text-foreground/90 leading-relaxed">
               O Moovi utiliza a API do Google Calendar exclusivamente para criar
-              eventos e lembretes solicitados explicitamente pelo usuário via
-              WhatsApp. Nós não lemos seus eventos passados, não armazenamos sua
+              eventos e lembretes solicitados explicitamente pelo usuário dentro
+              da plataforma. Nós não lemos seus eventos passados, não armazenamos sua
               agenda em nossos servidores e jamais compartilhamos os dados do
               seu Google Workspace com terceiros. O uso e a transferência para
               qualquer outro aplicativo das informações recebidas das APIs do
@@ -123,7 +123,7 @@ const Privacidade = () => {
               Em conformidade com a LGPD (Lei Geral de Proteção de Dados), você
               pode a qualquer momento solicitar acesso, correção, portabilidade
               ou exclusão dos seus dados. Para isso, basta entrar em contato
-              conosco pelo próprio WhatsApp do Moovi.
+              pelos canais oficiais de suporte do Moovi.
             </p>
           </section>
 
@@ -133,7 +133,7 @@ const Privacidade = () => {
             </h2>
             <p className="text-foreground/90 leading-relaxed">
               Em caso de dúvidas sobre esta Política de Privacidade, entre em
-              contato pelo WhatsApp oficial do Moovi disponível em nosso site.
+              contato pelos canais oficiais de suporte disponíveis em nosso site.
             </p>
           </section>
         </article>

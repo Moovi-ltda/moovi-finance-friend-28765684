@@ -25,14 +25,14 @@ const Differentials = () => {
             {[{
               icon: Smartphone,
               text: "Sem instalar nada novo",
-              subtitle: "Funciona direto no WhatsApp"
+              subtitle: "Tudo acontece no Dashboard"
             }, {
               icon: Zap,
               text: "Sem complicação",
               subtitle: "Simples como uma mensagem"
             }, {
               icon: MessageCircle,
-              text: "Conversa natural",
+              text: "Navegação intuitiva",
               subtitle: "Como falar com um amigo"
             }, {
               icon: Clock,
@@ -56,14 +56,14 @@ const Differentials = () => {
           {[{
             icon: Smartphone,
             text: "Sem instalar nada novo",
-            subtitle: "Funciona direto no WhatsApp"
+            subtitle: "Tudo acontece no Dashboard"
           }, {
             icon: Zap,
             text: "Sem complicação",
             subtitle: "Simples como uma mensagem"
           }, {
             icon: MessageCircle,
-            text: "Conversa natural",
+            text: "Navegação intuitiva",
             subtitle: "Como falar com um amigo"
           }, {
             icon: Clock,

@@ -43,7 +43,7 @@ export default function SecuritySection() {
 
           {/* Description */}
           <p className="text-white/70 text-sm md:text-base leading-relaxed max-w-xl mx-auto font-medium px-2 md:px-0 mb-10 md:mb-12">
-            O selo exibido no nosso perfil garante que você tenha mais segurança ao conversar com a Moovi no WhatsApp. Esse selo indica que a Meta verificou nossa conta com base nas atividades no WhatsApp e documentos fornecidos.
+            O selo no nosso perfil oficial garante que os lembretes que você recebe vieram mesmo da Moovi. A Meta verificou nossa conta com base nas atividades e nos documentos que enviamos. Importante: a Moovi não gerencia finanças por chat. O WhatsApp é usado apenas para enviar os lembretes que você agendou na plataforma.
           </p>
 
         </motion.div>

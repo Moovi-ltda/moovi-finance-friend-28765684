@@ -8,12 +8,12 @@ const ComparisonSection = () => {
   const { elementRef, isVisible } = useScrollAnimation({ threshold: 0.15 });
 
   const comparisons = [
-    { feature: "Registrar gastos", moovi: "Interface Web Rápida & Notificações via WhatsApp", others: "Abrir app, preencher campos" },
+    { feature: "Registrar gastos", moovi: "Direto no Dashboard, em segundos", others: "Abrir app, preencher campos" },
     { feature: "Categorização", moovi: "Automática com IA", others: "Manual, uma por uma" },
-    { feature: "Alertas de orçamento", moovi: "Automáticos no WhatsApp", others: "Não tem ou por e-mail" },
+    { feature: "Alertas de orçamento", moovi: "Automáticos no Dashboard", others: "Não tem ou por e-mail" },
     { feature: "Dashboard profissional", moovi: "Completo com gráficos", others: "Básico ou inexistente" },
     { feature: "Exportar relatórios", moovi: "PDF e Excel", others: "Limitado" },
-    { feature: "Lembretes de contas", moovi: "No WhatsApp", others: "Notificação genérica" },
+    { feature: "Lembretes de contas", moovi: "Agendados por você, enviados no WhatsApp", others: "Notificação genérica" },
   ];
 
 
@@ -71,7 +71,7 @@ const ComparisonSection = () => {
 
           {/* Rows */}
           {comparisons.map((item, i) => {
-            const hasCheck = item.moovi.includes("✅") || ["Completo com gráficos", "PDF e Excel", "No WhatsApp", "Automática com IA"].includes(item.moovi);
+            const hasCheck = item.moovi.includes("✅") || ["Completo com gráficos", "PDF e Excel", "Agendados por você, enviados no WhatsApp", "Automática com IA"].includes(item.moovi);
             const cleanMoovi = item.moovi.replace("✅ ", "");
             const hasCross = item.others.includes("❌");
             const cleanOthers = item.others.replace("❌ ", "");

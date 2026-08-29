@@ -7,8 +7,8 @@ const Transformation = () => {
   } = useScrollAnimation({
     threshold: 0.15
   });
-  const pains = ["Tentando lembrar tudo de cabeça — e esquecendo boletos importantes", "Sem saber para onde foi o dinheiro no final do mês", "Gastando tempo com planilhas que você nunca abre de novo", "Sentindo aquela angústia de não ter controle sobre suas finanças", "Adiando decisões financeiras porque tudo parece complicado demais"];
-  const benefits = ["Suas contas estão organizadas e você será avisado de tudo no momento certo", "Você sabe exatamente quanto gastou, quanto tem e quanto pode usar", "Não precisa abrir nenhum aplicativo — tudo acontece no WhatsApp que você já usa", "Um assessor pessoal cuida da sua vida financeira 24 horas por dia", "Você finalmente tem clareza, controle e paz de espírito com seu dinheiro"];
+  const pains = ["Tentando lembrar tudo de cabeça e esquecendo boletos importantes", "Sem saber para onde foi o dinheiro no final do mês", "Gastando tempo com planilhas que você nunca abre de novo", "Sentindo aquela angústia de não ter controle sobre suas finanças", "Adiando decisões financeiras porque tudo parece complicado demais"];
+  const benefits = ["Suas contas ficam organizadas e os lembretes que você agenda chegam na hora certa", "Você sabe exatamente quanto gastou, quanto tem e quanto pode usar", "Tudo acontece na plataforma web, direto no seu navegador", "O Assistente Moovi ajuda você dentro do Dashboard 24 horas por dia", "Você finalmente tem clareza, controle e paz de espírito com seu dinheiro"];
   return <section className="py-16 md:py-20 bg-muted/50">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8" ref={elementRef}>
         {/* Dores */}

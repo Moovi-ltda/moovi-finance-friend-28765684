@@ -64,7 +64,7 @@ const FinalCTA = () => {
               className="h-10 brightness-0 invert"
             />
             <p className="text-white/70 text-sm text-center">
-              © {currentYear} MOOVI. Todos os direitos reservados. Controle financeiro inteligente no WhatsApp.
+              © {currentYear} MOOVI. Todos os direitos reservados. Controle financeiro inteligente no seu Dashboard.
             </p>
           </div>
         </div>

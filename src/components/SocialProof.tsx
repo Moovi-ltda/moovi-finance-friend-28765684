@@ -10,7 +10,7 @@ const SocialProof = () => {
     {
       name: "Carlos Eduardo",
       title: "Dono de E-commerce",
-      quote: "Achei que ia ser mais um app que eu não usaria. Mas como é no WhatsApp, ficou automático. Mudou minha vida financeira!",
+      quote: "Achei que ia ser mais um app complicado. Mas o Dashboard deixa tudo claro e fácil de acompanhar. Mudou minha vida financeira!",
     },
     {
       name: "Juliana Martins",
@@ -30,7 +30,7 @@ const SocialProof = () => {
     {
       name: "Thiago Souza",
       title: "Freelancer de TI",
-      quote: "Nunca imaginei que controlar minhas finanças seria TÃO simples. Sério, é só conversar no WhatsApp.",
+      quote: "Nunca imaginei que controlar minhas finanças seria TÃO simples. Sério, está tudo organizado no Dashboard.",
     },
   ];
 

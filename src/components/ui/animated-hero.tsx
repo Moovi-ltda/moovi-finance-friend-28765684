@@ -6,7 +6,7 @@ function AnimatedHero() {
           {/* Header */}
           <h1 className="text-4xl sm:text-3xl md:text-5xl lg:text-6xl max-w-5xl tracking-tighter text-center font-bold leading-tight text-gray-900">
             <span className="block text-green-700 whitespace-nowrap md:whitespace-normal">Organize seu dinheiro</span>
-            <span className="block">pelo WhatsApp </span>
+            <span className="block">no seu Dashboard </span>
             <span className="block">em segundos.</span>
           </h1>
 
@@ -15,14 +15,14 @@ function AnimatedHero() {
           <p className="text-base leading-relaxed tracking-tight text-muted-foreground font-bold max-w-2xl text-center px-4 md:text-lg mt-4 mb-0">
             <span className="md:hidden">
               <span>Sem apps complexos ou planilhas chatas. </span>
-              <span className="text-green-600 font-bold">Envie um áudio ou texto e a Moovi </span>
-              <span>organiza tudo para você automaticamente. </span>
+              <span className="text-green-600 font-bold">Lance tudo no Dashboard e a Moovi </span>
+              <span>organiza seus dados automaticamente. </span>
             </span>
 
             <span className="hidden md:block text-center px-4 md:text-lg mt-4 mb-0">
               Sem apps complexos ou planilhas chatas.{" "}
-              <span className="text-green-600 font-bold">Envie um áudio ou texto e a Moovi </span> organiza tudo para
-              você automaticamente.
+              <span className="text-green-600 font-bold">Lance tudo no Dashboard e a Moovi </span> organiza seus dados
+              automaticamente.
             </span>
           </p>
         </div>

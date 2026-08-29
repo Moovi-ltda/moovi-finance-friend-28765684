@@ -15,7 +15,7 @@ const steps = [
     icon: MessageSquare,
     number: "02",
     title: "Receba acesso imediato",
-    description: "Após o pagamento, você recebe o acesso direto no WhatsApp. Sem espera.",
+    description: "Após o pagamento, seu acesso ao Dashboard é liberado. Sem espera.",
     color: "bg-green-50 text-green-600",
     borderColor: "border-green-200",
   },
@@ -44,7 +44,7 @@ export default function HowItWorks() {
             Pagou? Pronto. A Moovi faz o resto.
           </h2>
           <p className="text-gray-500 text-base md:text-lg max-w-2xl mx-auto">
-            Em menos de 2 minutos você já está organizando suas finanças pelo WhatsApp.
+            Em menos de 2 minutos você já está organizando suas finanças no Dashboard.
           </p>
         </div>
 

@@ -124,7 +124,7 @@ export function PreCheckoutModal({ open, onOpenChange, plan }: PreCheckoutModalP
 
         <form onSubmit={handleSubmit} className="space-y-4 mt-2">
           <div className="space-y-2">
-            <Label htmlFor="telefone">WhatsApp</Label>
+            <Label htmlFor="telefone">WhatsApp dos lembretes</Label>
             <div className="flex gap-2">
               <Popover open={countryOpen} onOpenChange={setCountryOpen}>
                 <PopoverTrigger asChild>
@@ -171,7 +171,7 @@ export function PreCheckoutModal({ open, onOpenChange, plan }: PreCheckoutModalP
                 inputMode="numeric"
               />
             </div>
-            <p className="text-xs text-muted-foreground mt-1">Usamos seu WhatsApp para liberar seu acesso instantaneamente após o pagamento.</p>
+            <p className="text-xs text-muted-foreground mt-1">Usamos seu WhatsApp apenas para enviar os lembretes que você agendar na plataforma.</p>
           </div>
 
 

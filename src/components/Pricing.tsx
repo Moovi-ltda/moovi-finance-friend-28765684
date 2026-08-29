@@ -18,7 +18,7 @@ export function Pricing() {
       period: "x12",
       features: [
         { text: "Acesso completo ao Dashboard Web", included: true },
-        { text: "Lembretes e alertas automáticos via WhatsApp", included: true },
+        { text: "Lembretes agendados enviados no seu WhatsApp", included: true },
         { text: "Categorização inteligente de gastos", included: true },
         { text: "Compromissos automáticos", included: true },
         { text: "Controle de orçamentos", included: true },
@@ -45,7 +45,7 @@ export function Pricing() {
         { text: "Relatórios financeiros mensais detalhados", included: true },
         { text: "Exportação de dados (PDF/Excel)", included: true },
         { text: "Criação de metas e limites de gastos", included: true },
-        { text: "Alertas preventivos de orçamento", included: true },
+        { text: "Alertas preventivos de orçamento no Dashboard", included: true },
         { text: "Compromissos recorrentes", included: true },
         { text: "Contas a pagar/receber", included: true },
         { text: "Suporte prioritário humanizado", included: true },
@@ -143,7 +143,7 @@ export function Pricing() {
           variants={revealVariants}
           className="text-gray-500 text-lg"
         >
-          Dashboard completo no seu navegador e alertas automáticos no WhatsApp.
+          Plataforma completa no seu navegador, com lembretes agendados no seu WhatsApp.
         </motion.p>
       </article>
 
