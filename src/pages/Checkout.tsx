@@ -17,7 +17,7 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover
 import { toast } from "sonner";
 import logoMoovi from "@/assets/moovi-logo.png";
 
-const WEBHOOK_URL = "https://n8n.fisherai.shop/webhook/checkout-transparente";
+const WEBHOOK_URL = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/checkout-transparente`;
 
 const COUNTRIES = [
   { code: "BR", ddi: "55", flag: "🇧🇷", name: "Brasil" },
