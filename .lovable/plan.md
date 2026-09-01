@@ -1,29 +1,13 @@
-## Plano de correção
+# Correção do tracking de afiliados no checkout
 
-1. **Resolver as telas brancas e travamentos no scroll**
-   - Remover/parar efeitos pesados vinculados ao scroll no hero, especialmente `useScroll/useTransform` do fundo.
-   - Reduzir camadas com blur gigante e elementos decorativos que causam repintura pesada no Safari/mobile.
-   - Manter o visual da página, mas com menos custo de renderização.
+## Implementação
+1. Atualizar a captura para aceitar `afiliado`, `ref`, `aff` e `a`, tanto na página de vendas quanto no checkout.
+2. Persistir o último ID válido em `localStorage` usando `moovi_afiliado`, com leitura compatível da chave antiga para não perder atribuições em andamento.
+3. Garantir que o checkout capture novamente os parâmetros ao carregar e recupere o ID persistido no envio.
+4. Montar `externalReference` como `[telefone]|[plano]|AFILIADO:[id]`, mantendo `AFILIADO:` vazio quando não houver atribuição.
+5. Validar o payload gerado e o build da aplicação.
 
-2. **Otimizar o vídeo do mockup**
-   - Trocar o carregamento automático do iframe do Panda por carregamento sob demanda ou somente quando o mockup estiver visível.
-   - Exibir thumbnail leve primeiro, evitando que o iframe pese o carregamento inicial e o scroll.
-   - Manter o vídeo funcional, mas impedir que ele seja injetado cedo demais no mobile.
-
-3. **Otimizar imagens dos mockups e depoimentos**
-   - Adicionar `loading="lazy"`, `decoding="async"` e dimensões estáveis nas imagens usadas dentro do componente `Iphone`.
-   - Priorizar só imagens acima da dobra; deixar imagens abaixo carregarem conforme entram na viewport.
-   - Reduzir risco de layout shift e tela branca por carregamento simultâneo.
-
-4. **Recriar a seção de funcionalidades no mobile**
-   - No desktop, manter o efeito de cards empilhados com GSAP.
-   - No mobile, desativar `pin/scrub/ScrollTrigger` e renderizar os cards em uma lista vertical normal.
-   - Isso evita o bug do scroll “pular” cards automaticamente e melhora muito a fluidez no celular.
-
-5. **Limpar triggers e listeners corretamente**
-   - Garantir que `ScrollTrigger` só rode em desktop e seja removido ao sair da seção.
-   - Evitar listeners ou animações contínuas desnecessárias no mobile.
-
-6. **Validação após implementar**
-   - Checar console/logs do Vite se houver erro.
-   - Testar visualmente em viewport mobile para confirmar: sem telas brancas, cards passando um por vez em scroll natural, vídeo/imagens sem travar o carregamento.
+## Detalhes técnicos
+- O último link de afiliado acessado continuará sobrescrevendo o anterior.
+- O ID será sanitizado antes de entrar no payload para não corromper o separador `|`.
+- A limpeza do tracking continuará ocorrendo apenas depois de pagamento confirmado.
