@@ -108,6 +108,12 @@ Deno.serve(async (req) => {
 
     const body = parsed.data;
 
+    // --- Garante que o externalReference enviado pelo front é preservado exatamente ---
+    const externalReference = body.externalReference?.trim();
+    if (!externalReference) {
+      return json({ status: "erro", mensagem: "externalReference é obrigatório." }, 400);
+    }
+
     // --- Cliente no Asaas ---
     const cpfCnpj = onlyDigits(body.cpf_cnpj);
     let customerId: string | undefined;
@@ -143,7 +149,7 @@ Deno.serve(async (req) => {
       value: body.valor,
       dueDate: addDaysSaoPaulo(1),
       description: `Assinatura Moovi - ${body.plano}`,
-      externalReference: body.externalReference,
+      externalReference,
     };
 
     if (body.forma_pagamento === "CREDIT_CARD") {
