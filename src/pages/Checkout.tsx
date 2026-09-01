@@ -224,20 +224,32 @@ export default function Checkout() {
     setErrorMsg("");
 
     const docDigits = onlyDigits(cpf);
+    const telefoneFull = `+${selectedCountry.ddi}${onlyDigits(telefone)}`;
+    const afiliadoId = (localStorage.getItem("moovi_afiliado_id") || "").trim();
+    const planoRef = plan.name
+      .replace(/plano/gi, "")
+      .trim()
+      .toUpperCase();
+    const externalReference = `${onlyDigits(telefoneFull)}|NOVA_ASSINATURA|${planoRef}${
+      afiliadoId ? `|AFILIADO:${afiliadoId}` : ""
+    }`;
+
     const payload: Record<string, unknown> = {
       plano: plan.name,
       valor: totalValue,
       forma_pagamento: method,
       nome: nome.trim(),
       email: email.trim(),
-      telefone: `+${selectedCountry.ddi}${onlyDigits(telefone)}`,
+      telefone: telefoneFull,
       cep: onlyDigits(cep),
       endereco: endereco.trim(),
       numero: numero.trim(),
       cpf_cnpj: docDigits,
       tipo_documento: docDigits.length === 14 ? "CNPJ" : "CPF",
-      afiliado_id: localStorage.getItem("moovi_afiliado_id") || "",
+      afiliado_id: afiliadoId,
+      externalReference,
     };
+
 
     if (method === "CREDIT_CARD") {
       const [mesRaw, anoRaw] = cardExpiry.split("/");
