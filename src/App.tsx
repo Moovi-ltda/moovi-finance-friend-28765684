@@ -17,13 +17,14 @@ const queryClient = new QueryClient();
 function AffiliateCapture() {
   const [searchParams] = useSearchParams();
   useEffect(() => {
-    const ref = searchParams.get("ref");
-    if (ref) {
-      localStorage.setItem("moovi_afiliado_id", ref);
+    const captured = captureAffiliateId();
+    if (captured) {
+      console.log("[Moovi] afiliado_id capturado:", captured);
     }
   }, [searchParams]);
   return null;
 }
+
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
