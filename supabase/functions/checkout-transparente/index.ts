@@ -108,12 +108,6 @@ Deno.serve(async (req) => {
 
     const body = parsed.data;
 
-    // --- Garante que o externalReference enviado pelo front é preservado exatamente ---
-    const externalReference = body.externalReference?.trim();
-    if (!externalReference) {
-      return json({ status: "erro", mensagem: "externalReference é obrigatório." }, 400);
-    }
-
     // --- Cliente no Asaas ---
     const cpfCnpj = onlyDigits(body.cpf_cnpj);
     let customerId: string | undefined;
@@ -149,7 +143,7 @@ Deno.serve(async (req) => {
       value: body.valor,
       dueDate: addDaysSaoPaulo(1),
       description: `Assinatura Moovi - ${body.plano}`,
-      externalReference,
+      externalReference: body.externalReference,
     };
 
     if (body.forma_pagamento === "CREDIT_CARD") {
@@ -185,19 +179,8 @@ Deno.serve(async (req) => {
     }
 
     // Log estruturado do payload (dados sensíveis mascarados)
-    console.log("[checkout-transparente] externalReference recebido:", externalReference);
-    console.log(
-      "[checkout-transparente] payload Asaas (sensível oculto):",
-      JSON.stringify({
-        customer: customerId,
-        billingType: paymentPayload.billingType,
-        value: paymentPayload.value,
-        dueDate: paymentPayload.dueDate,
-        description: paymentPayload.description,
-        externalReference: paymentPayload.externalReference,
-        hasCreditCard: !!paymentPayload.creditCard,
-      }),
-    );
+    console.log("[checkout-transparente] externalReference:", body.externalReference);
+    console.log("[checkout-transparente] payment payload keys:", Object.keys(paymentPayload));
 
     // --- Cria cobrança no Asaas ---
     const payment = (await asaas("/v3/payments", "POST", paymentPayload)) as Record<string, unknown>;
