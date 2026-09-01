@@ -185,8 +185,19 @@ Deno.serve(async (req) => {
     }
 
     // Log estruturado do payload (dados sensíveis mascarados)
-    console.log("[checkout-transparente] externalReference:", body.externalReference);
-    console.log("[checkout-transparente] payment payload keys:", Object.keys(paymentPayload));
+    console.log("[checkout-transparente] externalReference recebido:", externalReference);
+    console.log(
+      "[checkout-transparente] payload Asaas (sensível oculto):",
+      JSON.stringify({
+        customer: customerId,
+        billingType: paymentPayload.billingType,
+        value: paymentPayload.value,
+        dueDate: paymentPayload.dueDate,
+        description: paymentPayload.description,
+        externalReference: paymentPayload.externalReference,
+        hasCreditCard: !!paymentPayload.creditCard,
+      }),
+    );
 
     // --- Cria cobrança no Asaas ---
     const payment = (await asaas("/v3/payments", "POST", paymentPayload)) as Record<string, unknown>;
