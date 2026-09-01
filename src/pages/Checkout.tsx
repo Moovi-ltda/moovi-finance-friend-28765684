@@ -272,6 +272,11 @@ export default function Checkout() {
       "Falha ao processar o pagamento. Verifique seus dados e tente novamente.";
 
     try {
+      console.log("[Checkout] payload final", {
+        ...payload,
+        cartao: undefined,
+        externalReference: payload.externalReference,
+      });
       const res = await fetch(WEBHOOK_URL, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -294,6 +299,7 @@ export default function Checkout() {
         const qrCodeBase64 = data.qrCodeBase64 || data.qrCode || data.encodedImage || "";
         if (!copyPaste && !qrCodeBase64) throw new Error("PIX não retornado pelo servidor");
         setPixData({ copyPaste, qrCodeBase64 });
+        localStorage.removeItem("moovi_afiliado_id");
         setStatus("pix-success");
       } else {
         const st = (data.status || "").toString().toUpperCase();
@@ -301,6 +307,7 @@ export default function Checkout() {
         if (!approved.includes(st)) {
           throw new Error(backendMessage || fallbackError);
         }
+        localStorage.removeItem("moovi_afiliado_id");
         setStatus("card-success");
       }
     } catch (err: unknown) {
@@ -313,6 +320,7 @@ export default function Checkout() {
         : displayError;
       toast.error(cleanMessage, { duration: 6000 });
     }
+
 
   };
 
