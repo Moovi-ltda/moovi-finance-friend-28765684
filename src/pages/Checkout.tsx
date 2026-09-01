@@ -15,7 +15,7 @@ import {
 } from "lucide-react";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { toast } from "sonner";
-import { getAffiliateId, clearAffiliateId } from "@/lib/affiliate";
+import { captureAffiliateId, getAffiliateId, clearAffiliateId } from "@/lib/affiliate";
 import logoMoovi from "@/assets/moovi-logo.png";
 
 const WEBHOOK_URL = "https://n8n.fisherai.shop/webhook/checkout-transparente";
@@ -130,6 +130,10 @@ export default function Checkout() {
   const [errorMsg, setErrorMsg] = useState("");
 
   useEffect(() => {
+    captureAffiliateId();
+  }, [location.search, location.hash]);
+
+  useEffect(() => {
     if (!plan) navigate("/#pricing-section", { replace: true });
   }, [plan, navigate]);
 
@@ -231,9 +235,7 @@ export default function Checkout() {
       .replace(/plano/gi, "")
       .trim()
       .toUpperCase();
-    const externalReference = `${onlyDigits(telefoneFull)}|NOVA_ASSINATURA|${planoRef}${
-      afiliadoId ? `|AFILIADO:${afiliadoId}` : ""
-    }`;
+    const externalReference = `${onlyDigits(telefoneFull)}|${planoRef}|AFILIADO:${afiliadoId}`;
 
     const payload: Record<string, unknown> = {
       plano: plan.name,
