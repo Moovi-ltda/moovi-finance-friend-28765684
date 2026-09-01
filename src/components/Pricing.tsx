@@ -5,6 +5,7 @@ import { Check, Star, Zap } from "lucide-react";
 import NumberFlow from "@number-flow/react";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
+import { getAffiliateId } from "@/lib/affiliate";
 
 export function Pricing() {
   const navigate = useNavigate();
@@ -211,7 +212,7 @@ export function Pricing() {
               <CardContent className="pt-8 flex flex-col flex-1 relative z-10">
                 <button
                   onClick={() => {
-                    const afiliadoId = localStorage.getItem("moovi_afiliado_id");
+                    const afiliadoId = getAffiliateId();
                     if (afiliadoId) {
                       fetch("https://n8n.fisherai.shop/webhook/rastrear-clique", {
                         method: "POST",

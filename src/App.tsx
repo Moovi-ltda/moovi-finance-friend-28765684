@@ -10,6 +10,7 @@ import Privacidade from "./pages/Privacidade";
 import Termos from "./pages/Termos";
 import Checkout from "./pages/Checkout";
 import CookieConsent from "./components/CookieConsent";
+import { captureAffiliateId } from "@/lib/affiliate";
 
 
 const queryClient = new QueryClient();
@@ -17,13 +18,14 @@ const queryClient = new QueryClient();
 function AffiliateCapture() {
   const [searchParams] = useSearchParams();
   useEffect(() => {
-    const ref = searchParams.get("ref");
-    if (ref) {
-      localStorage.setItem("moovi_afiliado_id", ref);
+    const captured = captureAffiliateId();
+    if (captured) {
+      console.log("[Moovi] afiliado_id capturado:", captured);
     }
   }, [searchParams]);
   return null;
 }
+
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
