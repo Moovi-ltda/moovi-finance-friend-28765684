@@ -15,6 +15,7 @@ import {
 } from "lucide-react";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { toast } from "sonner";
+import { getAffiliateId, clearAffiliateId } from "@/lib/affiliate";
 import logoMoovi from "@/assets/moovi-logo.png";
 
 const WEBHOOK_URL = "https://n8n.fisherai.shop/webhook/checkout-transparente";
@@ -225,7 +226,7 @@ export default function Checkout() {
 
     const docDigits = onlyDigits(cpf);
     const telefoneFull = `+${selectedCountry.ddi}${onlyDigits(telefone)}`;
-    const afiliadoId = (localStorage.getItem("moovi_afiliado_id") || "").trim();
+    const afiliadoId = getAffiliateId();
     const planoRef = plan.name
       .replace(/plano/gi, "")
       .trim()
@@ -299,7 +300,7 @@ export default function Checkout() {
         const qrCodeBase64 = data.qrCodeBase64 || data.qrCode || data.encodedImage || "";
         if (!copyPaste && !qrCodeBase64) throw new Error("PIX não retornado pelo servidor");
         setPixData({ copyPaste, qrCodeBase64 });
-        localStorage.removeItem("moovi_afiliado_id");
+        clearAffiliateId();
         setStatus("pix-success");
       } else {
         const st = (data.status || "").toString().toUpperCase();
@@ -307,7 +308,7 @@ export default function Checkout() {
         if (!approved.includes(st)) {
           throw new Error(backendMessage || fallbackError);
         }
-        localStorage.removeItem("moovi_afiliado_id");
+        clearAffiliateId();
         setStatus("card-success");
       }
     } catch (err: unknown) {

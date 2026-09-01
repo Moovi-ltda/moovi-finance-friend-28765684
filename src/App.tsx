@@ -10,6 +10,7 @@ import Privacidade from "./pages/Privacidade";
 import Termos from "./pages/Termos";
 import Checkout from "./pages/Checkout";
 import CookieConsent from "./components/CookieConsent";
+import { captureAffiliateId } from "@/lib/affiliate";
 
 
 const queryClient = new QueryClient();
