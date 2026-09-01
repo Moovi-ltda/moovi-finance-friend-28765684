@@ -1,20 +1,27 @@
 const STORAGE_KEY = "moovi_afiliado_id";
+const TS_KEY = "moovi_afiliado_ts";
 const PARAM_NAMES = ["ref", "afiliado", "afiliado_id", "aff", "ref_id", "utm_ref"];
 
+/** Janela curta de atribuição: last-click vence e expira em 30 minutos. */
+const TTL_MS = 30 * 60 * 1000;
+
 function safeLocalSet(value: string) {
+  const now = String(Date.now());
   try {
     localStorage.setItem(STORAGE_KEY, value);
+    localStorage.setItem(TS_KEY, now);
   } catch {
     /* storage bloqueado */
   }
   try {
     sessionStorage.setItem(STORAGE_KEY, value);
+    sessionStorage.setItem(TS_KEY, now);
   } catch {
     /* storage bloqueado */
   }
   try {
-    // cookie de 90 dias como fallback (modo privado / storage bloqueado)
-    document.cookie = `${STORAGE_KEY}=${encodeURIComponent(value)}; path=/; max-age=${60 * 60 * 24 * 90}; SameSite=Lax`;
+    // cookie de sessão curto (30 min) como fallback
+    document.cookie = `${STORAGE_KEY}=${encodeURIComponent(value)}; path=/; max-age=${TTL_MS / 1000}; SameSite=Lax`;
   } catch {
     /* ignore */
   }
@@ -27,6 +34,19 @@ function readCookie(): string {
   } catch {
     return "";
   }
+}
+
+function isExpired(): boolean {
+  const read = (s: Storage | null) => {
+    try {
+      return s?.getItem(TS_KEY) || "";
+    } catch {
+      return "";
+    }
+  };
+  const ts = Number(read(typeof localStorage !== "undefined" ? localStorage : null) || read(typeof sessionStorage !== "undefined" ? sessionStorage : null));
+  if (!ts) return false; // sem timestamp: confia no max-age do cookie
+  return Date.now() - ts > TTL_MS;
 }
 
 function fromUrl(): string {
@@ -45,20 +65,28 @@ function fromUrl(): string {
   return "";
 }
 
-/** Captura o ref da URL (se houver) e persiste. Deve rodar em toda navegação. */
+/** Captura o ref da URL (last-click vence sempre) e persiste por 30 min. */
 export function captureAffiliateId(): string {
   const fromParam = fromUrl();
   if (fromParam) {
+    // sobrescreve qualquer afiliado anterior — última origem vence
+    clearAffiliateId();
     safeLocalSet(fromParam);
     return fromParam;
   }
   return getAffiliateId();
 }
 
-/** Lê o ID do afiliado de qualquer fonte disponível. */
+/** Lê o ID do afiliado; retorna vazio se a janela de atribuição expirou. */
 export function getAffiliateId(): string {
   const url = fromUrl();
   if (url) return url;
+
+  if (isExpired()) {
+    clearAffiliateId();
+    return "";
+  }
+
   try {
     const local = localStorage.getItem(STORAGE_KEY);
     if (local && local.trim()) return local.trim();
@@ -77,11 +105,13 @@ export function getAffiliateId(): string {
 export function clearAffiliateId() {
   try {
     localStorage.removeItem(STORAGE_KEY);
+    localStorage.removeItem(TS_KEY);
   } catch {
     /* ignore */
   }
   try {
     sessionStorage.removeItem(STORAGE_KEY);
+    sessionStorage.removeItem(TS_KEY);
   } catch {
     /* ignore */
   }
